@@ -1,0 +1,117 @@
+<script setup>
+  import { onLoad, onShow } from '@dcloudio/uni-app'
+  import { useProductDetail } from '@/service/shop'
+  import useNavigate from '@/common/hook/use-navigate'
+  import useShoppingCart from '@/stores/shopping-cart'
+  import { computed } from 'vue'
+
+  const { productDetail, refresh } = useProductDetail()
+  const { pathMap, navigateTo } = useNavigate()
+  const shoppingCart = useShoppingCart()
+  onLoad(() => {
+    refresh()
+  })
+  const blockList = [
+    { label: '选择', content: '已选：黑色，256G', path: pathMap.productReview },
+    { label: '评价', content: '', path: pathMap.productReview }
+  ]
+
+  function handleBlockItemClick(item) {
+    navigateTo(item.path, { id: productDetail.id })
+  }
+  const btnList = computed(() => {
+    return [
+      { text: productDetail.isAddedToCart ? '已加入购物车' : '加入购物车', type: 'info' },
+      { text: '立即购买' }
+    ]
+  })
+  function handleBtnItemCLick(item) {
+    if (item.text === '加入购物车') {
+      shoppingCart.add(productDetail)
+    }
+    else if (item.text === '已加入购物车') {
+    
+    }
+    else if (item.text === '立即购买') {
+    
+    }
+  }
+</script>
+<template>
+  <view class="product-details">
+    <u-image :src="productDetail.productCover" width="100%" height="480" />
+    <view class="top-block">
+      <view class="top-block__left">
+        <view class="top-block__name aa-font-title">{{ productDetail.productName }}</view>
+        <view class="top-block__price aa-font-price">￥{{ productDetail.productPrice }}</view>
+      </view>
+      <view class="top-block__sales aa-font-desc">销量{{ productDetail.productSales }}</view>
+    </view>
+    <view class="info-block-list">
+      <view
+        class="info-block-item"
+        v-for="item in blockList"
+        :key="item.label"
+        @click="handleBlockItemClick(item)"
+      >
+        <text class="info-block-item__label aa-font-desc">{{ item.label }}</text>
+        <text class="info-block-item__content aa-font-info-content">{{ item.content }}</text>
+        <u-icon name="arrow-right" color="#999" />
+      </view>
+    </view>
+    <view class="bottom-block">
+      <view class="aa-font-paragraph-title">介绍</view>
+      <view class="aa-font-paragraph">{{ productDetail.paragraph }}</view>
+    </view>
+    <aa-fixed-bottom btn-class="mr-20" :show-contact="false" :btn-list="btnList" @btnItemClick="handleBtnItemCLick">
+    </aa-fixed-bottom>
+  </view>
+</template>
+
+<style scoped lang="scss">
+  .product-details {
+    .top-block,
+    .info-block-item,
+    .bottom-block {
+      padding: 30rpx;
+      background-color: #fff;
+      margin-bottom: 20rpx;
+    }
+
+    .top-block {
+      display: flex;
+      align-items: center;
+
+      .top-block__left {
+        flex: 1;
+      }
+
+      .top-block__price {
+        margin-top: 10rpx;
+      }
+    }
+
+    .info-block-item {
+      display: flex;
+      align-items: center;
+
+      .info-block-item__content {
+        flex: 1;
+        margin-left: 30rpx;
+      }
+
+      .info-block-item__label {
+      }
+    }
+  }
+  .aa-font-paragraph {
+    margin-top: 20rpx;
+    background-color: #fff;
+    margin-bottom: 120rpx;
+  }
+</style>
+<style>
+  page {
+    background-color: #f7f7f7;
+  }
+</style>

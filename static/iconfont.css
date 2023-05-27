@@ -1,0 +1,119 @@
+@font-face {
+  font-family: "custom-icon"; /* Project id 4050825 */
+  src: url('font/iconfont.woff2?t=1683540626856') format('woff2'),
+       url('font/iconfont.woff?t=1683540626856') format('woff'),
+       url('font/iconfont.ttf?t=1683540626856') format('truetype');
+}
+
+.custom-icon {
+  font-family: "custom-icon", serif !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.custom-icon-email:before {
+  content: "\e604";
+}
+
+.custom-icon-workYears:before {
+  content: "\e61a";
+}
+
+.custom-icon-education:before {
+  content: "\e611";
+}
+
+.custom-icon-shop-cart:before {
+  content: "\e62d";
+}
+
+.custom-icon-gouwuche1:before {
+  content: "\e65c";
+}
+
+.custom-icon-phone:before {
+  content: "\e600";
+}
+
+.custom-icon-telephone:before {
+  content: "\e601";
+}
+
+.custom-icon-setting:before {
+  content: "\e621";
+}
+
+.custom-icon-delete:before {
+  content: "\e68e";
+}
+
+.custom-icon-code:before {
+  content: "\e71c";
+}
+
+.custom-icon-edit:before {
+  content: "\e67f";
+}
+
+.custom-icon-time:before {
+  content: "\e638";
+}
+
+.custom-icon-numberOfPeople:before {
+  content: "\e623";
+}
+
+.custom-icon-alipayPayment:before {
+  content: "\e634";
+}
+
+.custom-icon-wechatPayment:before {
+  content: "\e639";
+}
+
+.custom-icon-supplyAndDemand:before {
+  content: "\e671";
+}
+
+.custom-icon-creditCardPayment:before {
+  content: "\e674";
+}
+
+.custom-icon-feedback:before {
+  content: "\e614";
+}
+
+.custom-icon-price:before {
+  content: "\e70b";
+}
+
+.custom-icon-password:before {
+  content: "\e8b2";
+}
+
+.custom-icon-activities:before {
+  content: "\e608";
+}
+
+.custom-icon-navigate:before {
+  content: "\e60c";
+}
+
+.custom-icon-qrCode:before {
+  content: "\e98d";
+}
+
+.custom-icon-money:before {
+  content: "\e995";
+}
+
+.custom-icon-privacy:before {
+  content: "\e99b";
+}
+
+.custom-icon-order:before {
+  content: "\fb47";
+}
+

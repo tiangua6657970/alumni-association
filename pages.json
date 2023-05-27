@@ -1,0 +1,379 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
+		{
+			"path": "pages/alumni-activities/alumni-activities",
+			"style": {
+				"navigationBarTitleText": "校友活动",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/alumni-activity-registration/alumni-activity-registration",
+			"style": {
+				"navigationBarTitleText": "活动报名"
+			}
+		},
+		{
+			"path": "pages/alumni-activity-detail/alumni-activity-detail",
+			"style": {
+				"navigationBarTitleText": "活动详情"
+			}
+		},
+		{
+			"path": "pages/add-alumni-association/add-alumni-association",
+			"style": {
+				"navigationBarTitleText": "加入校友会"
+			}
+		},
+		{
+			"path": "pages/donation/donation",
+			"style": {
+				"navigationBarTitleText": "捐款"
+			}
+		},
+		{
+			"path": "pages/donation-detail/donation-detail",
+			"style": {
+				"navigationBarTitleText": "捐款详情"
+			}
+		},
+		{
+			"path": "pages/customer-authentication/customer-authentication",
+			"style": {
+				"navigationBarTitleText": "客服认证",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/alumni-enterprise-detail/alumni-enterprise-detail",
+			"style": {
+				"navigationBarTitleText": "企业详情"
+			}
+		},
+		{
+			"path": "pages/authentication-methods/authentication-methods",
+			"style": {
+				"navigationBarTitleText": "认证方式",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/forgot-password/forgot-password",
+			"style": {
+				"navigationBarTitleText": "忘记密码"
+			}
+		},
+		{
+			"path": "pages/alumni-detail/alumni-detail",
+			"style": {
+				"navigationBarTitleText": "校友简介",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/alumni-association-detail/alumni-association-detail",
+			"style": {
+				"navigationBarTitleText": "校友会简介"
+			}
+		},
+		{
+			"path": "pages/alumni-and-alumni-association-list/alumni-and-alumni-association-list",
+			"style": {
+				"navigationBarTitleText": "搜索校友、校友会",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/alumni-list/alumni-list",
+			"style": {
+				"navigationBarTitleText": "校友列表"
+			}
+		},
+		{
+			"path": "pages/alumni-association-list/alumni-association-list",
+			"style": {
+				"navigationBarTitleText": "校友会列表"
+			}
+		},
+		{
+			"path": "pages/alumni-enterprise/alumni-enterprise",
+			"style": {
+				"navigationBarTitleText": "校友企业",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/alumni-enterprise-certification/alumni-enterprise-certification",
+			"style": {
+				"navigationBarTitleText": "校友企业认证"
+			}
+		},
+		{
+			"path": "pages/alumni-certification/alumni-certification",
+			"style": {
+				"navigationBarTitleText": "校友认证",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/alumni-certification-tips/alumni-certification-tips",
+			"style": {
+				"navigationBarTitleText": "校友认证提示",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/dynamic/dynamic",
+			"style": {
+				"navigationBarTitleText": "校友动态",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/dynamic-detail/dynamic-detail",
+			"style": {
+				"navigationBarTitleText": "校友动态详情"
+			}
+		},
+		{
+			"path": "pages/student-id-verification/student-id-verification",
+			"style": {
+				"navigationBarTitleText": "学号认证",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/job-positions/job-positions",
+			"style": {
+				"navigationBarTitleText": "职位信息"
+			}
+		},
+		// ---------------++++++++++++++++++++------------------
+		{
+			"path": "pages/edit-profile/edit-profile",
+			"style": {
+				"navigationBarTitleText": "编辑资料"
+			}
+		},
+		{
+			"path": "pages/order-review/order-review",
+			"style": {
+				"navigationBarTitleText": "订单评价"
+			}
+		},
+		{
+			"path": "pages/post-demand-and-supply/post-demand-and-supply",
+			"style": {
+				"navigationBarTitleText": "发布供需"
+			}
+		},
+		{
+			"path": "pages/personal-center/personal-center",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/supply-and-demand/supply-and-demand",
+			"style": {
+				"navigationBarTitleText": "供应和需求",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/supply-and-demand-detail/supply-and-demand-detail",
+			"style": {
+				"navigationBarTitleText": "供应/需求详情"
+			}
+		},
+		{
+			"path": "pages/industry/industry",
+			"style": {
+				"navigationBarTitleText": "行业"
+			}
+		},
+		{
+			"path": "pages/suggestions-and-feedback/suggestions-and-feedback",
+			"style": {
+				"navigationBarTitleText": "建议反馈"
+			}
+		},
+		{
+			"path": "pages/settings/settings",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/delivery-address/delivery-address",
+			"style": {
+				"navigationBarTitleText": "收货地址"
+			}
+		},
+		{
+			"path": "pages/add-delivery-address/add-delivery-address",
+			"style": {
+				"navigationBarTitleText": "添加收货地址"
+			}
+		},
+		{
+			"path": "pages/my-orders/my-orders",
+			"style": {
+				"navigationBarTitleText": "我的订单"
+			}
+		},
+		{
+			"path": "pages/my-orders-detail/my-orders-detail",
+			"style": {
+				"navigationBarTitleText": "我的订单详情"
+			}
+		},
+		{
+			"path": "pages/my-activities/my-activities",
+			"style": {
+				"navigationBarTitleText": "我的活动",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/my-supply-and-demand/my-supply-and-demand",
+			"style": {
+				"navigationBarTitleText": "我的供需",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/privacy/privacy",
+			"style": {
+				"navigationBarTitleText": "隐私"
+			}
+		},
+		{
+			"path": "pages/payment-records/payment-records",
+			"style": {
+				"navigationBarTitleText": "支付记录"
+			}
+		},
+		// ---------------++++++++++++++++++++------------------
+		{
+			"path": "pages/shopping-cart/shopping-cart",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+		{
+			"path": "pages/confirm-order/confirm-order",
+			"style": {
+				"navigationBarTitleText": "确认订单"
+			}
+		},
+		{
+			"path": "pages/shop/shop",
+			"style": {
+				"navigationBarTitleText": "商城",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/product-review/product-review",
+			"style": {
+				"navigationBarTitleText": "商品评价"
+			}
+		},
+		{
+			"path": "pages/product-detail/product-detail",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+			"path": "pages/payment/payment",
+			"style": {
+				"navigationBarTitleText": "支付"
+			}
+		},
+		{
+			"path": "pages/payment-result/payment-result",
+			"style": {
+				"navigationBarTitleText": "支付结果"
+			}
+		},
+		{
+			"path": "pages/shipment-tracking/shipment-tracking",
+			"style": {
+				"navigationBarTitleText": "物流信息"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"fontSize": "12px",
+		"color": "#B7BEC2",
+		"selectedColor": "#64A9F0",
+		"borderStyle": "black",
+		"iconWidth": "24px",
+		"spacing": "2px",
+		"backgroundColor": "",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/images/tabBar/home.png",
+				"text": "首页",
+				"selectedIconPath": "static/images/tabBar/home-selected.png"
+			},
+			{
+				"pagePath": "pages/supply-and-demand/supply-and-demand",
+				"iconPath": "static/images/tabBar/supply-and-demand.png",
+				"text": "供需",
+				"selectedIconPath": "static/images/tabBar/supply-and-demand-selected.png"
+			},
+			{
+				"pagePath": "pages/shop/shop",
+				"iconPath": "static/images/tabBar/shop.png",
+				"text": "商城",
+				"selectedIconPath": "static/images/tabBar/shop-selected.png"
+			},
+			{
+				"pagePath": "pages/personal-center/personal-center",
+				"iconPath": "static/images/tabBar/profile.png",
+				"text": "我的",
+				"selectedIconPath": "static/images/tabBar/profile-selected.png"
+			}
+		]
+	},
+	"uniIdRouter": {}
+}

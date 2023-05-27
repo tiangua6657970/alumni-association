@@ -1,0 +1,44 @@
+<script setup>
+  import { onLoad, onShow } from '@dcloudio/uni-app'
+  import useShoppingCart from '@/stores/shopping-cart'
+  import { ref } from 'vue'
+  import useNavigate from '@/common/hook/use-navigate'
+  
+  const shoppingCart = useShoppingCart()
+  const { navigateToPaymentResult } = useNavigate()
+  const paymentMethod = ref('')
+  onLoad((options) => {
+    console.log(options.orderId, 'orderId')
+  })
+  
+  function handlePayment() {
+    navigateToPaymentResult()
+  }
+</script>
+<template>
+  <view class="payment">
+    <view class="aa-block total-price">
+      <!-- TODO: 获取订单后赋值 -->
+      <aa-total-price :show-total-text="false" />
+    </view>
+    <aa-payment-method-list root-class="mt-20" @paymentMethodChange="paymentMethod = $event" />
+    <aa-fixed-bottom-primary-btn @click="handlePayment">支付</aa-fixed-bottom-primary-btn>
+  </view>
+</template>
+
+<style scoped lang="scss">
+  .payment {
+  }
+  
+  .total-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80rpx 0;
+  }
+</style>
+<style>
+  page {
+    background-color: #f7f7f7;
+  }
+</style>
