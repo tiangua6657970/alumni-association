@@ -1,5 +1,5 @@
 {
-  "name": "school",
+  "name": "alumni-association",
   "version": "1.0.0",
   "dependencies": {
     "pinia": "^2.0.35"
