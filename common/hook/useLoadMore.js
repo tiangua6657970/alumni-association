@@ -33,6 +33,7 @@ export default function useLoadMore(fetch) {
     _setLoadStatus(data.length)
     loadResult.value = data
     typeof callback === 'function' && callback()
+    return data
   }
 
 

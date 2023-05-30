@@ -6,21 +6,17 @@
       type: Array,
       default: () => []
     },
-    title: {
-      type: String,
-      default: '标题'
-    },
     showStatus: {
       type: Boolean,
       default: false
     },
     type: {
       type: String,
-      default: 'auto'
+      default: 'leftCover'
     },
-    showTop: {
-      type: Boolean,
-      default: true
+    rootClass: {
+      type: String,
+      default: 'pt-30 plr-30'
     }
   })
   const statusTextMap = {
@@ -29,7 +25,7 @@
   }
 </script>
 <template>
-  <view class="aa-content-list" v-if="list.length">
+  <view class="aa-content-list" :class="rootClass" v-if="list.length">
     <view
       class="aa-content-item u-border-bottom"
       v-for="(item, index) in list"
@@ -68,7 +64,6 @@
 
 <style scoped lang="scss">
   .aa-content-list {
-    padding: 30rpx 30rpx 0 30rpx;
     background-color: #ffffff;
     &.pb-30 {
       padding-bottom: 30rpx;

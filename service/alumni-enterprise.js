@@ -8,6 +8,8 @@ export const getAlumniEnterpriseList = params => get(paths.alumniEnterpriseList,
 export const getAlumniEnterpriseDetail = params => get(paths.alumniEnterpriseDetail, params)
 export const getAlumniEnterpriseJodList = params => get(paths.alumniEnterpriseJodList, params)
 export const getAlumniEnterpriseJodDetail = params => get(paths.alumniEnterpriseJodDetail, params)
+export const getAlumniEnterpriseProductServiceList = params => get(paths.alumniEnterpriseProductServiceList, params)
+export const getAlumniAchievementsList = params => get(paths.alumniAchievementsList, params)
 
 function mapEnterprise(data) {
   const {
@@ -67,6 +69,30 @@ function mapEnterpriseJod(data) {
   }
 }
 
+async function _getAlumniEnterpriseList(arg = {}) {
+  let { data } = await getAlumniEnterpriseList({ ...arg })
+  if (!isMock) {
+    data = data.map(item => mapEnterprise(item))
+  }
+  return data.map(item => {
+    item.desc = `${item.city} | ${item.enterpriseScale} | ${item.industryText}`
+    return item
+  })
+}
+
+export function useAlumniEnterpriseList() {
+  const alumniEnterpriseList = ref([])
+
+  async function refresh() {
+    return alumniEnterpriseList.value = await _getAlumniEnterpriseList()
+  }
+
+  return {
+    alumniEnterpriseList,
+    refresh
+  }
+}
+
 export function useSearchAlumniEnterpriseList() {
   const {
     query,
@@ -79,17 +105,6 @@ export function useSearchAlumniEnterpriseList() {
     setParamsAndRefresh,
     resetParamsAndRefresh
   } = useSearch(_getAlumniEnterpriseList)
-
-  async function _getAlumniEnterpriseList(arg = {}) {
-    let { data } = await getAlumniEnterpriseList({ ...arg })
-    if (!isMock) {
-      data = data.map(item => mapEnterprise(item))
-    }
-    return data.map(item => {
-      item.desc = `${item.city} | ${item.enterpriseScale} | ${item.industryText}`
-      return item
-    })
-  }
   return {
     query,
     searchResult,
@@ -125,6 +140,8 @@ export function useAlumniEnterpriseDetail() {
     infoList2: []
   })
   const alumniEnterpriseJodList = ref([])
+  const alumniEnterpriseProductServiceList = ref([])
+  const alumniAchievementsList = ref([])
 
   async function _getAlumniEnterpriseDetail() {
     let { data } = await getAlumniEnterpriseDetail()
@@ -142,7 +159,7 @@ export function useAlumniEnterpriseDetail() {
       registrationDate,
       registeredCapital,
       registeredAddress,
-      creditCode,
+      creditCode
     } = data
     data.desc = `${city} | ${enterpriseScale} | ${industryText}`
     data.infoList1 = [
@@ -168,6 +185,22 @@ export function useAlumniEnterpriseDetail() {
     return data
   }
 
+  async function _getAlumniEnterpriseProductServiceList() {
+    let { data } = await getAlumniEnterpriseProductServiceList()
+    if (!isMock) {
+
+    }
+    return data
+  }
+
+  async function _getAlumniAchievementsList() {
+    let { data } = await getAlumniAchievementsList()
+    if (!isMock) {
+
+    }
+    return data
+  }
+
 
   async function refreshAlumniEnterpriseDetail(refreshNextTickCallback) {
     alumniEnterpriseDetail.value = await _getAlumniEnterpriseDetail()
@@ -179,12 +212,23 @@ export function useAlumniEnterpriseDetail() {
     alumniEnterpriseJodList.value = await _getAlumniEnterpriseJodList()
   }
 
+  async function refreshAlumniEnterpriseProductServiceList() {
+    alumniEnterpriseProductServiceList.value = await _getAlumniEnterpriseProductServiceList()
+  }
+
+  async function refreshAlumniAchievementsList() {
+    alumniAchievementsList.value = await _getAlumniAchievementsList()
+  }
 
   return {
     alumniEnterpriseDetail,
     alumniEnterpriseJodList,
+    alumniEnterpriseProductServiceList,
+    alumniAchievementsList,
     refreshAlumniEnterpriseDetail,
     refreshAlumniEnterpriseJodList,
+    refreshAlumniEnterpriseProductServiceList,
+    refreshAlumniAchievementsList
   }
 }
 

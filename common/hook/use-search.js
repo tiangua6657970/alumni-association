@@ -21,7 +21,7 @@ export default function useSearch(fetch, dependencies = [], queryRefreshCallback
 
   async function setParamsAndRefresh(key, value, callback) {
     params[key] = value
-    await refresh(callback)
+    return await refresh(callback)
   }
 
   function setParamsAndRefreshFactory(callback) {
@@ -32,7 +32,7 @@ export default function useSearch(fetch, dependencies = [], queryRefreshCallback
     for (const paramsKey in params) {
       params[paramsKey] = undefined
     }
-    await refresh(callback)
+    return await refresh(callback)
   }
 
   function resetParamsAndRefreshFactory(callback) {

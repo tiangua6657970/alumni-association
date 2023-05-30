@@ -1,6 +1,5 @@
 <script setup>
-  import { onLoad, onShow } from '@dcloudio/uni-app'
-  import { ref } from 'vue'
+  import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app'
   import useNavigate from '@/common/hook/use-navigate'
   import AaGap from '@/components/base/aa-gap/aa-gap'
   import indexGrid1 from '@/static/images/index/index-grid(1).png'
@@ -11,14 +10,11 @@
   import indexGrid6 from '@/static/images/index/index-grid(6).png'
   import indexGrid7 from '@/static/images/index/index-grid(7).png'
   import indexGrid8 from '@/static/images/index/index-grid(8).png'
-  import { getIndexData } from '@/service'
+  import { useIndexSwiperList } from '@/service'
   import { useDynamicList, useDynamicListCategoryList } from '@/service/dynamic'
   import { useActivityList } from '@/service/alumni-activities'
-  import usePersonalCenterStore from '@/stores/personal-center'
-  import { refreshDeliveryAddressList } from '@/stores/delivery-address'
-  const personalCenterStore = usePersonalCenterStore()
-  const swiperList = ref([])
-  const alumniEnterpriseList = ref([])
+  import { useAlumniEnterpriseList } from '@/service/alumni-enterprise'
+  
   const {
     navigateTo,
     pathMap,
@@ -30,29 +26,37 @@
     navigateToAlumniEnterprise,
     navigateToAlumniEnterpriseDetail
   } = useNavigate()
+  const { swiperList, refresh: refreshSwiperList } = useIndexSwiperList()
   const { refresh: refreshDynamicListCategoryList } = useDynamicListCategoryList()
-  const { dynamicList, refresh: refreshDynamicList, setParams } = useDynamicList()
+  const { dynamicList, setParamsAndRefresh } = useDynamicList()
+  const { alumniEnterpriseList, refresh: refreshAlumniEnterpriseList } = useAlumniEnterpriseList()
   const { activityList, refresh: refreshActivityList } = useActivityList()
-  async function _getIndexData() {
-    const { data } = await getIndexData({ phone: '18174102647' })
-    return data || {}
-  }
 
-  async function refreshIndexData() {
-    const { swiperList: _swiperList } = await _getIndexData()
-    swiperList.value = _swiperList
-  }
-
-  onLoad(async () => {
-    refreshIndexData()
+  async function refreshAlumniDynamicList() {
     const dynamicListCategoryList = await refreshDynamicListCategoryList()
     const category = dynamicListCategoryList.find(item => item.name === '校友动态')
     if (category) {
-      setParams({ cateId: category.id })
-      refreshDynamicList()
+      setParamsAndRefresh('cateId', category.id)
     }
+  }
+
+  onLoad(async () => {
+    refreshSwiperList()
+    refreshAlumniDynamicList()
     refreshActivityList()
+    refreshAlumniEnterpriseList()
   })
+
+  onPullDownRefresh(async () => {
+    await Promise.all([
+      refreshSwiperList(),
+      refreshActivityList(),
+      refreshAlumniEnterpriseList(),
+      refreshAlumniDynamicList()
+    ])
+    uni.stopPullDownRefresh()
+  })
+
   const indexNavGrid = [
     { name: '动态', icon: indexGrid1, path: pathMap.dynamic },
     { name: '校友活动', icon: indexGrid2, path: pathMap.alumniActivities },
@@ -67,12 +71,15 @@
   function handleSwiperItemClick(index) {
     navigateTo(pathMap[swiperList.value[index].routeName])
   }
-  
+
   function handleGridItemClick(item) {
     if (!item.path) return uni.$u.toast('功能还未开发')
     navigateTo(item.path)
   }
-  
+
+  function handleAlumniDynamicItemClick(item) {
+    navigateToDynamicDetail({ id: item.id, navigationBarTitle: '校友动态详情' })
+  }
 </script>
 <template>
   <view class="index">
@@ -87,22 +94,23 @@
         </view>
       </template>
     </u-navbar>
-    <aa-swiper :list="swiperList" @itemClick="handleSwiperItemClick"/>
+    <aa-swiper :list="swiperList" @itemClick="handleSwiperItemClick" />
     <aa-grid :list="indexNavGrid" @itemClick="handleGridItemClick" />
     <aa-gap />
     <aa-list-top title="校友动态" @moreClick="navigateToDynamic" />
     <aa-content-list
+      root-class="plr-30"
       :list="dynamicList"
       title="校友动态"
       type="rightCover"
-      @itemClick="navigateToDynamicDetail"
+      @itemClick="handleAlumniDynamicItemClick"
       @moreClick="navigateToDynamic"
     />
     <aa-gap />
     <aa-list-top title="校友活动" @moreClick="navigateToAlumniActivities" />
     <aa-content-list
+      root-class="plr-30"
       :list="activityList"
-      title="校友活动"
       type="leftCover"
       show-status
       @itemClick="navigateToActivityDetail"
@@ -110,25 +118,26 @@
     />
     <aa-gap />
     <aa-list-top title="校友企业" @moreClick="navigateToAlumniEnterprise" />
-    <aa-alumni-company-list
-      :list="alumniEnterpriseList"
-      title="校友企业"
-      @itemClick="navigateToAlumniEnterpriseDetail"
-      @moreClick="navigateToAlumniEnterprise"
-    />
-    <aa-gap />
+    <view class="pb-30 plr-30 aa-bg-white">
+      <aa-has-avatar-content-list
+        :list="alumniEnterpriseList"
+        @itemClick="navigateToAlumniEnterpriseDetail"
+      ></aa-has-avatar-content-list>
+    </view>
   </view>
 </template>
 
 <style scoped lang="scss">
-  .index {
-    background-color: #f7f7f7;
-  }
   .header {
     padding: 0 30rpx;
   }
 
   .u-grid {
     background-color: #ffffff;
+  }
+</style>
+<style>
+  page {
+    background-color: #f7f7f7;
   }
 </style>

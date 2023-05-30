@@ -152,7 +152,7 @@
 		{
 			"path": "pages/dynamic/dynamic",
 			"style": {
-				"navigationBarTitleText": "校友动态",
+				"navigationBarTitleText": "动态",
 				"enablePullDownRefresh": true
 			}
 		},

@@ -1,5 +1,5 @@
 <template>
-  <view class="aa-has-avatar-content-list">
+  <view class="aa-has-avatar-content-list" v-if="list.length">
     <view class="aa-has-avatar-content-item" v-for="item in list" @click="$emit('itemClick', item)">
       <u-avatar
         class="aa-has-avatar-content-item__avatar"

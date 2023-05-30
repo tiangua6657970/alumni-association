@@ -3,6 +3,8 @@ import { reactive, ref, watchEffect } from 'vue'
 import useLoadMore from '@/common/hook/useLoadMore'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
+import useSearch from '@/common/hook/use-search'
+
 export const getDynamicListCategoryList = params => get(paths.dynamicListCategoryList, params)
 export const getDynamicList = params => get(paths.dynamicList, params)
 export const getDynamicDetail = params => get(paths.dynamicDetail, params)
@@ -16,7 +18,16 @@ export function useDynamicListCategoryList() {
   }
 
   async function refresh() {
-    return (dynamicListCategoryList.value = await _getDynamicListCategoryList())
+    if (!isMock) {
+      return (dynamicListCategoryList.value = await _getDynamicListCategoryList())
+    } else {
+      return dynamicListCategoryList.value =  [
+        { name: '母校新闻', id: '1' },
+        { name: '校友动态', id: '2' },
+        { name: '校友故事', id: '3' },
+        { name: '通知公告', id: '4' }
+      ]
+    }
   }
 
   return {
@@ -31,7 +42,14 @@ function mapDynamic(data) {
 }
 
 export function useDynamicList() {
-  const { loadResult, loadStatus, noData, refresh: refreshDynamicList, loadMore } = useLoadMore(_getDynamicList)
+  const {
+    searchResult,
+    loadStatus,
+    noData,
+    refresh,
+    loadMore,
+    setParamsAndRefresh
+  } = useSearch(_getDynamicList)
   const _params = ref({})
 
   async function _getDynamicList(arg = {}) {
@@ -42,17 +60,9 @@ export function useDynamicList() {
     return data
   }
 
-  function setParams(params) {
-    _params.value = params
-  }
-
-  async function refresh() {
-    await refreshDynamicList()
-  }
-
   return {
-    dynamicList: loadResult,
-    setParams,
+    dynamicList: searchResult,
+    setParamsAndRefresh,
     loadStatus,
     noData,
     refresh,
@@ -65,7 +75,8 @@ export function useDynamicDetail(props) {
     title: '',
     cover: '',
     datetime: '',
-    paragraph: ''
+    paragraph: '',
+    publisher: ''
   })
 
   async function _getDynamicDetail() {
@@ -77,11 +88,12 @@ export function useDynamicDetail(props) {
   }
 
   async function refresh() {
-    const { title, cover, datetime, paragraph } = await _getDynamicDetail()
+    const { title, cover, datetime, paragraph, publisher } = await _getDynamicDetail()
     dynamicDetail.title = title
     dynamicDetail.cover = cover
     dynamicDetail.datetime = datetime
     dynamicDetail.paragraph = paragraph
+    dynamicDetail.publisher = publisher
   }
 
   return {

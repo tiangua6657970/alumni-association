@@ -34,6 +34,8 @@ export const devPaths = {
   alumniEnterpriseJodList: '',
   alumniEnterpriseJodDetail: '',
   alumniEnterpriseSupplyAndDemandList: '',
+  alumniEnterpriseProductServiceList: '',
+  alumniAchievementsList: '',
 
   // 商城相关
   productList: '',
@@ -55,7 +57,7 @@ export const devPaths = {
 const mockPathPrefix = 'https://mock.apifox.cn/m1/2374747-0-default'
 export const mockPaths = {
   // 首页轮播图等数据
-  indexData: `${mockPathPrefix}/indexData`,
+  indexData: `${mockPathPrefix}/indexSwiperList`,
 
   // 活动相关
   activityList: `${mockPathPrefix}/activityList`,
@@ -82,6 +84,8 @@ export const mockPaths = {
   alumniEnterpriseJodList: `${mockPathPrefix}/alumniEnterpriseJodList`,
   alumniEnterpriseJodDetail: `${mockPathPrefix}/alumniEnterpriseJodDetail`,
   alumniEnterpriseSupplyAndDemandList: `${mockPathPrefix}/alumniEnterpriseSupplyAndDemandList`,
+  alumniEnterpriseProductServiceList: `${mockPathPrefix}/alumniEnterpriseProductServiceList`,
+  alumniAchievementsList: `${mockPathPrefix}/alumniAchievementsList`,
 
   // 商城相关
   productList: `${mockPathPrefix}/productList`,

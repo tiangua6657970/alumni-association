@@ -12,11 +12,14 @@
     refresh()
   })
   const blockList = [
-    { label: '选择', content: '已选：黑色，256G', path: pathMap.productReview },
+    { label: '选择', content: '已选：黑色，256G', path: '' },
     { label: '评价', content: '', path: pathMap.productReview }
   ]
 
   function handleBlockItemClick(item) {
+    if (!item.path) {
+      return uni.$u.toast('功能未实现')
+    }
     navigateTo(item.path, { id: productDetail.id })
   }
   const btnList = computed(() => {

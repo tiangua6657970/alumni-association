@@ -133,8 +133,8 @@ export default function useNavigate() {
     navigateTo(pathMap.dynamic)
   }
 
-  function navigateToDynamicDetail(item) {
-    navigateTo(pathMap.dynamicDetail, { id: item.id })
+  function navigateToDynamicDetail(params) {
+    navigateTo(pathMap.dynamicDetail, params)
   }
 
   function navigateToActivityDetail(item) {

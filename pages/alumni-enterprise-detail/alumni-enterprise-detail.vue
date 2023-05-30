@@ -1,16 +1,21 @@
 <script setup>
-  import { reactive, ref, watch } from 'vue'
-  import { onLoad, onReady, onShow } from '@dcloudio/uni-app'
+  import { ref, watch } from 'vue'
+  import { onLoad } from '@dcloudio/uni-app'
   import { useAlumniEnterpriseDetail } from '@/service/alumni-enterprise'
   import useNavigate from '@/common/hook/use-navigate'
   import { useSupplyAndDemandList } from '@/service/supply-and-demand'
-  const { navigateToJobPositions, navigateToSupplyAndDemandDetail } = useNavigate()
+  
+  const { navigateToJobPositions, navigateToSupplyAndDemandDetail, navigateToDynamicDetail } = useNavigate()
   const activeIndex = ref(0)
   const {
     alumniEnterpriseDetail,
     refreshAlumniEnterpriseDetail,
     alumniEnterpriseJodList,
-    refreshAlumniEnterpriseJodList
+    refreshAlumniEnterpriseJodList,
+    alumniEnterpriseProductServiceList,
+    refreshAlumniEnterpriseProductServiceList,
+    alumniAchievementsList,
+    refreshAlumniAchievementsList
   } = useAlumniEnterpriseDetail()
   const {
     supplyAndDemandList: alumniEnterpriseSupplyAndDemandList,
@@ -28,12 +33,20 @@
   })
   const fetchMap = {
     0: refreshAlumniEnterpriseDetail,
+    1: refreshAlumniEnterpriseProductServiceList,
     2: refreshAlumniEnterpriseJodList,
+    3: refreshAlumniAchievementsList,
     4: refreshAlumniEnterpriseSupplyAndDemandList
   }
   watch(activeIndex, newVal => fetchMap[newVal]())
-
-  function handleJodItemClick(item) {}
+  
+  function handleEnterpriseProductServiceItemClick(item) {
+    navigateToDynamicDetail({ id: item.id, navigationBarTitle: '产品服务详情'})
+  }
+  
+  function handleAlumniAchievementItemClick(item) {
+    navigateToDynamicDetail({ id: item.id, navigationBarTitle: '校友风采详情'})
+  }
 </script>
 <template>
   <view class="alumni-enterprise-detail">
@@ -55,13 +68,26 @@
         <view class="aa-font-paragraph">{{ alumniEnterpriseDetail.paragraph }}</view>
       </view>
     </template>
+    <template v-if="activeIndex === 1">
+      <aa-content-list
+        :list="alumniEnterpriseProductServiceList"
+        @itemClick="handleEnterpriseProductServiceItemClick"
+      />
+    </template>
     <template v-if="activeIndex === 2">
       <aa-jod-list :list="alumniEnterpriseJodList" @itemClick="navigateToJobPositions($event)" />
+    </template>
+    <template v-if="activeIndex === 3">
+      <aa-content-list
+        :list="alumniAchievementsList"
+        @itemClick="handleAlumniAchievementItemClick"
+      />
     </template>
     <template v-if="activeIndex === 4">
       <aa-supply-and-demand-list
         :list="alumniEnterpriseSupplyAndDemandList"
         @itemClick="navigateToSupplyAndDemandDetail"
+        @enterpriseClick="navigateToSupplyAndDemandDetail"
       />
     </template>
   </view>
@@ -71,25 +97,28 @@
   page {
     background-color: #f7f7f7;
   }
+  
   .alumni-enterprise-detail {
     background-color: #f7f7f7;
+    
     .container {
       padding: 30rpx;
       background-color: #fff;
     }
+    
     .list-info {
       display: flex;
       align-items: center;
       margin-bottom: 40rpx;
-
+      
       .list-info__content {
         flex: 1;
         margin-left: 20rpx;
       }
-
+      
       .list-info__content__title {
       }
-
+      
       .list-info__content__desc {
         margin-top: 8rpx;
       }
