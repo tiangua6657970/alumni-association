@@ -94,6 +94,7 @@ export function useDynamicDetail(props) {
     dynamicDetail.datetime = datetime
     dynamicDetail.paragraph = paragraph
     dynamicDetail.publisher = publisher
+    return dynamicDetail
   }
 
   return {

@@ -1,4 +1,7 @@
 <script setup>
+  import { TYPE_TEXT_MAP } from '@/common/constants'
+  import { computed } from 'vue'
+
   const props = defineProps({
     list: {
       type: Array,
@@ -27,7 +30,7 @@
       <view class="supply-and-demand-item__title aa-font-title text-line-1">{{ item.title }}</view>
       <aa-name-datetime-count
         root-class="mt-20"
-        :name="item.typeText"
+        :name="TYPE_TEXT_MAP[item.type]"
         :datetime="item.datetime"
         :count="item.browseCount"
         :type="item.type"

@@ -1,7 +1,6 @@
 <script setup>
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToAuthenticationMethods, switchTabToIndex } from '@/common/navigates'
 
-  const { navigateToAuthenticationMethods, switchTabToIndex } = useNavigate()
 </script>
 <template>
   <view class="alumni-certification">

@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["./types/page-path.d.ts"]
+    "types": ["./types/page-path.d.ts"],
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
   }
 }

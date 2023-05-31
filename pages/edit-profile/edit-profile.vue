@@ -1,58 +1,72 @@
 <script setup>
+  import { onReady } from '@dcloudio/uni-app'
   import usePersonalCenterStore from '@/stores/personal-center'
   import { computed, reactive, ref, watch } from 'vue'
   import useUpload from '@/common/hook/use-upload'
+  import { SEX_LIST, SEX_MAP } from '@/common/constants'
+  import { getFormRules } from '@/common/utils'
+
   const { storeData } = usePersonalCenterStore()
-  const  {
-    uploadConfig,
-    fileList,
-    uploadRef,
-    upload,
-    handleChooseComplete
-  } = useUpload()
+  const { uploadConfig, fileList, uploadRef, upload, handleChooseComplete } = useUpload()
   const currentState = {}
   for (const storeDataKey in storeData) {
     currentState[storeDataKey] = storeData[storeDataKey]
   }
   const form = reactive(currentState)
+  const formRef = ref()
   const sexSelectorShow = ref(false)
+  const addressSelectorShow = ref(false)
   const sexSelectorDefaultIndex = ref(0)
   const sexDisplay = computed(() => {
-    const sexMap = {
-      1: '男',
-      2: '女'
-    }
-    return sexMap[form.sex]
+    return SEX_MAP[form.sex]
   })
-  const sexList = [
+
+  const { rules } = getFormRules(form, ['name', 'phone', 'code', 'placeholderAddress'])
+  rules.dateOfBirt = [
     {
-      value: 1,
-      label: '男'
-    },
-    {
-      value: 2,
-      label: '女'
+      required: true,
+      message: '请输入出生日期',
+      trigger: ['blur']
     }
   ]
+  rules.nativePlace = [
+    {
+      required: true,
+      message: '请输入籍贯',
+      trigger: ['blur']
+    }
+  ]
+  onReady(() => {
+    formRef.value.setRules(rules)
+  })
 
   function handleSexSelectionConfirm(result) {
     const { value } = result[0]
-    sexSelectorDefaultIndex.value = sexList.findIndex(item => item.value === value)
+    sexSelectorDefaultIndex.value = SEX_LIST.findIndex(item => item.value === value)
     form.sex = value
   }
 
+  function handleAddressSelectionConfirm(result) {
+    form.placeholderAddress = `${result.province.name}-${result.city.name}-${result.area.name}`
+  }
+
   function save() {
+    formRef.value.validate(async valid => {})
     console.log(form, 'form')
     upload()
   }
-  watch(fileList,(newVal) => {
+  watch(fileList, newVal => {
     if (newVal.length) {
       form.avatar = newVal[0].url
     }
   })
+
+  function handlePosition() {
+
+  }
 </script>
 <template>
-  <div class="edit-profile aa-container">
+  <view class="edit-profile aa-container">
     <view class="replace-avatar">
       <u-upload
         ref="uploadRef"
@@ -79,8 +93,9 @@
         <u-input
           :model-value="sexDisplay"
           type="select"
-          maxlength="20"
+          :select-open="sexSelectorShow"
           clearable
+          maxlength="20"
           placeholder="请选择性别"
           @click="sexSelectorShow = true"
         />
@@ -97,8 +112,18 @@
       <u-form-item label-width="auto" label="二维码：" prop="code">
         <u-input v-model="form.code" maxlength="20" clearable placeholder="二维码" />
       </u-form-item>
-      <u-form-item label-width="auto" label="地址：" prop="address">
-        <u-input v-model="form.address" maxlength="20" clearable placeholder="请输入地址" />
+      <u-form-item label-width="auto" label="地址：" prop="placeholderAddress">
+        <template #right>
+          <u-icon name="map" label="定位" color="#1B80C4" label-color="#1B80C4" @click="handlePosition" />
+        </template>
+        <u-input
+          v-model="form.placeholderAddress"
+          :select-open="addressSelectorShow"
+          type="select"
+          clearable
+          placeholder="请选择地址"
+          @click="addressSelectorShow = true"
+        />
       </u-form-item>
       <u-form-item label-width="auto" label="手机号：" prop="phone">
         <u-input v-model="form.phone" maxlength="20" clearable placeholder="请输入手机号" />
@@ -107,14 +132,15 @@
         <u-input v-model="form.email" maxlength="20" clearable placeholder="请输入邮箱地址" />
       </u-form-item>
     </u-form>
+    <u-picker v-model="addressSelectorShow" mode="region" @confirm="handleAddressSelectionConfirm"></u-picker>
     <u-select
       v-model="sexSelectorShow"
-      :list="sexList"
+      :list="SEX_LIST"
       :default-value="[sexSelectorDefaultIndex]"
       @confirm="handleSexSelectionConfirm"
     ></u-select>
     <aa-submit-button @click="save">保存</aa-submit-button>
-  </div>
+  </view>
 </template>
 
 <style scoped lang="scss">
@@ -128,7 +154,5 @@
     .profile-form {
       margin-top: 60rpx;
     }
-
-   
   }
 </style>

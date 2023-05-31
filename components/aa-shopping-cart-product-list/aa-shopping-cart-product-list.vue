@@ -35,6 +35,9 @@
   export default {
     name: 'shopping-cart-product-list',
     emits: ['remove'],
+    options: {
+      styleIsolation: 'shared'
+    },
     props: {
       list: {
         type: Array,

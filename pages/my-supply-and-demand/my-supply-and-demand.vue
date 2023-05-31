@@ -1,8 +1,7 @@
 <script setup>
   import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useSearchSupplyAndDemandList } from '@/service/supply-and-demand'
-  import useNavigate from '@/common/hook/use-navigate'
-  const { navigateToSupplyAndDemandDetail } = useNavigate()
+  import  { navigateToSupplyAndDemandDetail } from '@/common/navigates'
   const { searchResult, noData, loadStatus, refresh, loadMore } = useSearchSupplyAndDemandList()
   onLoad(() => {
     refresh()

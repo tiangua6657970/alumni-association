@@ -2,10 +2,9 @@
   import { onLoad } from '@dcloudio/uni-app'
   import { ref, watch } from 'vue'
   import { useSearchOrderList } from '@/service/personal-center'
-  import useNavigate from '@/common/hook/use-navigate'
-  
+  import { navigateToMyOrdersDetail } from '@/common/navigates'
+
   const { searchResult, query, refresh, noData, loadMore, loadStatus, setParamsAndRefresh } = useSearchOrderList()
-  const { navigateTo, pathMap, navigateToMyOrdersDetail } = useNavigate()
   const activeIndex = ref(0)
   const tabs = [{ name: '全部' }, { name: '待付款' }, { name: '待收货' }, { name: '已完成' }, { name: '已消除' }]
   onLoad(() => {
@@ -13,7 +12,6 @@
   })
 
   watch(activeIndex, newVal => setParamsAndRefresh('type', newVal))
-
 </script>
 <template>
   <div class="my-orders aa-container">
@@ -25,9 +23,7 @@
   </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
 <style>
   page {
     background: #f7f7f7;

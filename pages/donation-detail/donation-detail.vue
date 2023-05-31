@@ -1,13 +1,13 @@
 <script setup>
-  import { onLoad, onShow } from '@dcloudio/uni-app'
+  import { onLoad } from '@dcloudio/uni-app'
   import { useDonationDetail, useDonationRecords, useExpenditureDetailList } from '@/service/donation'
   import { ref } from 'vue'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToDonation } from '@/common/navigates'
+
   const activeIndex = ref(0)
   const { donationDetail, refresh } = useDonationDetail()
   const { donationRecords, refresh: refreshDonationRecords } = useDonationRecords()
   const { expenditureDetailList, refresh: refreshExpenditureDetailList } = useExpenditureDetailList()
-  const { navigateToDonation } = useNavigate()
   onLoad(() => {
     refresh()
     refreshDonationRecords()
@@ -59,7 +59,7 @@
         </view>
       </view>
     </view>
-    <aa-fixed-bottom btn-text="捐款" @btnClick="navigateToDonation"/>
+    <aa-fixed-bottom btn-text="捐款" @btnClick="navigateToDonation" />
   </view>
 </template>
 

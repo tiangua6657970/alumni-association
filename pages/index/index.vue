@@ -1,6 +1,16 @@
 <script setup>
-  import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { onLoad, onPullDownRefresh, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+  import {
+    navigateTo,
+    pathMap,
+    navigateToAlumniAndAlumniAssociationList,
+    navigateToDynamic,
+    navigateToDynamicDetail,
+    navigateToActivityDetail,
+    navigateToAlumniActivities,
+    navigateToAlumniEnterprise,
+    navigateToAlumniEnterpriseDetail
+  } from '@/common/navigates'
   import AaGap from '@/components/base/aa-gap/aa-gap'
   import indexGrid1 from '@/static/images/index/index-grid(1).png'
   import indexGrid2 from '@/static/images/index/index-grid(2).png'
@@ -14,18 +24,7 @@
   import { useDynamicList, useDynamicListCategoryList } from '@/service/dynamic'
   import { useActivityList } from '@/service/alumni-activities'
   import { useAlumniEnterpriseList } from '@/service/alumni-enterprise'
-  
-  const {
-    navigateTo,
-    pathMap,
-    navigateToAlumniAndAlumniAssociationList,
-    navigateToDynamic,
-    navigateToDynamicDetail,
-    navigateToActivityDetail,
-    navigateToAlumniActivities,
-    navigateToAlumniEnterprise,
-    navigateToAlumniEnterpriseDetail
-  } = useNavigate()
+
   const { swiperList, refresh: refreshSwiperList } = useIndexSwiperList()
   const { refresh: refreshDynamicListCategoryList } = useDynamicListCategoryList()
   const { dynamicList, setParamsAndRefresh } = useDynamicList()
@@ -40,7 +39,7 @@
     }
   }
 
-  onLoad(async () => {
+  onLoad(() => {
     refreshSwiperList()
     refreshAlumniDynamicList()
     refreshActivityList()
@@ -118,7 +117,7 @@
     />
     <aa-gap />
     <aa-list-top title="校友企业" @moreClick="navigateToAlumniEnterprise" />
-    <view class="pb-30 plr-30 aa-bg-white">
+    <view class="pb-30 plr-30 aa-bg-white" v-if="alumniEnterpriseList.length">
       <aa-has-avatar-content-list
         :list="alumniEnterpriseList"
         @itemClick="navigateToAlumniEnterpriseDetail"

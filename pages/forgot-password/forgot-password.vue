@@ -1,10 +1,10 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { reactive, ref } from 'vue'
   import { useCode } from '@/common/hook/use-code'
-  import useNavigate from '@/common/hook/use-navigate'
-  import { selectedAlumniList } from '@/stores/certification'
+  import { navigateToAlumniCertificationTips } from '@/common/navigates'
   import { getFormRules } from '@/common/utils'
+
   const formRef = ref()
   const form = reactive({
     phone: '',
@@ -13,12 +13,11 @@
     oldPassword: '',
     acceptLicense: false
   })
-  const { rules } = getFormRules(form,['phone','code','newPassword','oldPassword'])
+  const { rules } = getFormRules(form, ['phone', 'code', 'newPassword', 'oldPassword'])
   onReady(() => {
     formRef.value.setRules(rules)
   })
   const { tips, start, codeChange, uCodeRef, end, seconds, getCode } = useCode()
-  const { navigateToAlumniCertificationTips } = useNavigate()
   function save() {
     formRef.value.validate(valid => {
       if (valid) {
@@ -53,7 +52,7 @@
         </u-form-item>
       </u-form>
       <u-button class="mt-40 mb-20" type="primary" @click="save">确认修改</u-button>
-      <aa-license root-class="mt-40" v-model="form.acceptLicense"/>
+      <aa-license root-class="mt-40" v-model="form.acceptLicense" />
     </view>
     <u-verification-code
       :seconds="seconds"

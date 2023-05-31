@@ -1,12 +1,10 @@
 <script setup>
-  import { computed, ref, watch } from 'vue'
-  import { onLoad, onReachBottom, onPullDownRefresh } from '@dcloudio/uni-app'
+  import { ref, watch } from 'vue'
+  import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useDynamicList, useDynamicListCategoryList } from '@/service/dynamic'
-  import useNavigate from '@/common/hook/use-navigate'
-  import { isMock } from '@/common/env'
+  import { navigateToDynamicDetail } from '@/common/navigates'
 
   const activeIndex = ref(0)
-  const { navigateTo, pathMap, navigateToDynamicDetail } = useNavigate()
   const { dynamicListCategoryList, refresh: refreshDynamicListCategoryList } = useDynamicListCategoryList()
   const { loadStatus, dynamicList, noData, refresh, loadMore, setParamsAndRefresh } = useDynamicList()
   watch(activeIndex, newVal => {

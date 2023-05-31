@@ -1,11 +1,10 @@
 <script setup>
   import { onLoad, onReachBottom, onPullDownRefresh } from '@dcloudio/uni-app'
   import { useSearchAlumniListAndAlumniAssociationList } from '@/service/alumni-and-alumni-association'
-  import useNavigate from '@/common/hook/use-navigate'
-  
+  import { pathMap, navigateTo } from '@/common/navigates'
+
   const { query, searchResult, loadStatus, currentView, refresh, loadMore } =
     useSearchAlumniListAndAlumniAssociationList()
-  const { navigateTo, pathMap } = useNavigate()
   onLoad(async () => {
     await refresh()
   })
@@ -14,7 +13,7 @@
     await refresh()
     uni.stopPullDownRefresh()
   })
-  
+
   function handleItemClick(item) {
     if (currentView.value === 'left') {
       navigateTo(pathMap.alumniAssociationDetail, { id: item.id })
@@ -34,7 +33,7 @@
         size="medium"
         shape="circle"
         @click="currentView = 'left'"
-      >校友会
+        >校友会
       </u-button>
       <u-button
         :custom-style="{ width: '100%' }"
@@ -43,7 +42,7 @@
         size="medium"
         shape="circle"
         @click="currentView = 'right'"
-      >校友
+        >校友
       </u-button>
     </view>
     <aa-has-avatar-content-list :list="searchResult" @itemClick="handleItemClick">
@@ -57,16 +56,16 @@
 <style scoped lang="scss">
   .alumni-and-alumni-association-list {
     padding: 30rpx;
-    
+
     .tab {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 30rpx 0;
-      
+
       .tab-item {
         flex: 1;
-        
+
         &.tab-item:nth-last-child(1) {
           margin-left: 80rpx;
         }

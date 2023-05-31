@@ -1,8 +1,8 @@
 <script setup>
   import { reactive, ref, watch } from 'vue'
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { getFormRules } from '@/common/utils'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToAlumniAssociationList } from '@/common/navigates'
   import { selectedAlumniAssociation } from '@/stores/certification'
 
   const formRef = ref()
@@ -210,8 +210,6 @@
     formRef.value.setRules(rules)
   })
 
-  const { navigateToAlumniAssociationList } = useNavigate()
-
   function handlePosition() {}
 
   function handleIndustrySelectionConfirm(result) {
@@ -336,21 +334,6 @@
 </template>
 
 <style scoped lang="scss">
-  page {
-    background-color: #f7f7f7;
-  }
-
-  .bg-white {
-    background: #ffffff;
-  }
-
-  .mb-20 {
-    margin-bottom: 20rpx;
-  }
-
-  .mb-30 {
-    margin-bottom: 30rpx;
-  }
   .p-0 {
     padding: 0;
   }
@@ -359,5 +342,10 @@
   }
 
   .alumni-enterprise-certification {
+  }
+</style>
+<style>
+  page {
+    background-color: #f7f7f7;
   }
 </style>

@@ -1,7 +1,7 @@
 <script setup>
   import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useSearchAlumniEnterpriseList } from '@/service/alumni-enterprise'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateTo, pathMap, navigateToAlumniEnterpriseCertification } from '@/common/navigates'
   import { reactive, ref } from 'vue'
   import useIndustryCategoryList from '@/service/common/use-industry-category-list'
 
@@ -15,7 +15,6 @@
     setParamsAndRefresh,
     resetParamsAndRefresh
   } = useSearchAlumniEnterpriseList()
-  const { navigateTo, pathMap, navigateToAlumniEnterpriseCertification } = useNavigate()
   const { industryCategoryList, refresh: refreshIndustryCategoryList } = useIndustryCategoryList()
   const industrySelectorShow = ref(false)
   const addressSelectorShow = ref(false)

@@ -1,10 +1,12 @@
 <script setup>
-  import useNavigate from '@/common/hook/use-navigate'
+  import {
+    navigateToAlumniCertification,
+    navigateToCustomerAuthentication,
+    navigateToStudentIdVerification
+  } from '@/common/navigates'
   import { ref } from 'vue'
 
   const marginTop = ref(0)
-  const { navigateToAlumniCertification, navigateToStudentIdVerification, navigateToCustomerAuthentication } =
-    useNavigate()
 </script>
 <template>
   <view class="authentication-methods">

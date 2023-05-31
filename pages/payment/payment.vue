@@ -2,15 +2,14 @@
   import { onLoad, onShow } from '@dcloudio/uni-app'
   import useShoppingCart from '@/stores/shopping-cart'
   import { ref } from 'vue'
-  import useNavigate from '@/common/hook/use-navigate'
-  
+  import { navigateToPaymentResult } from '@/common/navigates'
+
   const shoppingCart = useShoppingCart()
-  const { navigateToPaymentResult } = useNavigate()
   const paymentMethod = ref('')
-  onLoad((options) => {
+  onLoad(options => {
     console.log(options.orderId, 'orderId')
   })
-  
+
   function handlePayment() {
     navigateToPaymentResult()
   }
@@ -29,7 +28,7 @@
 <style scoped lang="scss">
   .payment {
   }
-  
+
   .total-price {
     display: flex;
     justify-content: center;

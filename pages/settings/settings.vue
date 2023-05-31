@@ -1,7 +1,6 @@
 <script setup>
-  import useNavigate from '@/common/hook/use-navigate'
+  import { pathMap, navigateTo } from '@/common/navigates'
 
-  const { pathMap, navigateTo } = useNavigate()
   const navList = [
     { content: '个人信息', path: pathMap.editProfile },
     { content: '变更认证', path: '' },
@@ -11,6 +10,12 @@
   function handleItemClick(item) {
     navigateTo(item.path)
   }
+
+  function handleLogout() {
+    uni.reLaunch({
+      url: pathMap.login
+    })
+  }
 </script>
 <template>
   <view class="settings aa-container">
@@ -19,7 +24,7 @@
       :item-style="{ marginBottom: '20rpx', background: '#f7f7f7' }"
       @itemClick="handleItemClick"
     />
-    <aa-submit-button>退出登录</aa-submit-button>
+    <aa-submit-button @click="handleLogout">退出登录</aa-submit-button>
   </view>
 </template>
 

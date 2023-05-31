@@ -1,7 +1,5 @@
 <script setup>
-  import useNavigate from '@/common/hook/use-navigate'
-
-  const {  switchTabToShop, navigateToMyOrdersDetail } = useNavigate()
+  import { navigateToMyOrdersDetail, switchTabToShop } from '@/common/navigates'
 </script>
 <template>
   <view class="payment-result">
@@ -10,8 +8,8 @@
       <view class="payment-result-message-desc aa-font-desc">您可以在我的订单中查询订单详情或跟踪物流</view>
     </view>
     <view class="payment-result-action">
-      <u-button type="primary" @click="navigateToMyOrdersDetail">查看订单</u-button>
-      <u-button type="default" @click="switchTabToShop">返回商城首页</u-button>
+      <u-button class="btn" type="primary" @click="navigateToMyOrdersDetail">查看订单</u-button>
+      <u-button class="btn" type="default" @click="switchTabToShop">返回商城首页</u-button>
     </view>
   </view>
 </template>
@@ -33,8 +31,9 @@
     .payment-result-message-desc {
       margin-top: 10rpx;
     }
+
     .payment-result-action {
-      .u-btn {
+      .btn {
         width: 100%;
         margin-bottom: 60rpx;
       }

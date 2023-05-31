@@ -1,6 +1,6 @@
 <template>
   <view class="aa-has-avatar-content-list" v-if="list.length">
-    <view class="aa-has-avatar-content-item" v-for="item in list" @click="$emit('itemClick', item)">
+    <view class="aa-has-avatar-content-item" v-for="item in list" :key="item.id" @click="$emit('itemClick', item)">
       <u-avatar
         class="aa-has-avatar-content-item__avatar"
         :sex-icon="item.sex"
@@ -59,23 +59,23 @@
       align-items: center;
       margin-bottom: 50rpx;
     }
-    
+
     .aa-has-avatar-content-item:nth-last-child(1) {
       margin-bottom: 0;
     }
-    
+
     .aa-has-avatar-content-item__content {
       flex: 1;
       margin-left: 20rpx;
     }
-    
+
     .aa-has-avatar-content-item__title {
     }
-    
+
     .aa-has-avatar-content-item__desc {
       margin-top: 8rpx;
     }
-    
+
     :deep(.u-checkbox__label) {
       margin-right: 5rpx;
     }

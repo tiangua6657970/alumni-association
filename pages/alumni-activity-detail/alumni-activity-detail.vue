@@ -1,9 +1,8 @@
 <script setup>
   import { onLoad } from '@dcloudio/uni-app'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToAlumniActivityRegistration } from '@/common/navigates'
   import { activityCancelRegistration, useAlumniActivityDetail } from '@/service/alumni-activities'
   const props = defineProps({ id: String })
-  const { navigateToAlumniActivityRegistration } = useNavigate()
   const { alumniActivityDetail, refresh } = useAlumniActivityDetail(props)
   onLoad(() => {
     refresh()
@@ -27,7 +26,7 @@
   }
 </script>
 <template>
-  <view class="alumni-activity-detail">
+  <view class="alumni-activity-detail" v-if="alumniActivityDetail.id">
     <view class="cover">
       <u-image width="100%" height="100%" :src="alumniActivityDetail.cover" />
       <view class="cover__status">{{ statusTextMap[alumniActivityDetail.status] }}</view>
@@ -36,7 +35,7 @@
       <view class="aa-font-title">{{ alumniActivityDetail.title }}</view>
       <aa-info-list root-class="mt-30" :list="alumniActivityDetail.infoList" @itemEndClick="handleInfoItemEndClick" />
       <view class="sub-title">活动说明</view>
-      <view class="aa-font-paragraph"><u-parse :html="alumniActivityDetail.paragraph"></u-parse></view>
+      <view class="aa-font-paragraph">{{alumniActivityDetail.paragraph}}</view>
     </view>
     <aa-fixed-bottom>
       <template #default>

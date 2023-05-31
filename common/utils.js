@@ -51,10 +51,24 @@ export function getFormRules(form, extract = []) {
       {
         required: true,
         validator: (rule, value, callback) => {
-          return uni.$u.test.mobile(value);
+          return uni.$u.test.mobile(value)
         },
         message: '请输入合法的手机号',
-        trigger:  ['blur']
+        trigger: ['blur']
+      }
+    ],
+    email: [
+      {
+        required: true,
+        message: '请输入邮箱地址',
+        trigger: ['blur']
+      }
+    ],
+    placeholderAddress: [
+      {
+        required: true,
+        message: '请选择地址',
+        trigger: ['blur']
       }
     ],
     code: [
@@ -116,4 +130,19 @@ export function getFormRules(form, extract = []) {
   return {
     rules: result
   }
+}
+
+export function joinUrl(path, params = {}) {
+  return (
+    path +
+    '?' +
+    Object.entries(params)
+      .map(item => item.join('='))
+      .join('&')
+  )
+}
+export function getCurrentPath() {
+  const pages = getCurrentPages()
+  const { route: path, options: params } = pages[pages.length - 1]
+  return joinUrl(path,params)
 }

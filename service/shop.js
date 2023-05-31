@@ -70,6 +70,45 @@ export function useSearchProductList(queryRefreshCallback) {
   }
 }
 
+
+// const list =  [
+//   {
+//     name: '颜色',
+//     value: [
+//       { id: 1, name: '红色', value: '#ff0000', quantity: 20, disable: false },
+//       { id: 2, name: '蓝色', value: '#0000ff', quantity: 20, disable: false },
+//       { id: 3, name: '绿色', value: '#008000', quantity: 20, disable: false }
+//     ],
+//     selectedName: ''
+//   },
+//   {
+//     name: '大小',
+//     value: [
+//       { id: 1, name: 'S', value: 'S', quantity: 20, disable: false },
+//       { id: 2, name: 'M', value: 'M', quantity: 20, disable: false },
+//       { id: 3, name: 'L', value: 'L', quantity: 20, disable: false },
+//       { id: 4, name: 'XL', value: 'XL', quantity: 20, disable: false }
+//     ],
+//     selectedName: ''
+//   },
+//   {
+//     name: '材质',
+//     value: [
+//       { id: 1, name: '棉', value: 'cotton', quantity: 20, disable: false },
+//       { id: 2, name: '麻', value: 'linen', quantity: 20, disable: false },
+//       { id: 3, name: '丝', value: 'silk', quantity: 20, disable: false },
+//       { id: 4, name: '毛', value: 'wool', quantity: 20, disable: false }
+//     ],
+//     selectedName: ''
+//   }
+// ]
+// function getProductAttributes() {
+//   return list.map(item => {
+//     item.selectedName = item.value[0].name
+//     return item
+//   })
+// }
+
 export function useProductDetail() {
   const productDetail = reactive(mode)
   const shoppingCart = useShoppingCart()

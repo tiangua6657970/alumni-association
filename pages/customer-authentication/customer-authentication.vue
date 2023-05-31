@@ -7,7 +7,7 @@
   const form = reactive({
     name: '',
     id: '',
-    idCardCopy: 'd'
+    idCardCopy: ''
   })
   const { rules } = getFormRules(form, ['name', 'id', 'idCardCopy'])
   onReady(() => {

@@ -1,10 +1,9 @@
 <script setup>
   import useShoppingCart from '@/stores/shopping-cart'
-  import useNavigate from '@/common/hook/use-navigate'
-  
+  import { navigateToConfirmOrder } from '@/common/navigates'
+
   const shoppingCart = useShoppingCart()
-  const { navigateToConfirmOrder } = useNavigate()
-  
+
   function handleRemove(item) {
     uni.showModal({
       title: '移除',
@@ -35,7 +34,7 @@
 <style scoped lang="scss">
   .shopping-cart {
   }
-  
+
   .aa-font-price {
     margin-left: 30rpx;
   }

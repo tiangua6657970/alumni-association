@@ -1,7 +1,7 @@
 <script setup>
   import { computed } from 'vue'
-  import useNavigate from '@/common/hook/use-navigate'
-  const { pathMap, navigateTo } = useNavigate()
+  import { pathMap, navigateTo } from '@/common/navigates'
+
   const props = defineProps({ data: { type: Object, default: () => ({}) } })
   const emit = defineEmits(['productItemClick'])
   const statusMap = {
@@ -56,7 +56,7 @@
       <view class="aa-flex-1" v-if="btnList.length === 1"></view>
       <u-button
         class="aa-flex-1"
-        :class="{'ml-20': index === 1}"
+        :class="{ 'ml-20': index === 1 }"
         :type="item.btnType"
         v-for="(item, index) in btnList"
         :key="item.name"

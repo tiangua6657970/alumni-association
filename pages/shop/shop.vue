@@ -1,8 +1,8 @@
 <script setup>
-  import { onLoad, onPullDownRefresh, onReachBottom, onPageScroll } from '@dcloudio/uni-app'
-  import { computed, nextTick, ref, watch } from 'vue'
+  import { onLoad, onPageScroll, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
+  import { nextTick, ref, watch } from 'vue'
   import { useSearchProductList } from '@/service/shop'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToProductDetail, navigateToShoppingCart } from '@/common/navigates'
   import useShoppingCart from '@/stores/shopping-cart'
 
   const tabs = [{ name: '全部' }, { name: '类别' }, { name: '销量' }, { name: '价格' }]
@@ -20,7 +20,6 @@
     resetParamsAndRefreshFactory
   } = useSearchProductList(refreshCallback)
   const shoppingCart = useShoppingCart()
-  const { navigateToProductDetail, navigateToShoppingCart } = useNavigate()
 
   // 瀑布流组件的bug，刷新、切换的时候要先重置列表再赋值能解决
   function refreshCallback() {
@@ -30,6 +29,7 @@
       searchResult.value = temp
     })
   }
+
   const setParamsAndRefresh = setParamsAndRefreshFactory(refreshCallback)
   const resetParamsAndRefresh = resetParamsAndRefreshFactory(refreshCallback)
 
@@ -52,32 +52,14 @@
   onPageScroll(e => {
     scrollTop.value = e.scrollTop
   })
-  const navbarBg = computed(() => {
-    const scrollTopVal = scrollTop.value
-    if (scrollTopVal > marginTop.value) {
-      return {
-        background: 'RGBA(18, 114, 197, 0.8)'
-      }
-    } else {
-      return {
-        background: 'transparent'
-      }
-    }
-  })
-  const showStickySearch = computed(() => scrollTop.value > marginTop.value)
+
   function handleProductIconClick(item) {
     shoppingCart.toggle(item)
   }
 </script>
 <template>
   <view class="shop">
-    <aa-top-background
-      :height="400"
-      :navbar-background="navbarBg"
-      navbar-title="商城"
-      :is-back="false"
-      @updateRenderHeight="marginTop = $event"
-    >
+    <aa-top-background :height="400" navbar-title="商城" :is-back="false" @updateRenderHeight="marginTop = $event">
       <template #default>
         <!-- 加一层view是为兼容小程序 不然padding不生效-->
         <view class="search">

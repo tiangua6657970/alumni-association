@@ -111,7 +111,7 @@ export function useActivityList(fetchMy) {
   }
 }
 
-export function useAlumniActivityDetail(params) {
+export function useAlumniActivityDetail(props) {
   const alumniActivityDetail = ref({
     cover: '',
     title: '',
@@ -133,7 +133,7 @@ export function useAlumniActivityDetail(params) {
   })
 
   async function _getAlumniActivityDetail() {
-    let { data } = await getAlumniActivityDetail(params)
+    let { data } = await getAlumniActivityDetail(props)
     if (!isMock) {
       data = mapActivity(data)
     }

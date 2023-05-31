@@ -1,5 +1,4 @@
 <script setup>
-
   const emit = defineEmits(['itemClick', 'itemBtnClick', 'moreClick'])
   const props = defineProps({
     list: {
@@ -50,8 +49,7 @@
       <template v-else-if="type === 'rightCover'">
         <view class="aa-content-item__content aa-content-item__content--left">
           <view class="aa-content-item__content__title u-line-2 aa-font-title">{{ item.title }}</view>
-          <view class="aa-font-desc u-line-2"
-            >
+          <view class="aa-font-desc u-line-2">
             {{ item.paragraph }}
           </view>
           <view class="aa-content-item__content__bottom text-line-1 aa-font-mini">{{ item.datetime }}</view>
@@ -70,8 +68,12 @@
     }
 
     .aa-content-item {
+      &:nth-child(1) {
+        padding-top: 0;
+      }
       padding: 20rpx 0;
       display: flex;
+
       &.pt-0 {
         padding-top: 0;
       }

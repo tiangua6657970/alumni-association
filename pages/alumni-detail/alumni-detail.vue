@@ -2,13 +2,12 @@
   import { onLoad, onReady } from '@dcloudio/uni-app'
   import { useAlumniDetail } from '@/service/alumni-and-alumni-association'
   import { useSupplyAndDemandList } from '@/service/supply-and-demand'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToSupplyAndDemandDetail, navigateToAlumniEnterpriseDetail } from '@/common/navigates'
   import { systemInfo } from '@/stores/system-info'
   import { ref } from 'vue'
   
   const { alumniDetail, refresh } = useAlumniDetail()
   const { supplyAndDemandList, refresh: refreshSupplyAndDemandList } = useSupplyAndDemandList()
-  const { navigateToSupplyAndDemandDetail, navigateToAlumniEnterpriseDetail } = useNavigate()
   const marginTop = ref(0)
   onLoad(() => {
     console.log(systemInfo)
@@ -39,11 +38,14 @@
         </view>
       </view>
       <view class="aa-font-paragraph-title mtb-30">Ta供需</view>
-      <aa-supply-and-demand-list
-        :list="supplyAndDemandList"
-        @itemClick="navigateToSupplyAndDemandDetail"
-        v-if="supplyAndDemandList.length"
-      />
+      <view class="aa-container">
+        <aa-supply-and-demand-list
+          :list="supplyAndDemandList"
+          @itemClick="navigateToSupplyAndDemandDetail"
+          @enterpriseClick="navigateToAlumniEnterpriseDetail"
+          v-if="supplyAndDemandList.length"
+        />
+      </view>
       <view class="aa-font-paragraph-title mtb-30">Ta企业</view>
       <view class="pb-30 plr-30">
         <view class="inner-container">

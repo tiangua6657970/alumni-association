@@ -32,8 +32,9 @@
   .product-review {
     .product-review-item {
       padding: 20rpx;
-      background: #FFFFFF;
       margin-bottom: 20rpx;
+      border-radius: 8rpx;
+      background: #FFFFFF;
       .product-review-item__header {
         display: flex;
         align-items: center;

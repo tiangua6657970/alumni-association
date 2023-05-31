@@ -1,9 +1,14 @@
 <script setup>
   import { useSearchSupplyAndDemandList } from '@/service/supply-and-demand'
   import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
-  import useNavigate from '@/common/hook/use-navigate'
+  import {
+    navigateToAlumniEnterpriseDetail,
+    navigateToPostDemandAndSupply,
+    navigateToSupplyAndDemandDetail
+  } from '@/common/navigates'
   import { reactive, ref } from 'vue'
   import useIndustryCategoryList from '@/service/common/use-industry-category-list'
+  import { TYPE_LIST } from '@/common/constants'
 
   const {
     query,
@@ -15,23 +20,12 @@
     setParamsAndRefresh,
     resetParamsAndRefresh
   } = useSearchSupplyAndDemandList()
-  const { navigateToSupplyAndDemandDetail, navigateToPostDemandAndSupply, navigateToAlumniEnterpriseDetail } = useNavigate()
   const { industryCategoryList, refresh: refreshIndustryCategoryList } = useIndustryCategoryList()
   const typeSelectorShow = ref(false)
   const industrySelectorShow = ref(false)
   const addressSelectorShow = ref(false)
-  const typeList = [
-    {
-      value: 1,
-      label: '需求'
-    },
-    {
-      value: 2,
-      label: '提供'
-    }
-  ]
-
   const showFilterItems = reactive({})
+
   function handleSelectTab(item) {
     if (item.name === '类型') typeSelectorShow.value = true
     if (item.name === '行业') industrySelectorShow.value = true
@@ -103,7 +97,7 @@
         <u-icon name="plus" :size="40" />
       </template>
     </aa-fixed-bottom-right>
-    <u-select v-model="typeSelectorShow" :list="typeList" @confirm="handleTypeSelectionConfirm"></u-select>
+    <u-select v-model="typeSelectorShow" :list="TYPE_LIST" @confirm="handleTypeSelectionConfirm"></u-select>
     <u-select
       v-model="industrySelectorShow"
       mode="mutil-column-auto"
@@ -123,7 +117,6 @@
   .aa-container {
     background-color: #fff;
   }
-
 </style>
 <style>
   page {

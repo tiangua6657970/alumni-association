@@ -1,11 +1,10 @@
 <script setup>
   import { onLoad, onShow } from '@dcloudio/uni-app'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { pathMap, navigateTo, navigateToAddDeliveryAddress } from '@/common/navigates'
   import { ref } from 'vue'
   import { deliveryAddressListStore } from '@/stores/delivery-address'
   const selectShow = ref(false)
-  const { pathMap, navigateTo, navigateToAddDeliveryAddress } = useNavigate()
-  
+
   onLoad(options => {
     selectShow.value = options.showSelect
   })

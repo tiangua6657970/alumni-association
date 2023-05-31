@@ -1,11 +1,10 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
+  import { onLoad } from '@dcloudio/uni-app'
   import { useSupplyAndDemandDetail } from '@/service/supply-and-demand'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToAlumniEnterpriseDetail } from '@/common/navigates'
 
   const props = defineProps(['id'])
   const { detailData: data, refresh } = useSupplyAndDemandDetail(props)
-  const { navigateToAlumniEnterpriseDetail } = useNavigate()
   onLoad(() => {
     refresh()
   })

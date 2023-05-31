@@ -28,7 +28,7 @@
     <aa-top-background navbar-title="学号认证" @updateRenderHeight="marginTop = $event">
       <aa-top-background__msg></aa-top-background__msg>
     </aa-top-background>
-    <view class="aa-container container" :style="{ marginTop: marginTop + 'px' }">
+    <view class="aa-container container aa-fix-fixed-bottom-btn" :style="{ marginTop: marginTop + 'px' }">
       <u-form :model="form" ref="formRef">
         <u-form-item label-width="auto" label="姓名" prop="name">
           <u-input v-model="form.name" clearable placeholder="请输入姓名" />

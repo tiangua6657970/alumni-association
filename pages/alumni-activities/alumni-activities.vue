@@ -1,9 +1,8 @@
 <script setup>
   import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToActivityDetail, navigateToAlumniActivityRegistration } from '@/common/navigates'
   import { useActivityList } from '@/service/alumni-activities'
 
-  const { navigateToActivityDetail, navigateToAlumniActivityRegistration } = useNavigate()
   const { activityList, loadStatus, noData, refresh, loadMore } = useActivityList()
   onLoad(refresh)
   onReachBottom(loadMore)

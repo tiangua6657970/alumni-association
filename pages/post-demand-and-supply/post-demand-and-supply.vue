@@ -4,6 +4,7 @@
   import { getFormRules } from '@/common/utils'
   import { postDemandAndSupply } from '@/service/supply-and-demand'
   import useIndustryCategoryList from '@/service/common/use-industry-category-list'
+  import { TYPE_TEXT_MAP } from "@/common/constants";
 
   const form = reactive({
     title: '',
@@ -103,11 +104,7 @@
   function handleTypeSelectionConfirm(result) {
     const { value } = result[0]
     typeSelectorDefaultIndex.value = typeList.findIndex(item => item.value === value)
-    const typeMap = {
-      1: '需求',
-      2: '提供'
-    }
-    form.placeholderType = typeMap[value]
+    form.placeholderType = TYPE_TEXT_MAP[value]
     form.type = value
   }
 

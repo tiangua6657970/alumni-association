@@ -3,12 +3,13 @@ import useSearch from '@/common/hook/use-search'
 import { computed, reactive, ref, watch } from 'vue'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
+import { TYPE_LIST } from "@/common/constants";
 
 export const getSupplyAndDemandList = params => post(paths.supplyAndDemandList, params)
 export const getSupplyAndDemandDetail = params => get(paths.supplyAndDemandDetail, params)
 export const postDemandAndSupply = data => post(paths.postDemandAndSupply, data)
 
-function processSupplyAndDemand(data) {
+function mapSupplyAndDemand(data) {
   const {
     title,
     updateAt: datetime,
@@ -57,7 +58,7 @@ function _processSupplyAndDemand(data) {
 export async function _getSupplyAndDemandList(arg = {}) {
   let { data } = await getSupplyAndDemandList({ ...arg })
   if (!isMock) {
-    data = data.list.map(item => processSupplyAndDemand(item))
+    data = data.list.map(item => mapSupplyAndDemand(item))
   }
   return data.map(item => _processSupplyAndDemand(item))
 }
@@ -133,7 +134,7 @@ export function useSupplyAndDemandDetail(props) {
   async function _getSupplyAndDemandDetail() {
     let { data } = await getSupplyAndDemandDetail({ id: props.id })
     if (!isMock) {
-      data = processSupplyAndDemand(data)
+      data = mapSupplyAndDemand(data)
     }
     return _processSupplyAndDemand(data)
   }

@@ -1,12 +1,18 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
-  import { computed, reactive, ref } from 'vue'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { onReady } from '@dcloudio/uni-app'
+  import { computed, ref } from 'vue'
+  import {
+    navigateToAlumniCertificationTips,
+    navigateToForgotPassword,
+    navigateToRegister
+  } from '@/common/navigates'
   import { useCode } from '@/common/hook/use-code'
   import { useLogin } from '@/service/auth'
   import { __token__, __userInfo__ } from '@/common/keys'
   import { refreshDeliveryAddressList } from '@/stores/delivery-address'
   import usePersonalCenterStore from '@/stores/personal-center'
+  import { isMock } from '@/common/env'
+
   const personalCenterStore = usePersonalCenterStore()
   const { formRef, form, rules, submit } = useLogin()
   const currentView = ref('codeLogin')
@@ -40,7 +46,6 @@
   onReady(() => {
     formRef.value.setRules(rules)
   })
-  const { navigateToAlumniCertificationTips, navigateToForgotPassword, navigateToRegister } = useNavigate()
   const { seconds, tips, uCodeRef, start, codeChange, end, getCode } = useCode()
 
   function save() {
@@ -49,6 +54,12 @@
         if (!form.acceptLicense) {
           uni.$u.toast('您还没有同意隐私协议')
           return
+        }
+        if (isMock) {
+          uni.$u.toast('登录成功')
+          personalCenterStore.refresh()
+          refreshDeliveryAddressList()
+          navigateToAlumniCertificationTips()
         }
         const { err, data } = await submit()
         if (!err) {

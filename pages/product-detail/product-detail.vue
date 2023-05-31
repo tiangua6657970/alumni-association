@@ -1,21 +1,27 @@
 <script setup>
-  import { onLoad, onShow } from '@dcloudio/uni-app'
+  import { onLoad } from '@dcloudio/uni-app'
   import { useProductDetail } from '@/service/shop'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateTo, pathMap } from '@/common/navigates'
   import useShoppingCart from '@/stores/shopping-cart'
   import { computed } from 'vue'
 
   const { productDetail, refresh } = useProductDetail()
-  const { pathMap, navigateTo } = useNavigate()
   const shoppingCart = useShoppingCart()
   onLoad(() => {
     refresh()
   })
-  const blockList = [
-    { label: '选择', content: '已选：黑色，256G', path: '' },
-    { label: '评价', content: '', path: pathMap.productReview }
-  ]
 
+  const blockList = computed(() => {
+    // const selectedProductAttributesVal = selectedProductAttributes.value
+    // const result = selectedProductAttributesVal.map(item => item.name).join(',')
+    return [
+      {
+        label: '选择',
+        content: '已选：黑色，256G'
+      },
+      { label: '评价', content: '', path: pathMap.productReview }
+    ]
+  })
   function handleBlockItemClick(item) {
     if (!item.path) {
       return uni.$u.toast('功能未实现')
@@ -31,18 +37,14 @@
   function handleBtnItemCLick(item) {
     if (item.text === '加入购物车') {
       shoppingCart.add(productDetail)
-    }
-    else if (item.text === '已加入购物车') {
-    
-    }
-    else if (item.text === '立即购买') {
-    
+    } else if (item.text === '已加入购物车') {
+    } else if (item.text === '立即购买') {
     }
   }
 </script>
 <template>
   <view class="product-details">
-    <u-image :src="productDetail.productCover" width="100%" height="480" />
+    <u-image :src="productDetail.productCover" height="400" />
     <view class="top-block">
       <view class="top-block__left">
         <view class="top-block__name aa-font-title">{{ productDetail.productName }}</view>
@@ -66,7 +68,12 @@
       <view class="aa-font-paragraph-title">介绍</view>
       <view class="aa-font-paragraph">{{ productDetail.paragraph }}</view>
     </view>
-    <aa-fixed-bottom btn-class="mr-20" :show-contact="false" :btn-list="btnList" @btnItemClick="handleBtnItemCLick">
+    <aa-fixed-bottom
+      btn-class="mr-20"
+      :show-contact="false"
+      :btn-list="btnList"
+      @btnItemClick="handleBtnItemCLick"
+    >
     </aa-fixed-bottom>
   </view>
 </template>

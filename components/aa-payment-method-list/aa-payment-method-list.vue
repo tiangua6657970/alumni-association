@@ -68,9 +68,6 @@
       .payment-method-item__select {
         margin-left: auto;
       }
-      :deep(.u-checkbox__label) {
-        margin: 0;
-      }
     }
   }
 </style>

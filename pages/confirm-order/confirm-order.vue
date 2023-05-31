@@ -1,11 +1,10 @@
 <script setup>
   import usePersonalCenterStore from '@/stores/personal-center'
   import useShoppingCart from '@/stores/shopping-cart'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { navigateToAddDeliveryAddress, navigateToDeliveryAddress, navigateToPayment } from '@/common/navigates'
 
   const personalCenter = usePersonalCenterStore()
   const shoppingCart = useShoppingCart()
-  const { navigateToAddDeliveryAddress, navigateToDeliveryAddress, navigateToPayment } = useNavigate()
 
   function handleSubmit() {
     navigateToPayment({ orderId: '12304' })
@@ -23,7 +22,7 @@
       />
       <u-empty text="你还没有添加收货地址" mode="list" v-else>
         <template #bottom>
-          <view class="add-delivery-address" @click="navigateToAddDeliveryAddress">
+          <view class="add-delivery-address ptb-20" @click="navigateToAddDeliveryAddress">
             <u-icon
               name="plus"
               class="u-add-btn"
@@ -68,7 +67,7 @@
 <style scoped lang="scss">
   .confirm-order {
   }
-  
+
   :deep(.aa-shopping-cart-product-item) {
     margin-bottom: 0 !important;
   }

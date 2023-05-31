@@ -5,6 +5,7 @@
     "pinia": "^2.0.35"
   },
   "devDependencies": {
+    "@dcloudio/types": "^3.3.3",
     "prettier": "^2.8.8"
   },
   "peerDependencies": {

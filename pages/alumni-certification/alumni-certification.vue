@@ -1,7 +1,7 @@
 <script setup>
-  import { computed, reactive, ref, watch } from 'vue'
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
-  import useNavigate from '@/common/hook/use-navigate'
+  import { computed, reactive, ref } from 'vue'
+  import { onReady } from '@dcloudio/uni-app'
+  import { navigateToAlumniList } from '@/common/navigates'
   import { selectedAlumniList } from '@/stores/certification'
   import { getFormRules } from '@/common/utils'
 
@@ -10,7 +10,7 @@
   const form = reactive({
     phone: '',
     id: '',
-    idCardCopy: 'd',
+    idCardCopy: '',
     certificationAlumni: []
   })
   const placeholder = computed(() => {
@@ -34,7 +34,6 @@
   onReady(() => {
     formRef.value.setRules(rules)
   })
-  const { navigateToAlumniList } = useNavigate()
   function save() {
     formRef.value.validate(valid => {
       if (valid) {
@@ -48,7 +47,7 @@
     <aa-top-background navbar-title="校友认证" @updateRenderHeight="marginTop = $event">
       <aa-top-background__msg></aa-top-background__msg>
     </aa-top-background>
-    <view class="aa-container container" :style="{ marginTop: marginTop + 'px' }">
+    <view class="aa-container container aa-fix-fixed-bottom-btn" :style="{ marginTop: marginTop + 'px' }">
       <u-form :model="form" ref="formRef">
         <u-form-item label-width="auto" label="姓名" prop="name">
           <u-input v-model="form.name" clearable placeholder="请输入姓名" />
@@ -66,7 +65,13 @@
           right-icon="arrow-right"
           @click="navigateToAlumniList"
         >
-          <u-input v-model="form.phone" disabled clearable :placeholder="placeholder" />
+          <u-input
+            v-model="form.phone"
+            disabled
+            clearable
+            :placeholder="placeholder"
+            @click="navigateToAlumniList"
+          />
         </u-form-item>
       </u-form>
       <aa-selected-alumni-list class="mt-30" :list="selectedAlumniList" />
