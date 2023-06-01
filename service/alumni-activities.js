@@ -11,6 +11,15 @@ export const getAlumniActivityDetail = params => get(paths.alumniActivityDetail,
 export const activityRegistration = data => post(paths.activityRegistration, data)
 export const activityCancelRegistration = data => put(paths.activityCancelRegistration, data)
 
+const statusTextMap = {
+  1: '报名中',
+  2: '在进行'
+}
+
+function formatDatetime(startTime, endTime) {
+  return `${startTime.slice(5, -3)} 至 ${endTime.slice(5, -3)}`
+}
+
 function mapActivity(data) {
   let {
     cover,
@@ -19,7 +28,6 @@ function mapActivity(data) {
     endTime,
     applicationStart: applyStartTime,
     applicationEnd: applyEndTime,
-    updatedAt: datetime,
     contact: registrationPhone,
     address: registrationAddress,
     number: activityAttendeeCount,
@@ -46,12 +54,26 @@ function mapActivity(data) {
     startTime: startTime.slice(0, -3),
     endTime: endTime.slice(0, -3),
     applyStartTime: applyStartTime.slice(0, -3),
-    applyEndTime: applyEndTime.slice(0, -3),
-    datetime: datetime.slice(0, -3)
+    applyEndTime: applyEndTime.slice(0, -3)
   }
 }
 
-function processAlumniActivity(item) {
+function mapActivityList(list) {
+  return list.map(item => {
+    const { cover, title, content: paragraph, startTime, endTime, status, id } = item
+    return {
+      cover,
+      title,
+      paragraph,
+      startTime,
+      endTime,
+      status,
+      id
+    }
+  })
+}
+
+function processAlumniActivity(data) {
   const {
     registrationAddress,
     activityAttendeeCount,
@@ -60,12 +82,17 @@ function processAlumniActivity(item) {
     applyEndTime,
     startTime,
     endTime,
-    datetime,
-    registrationPhone
-  } = item
-  item.datetime = datetime.slice(0, -3)
-  item.infoList = [
-    { icon: 'clock', label: '报名时间', content: `${applyStartTime.slice(0, -3)} 至 ${applyEndTime.slice(0, -3)}`  },
+    registrationPhone,
+    status
+  } = data
+
+  data.statusText = statusTextMap[status]
+  data.infoList = [
+    {
+      icon: 'clock',
+      label: '报名时间',
+      content: `${applyStartTime.slice(0, -3)} 至 ${applyEndTime.slice(0, -3)}`
+    },
     { icon: 'clock', label: '活动时间', content: `${startTime.slice(0, -3)} 至 ${endTime.slice(0, -3)}` },
     { icon: 'phone', label: '报名电话', content: registrationPhone },
     {
@@ -77,7 +104,15 @@ function processAlumniActivity(item) {
     { icon: 'account', label: '活动人数', content: activityAttendeeCount },
     { icon: 'rmb-circle', label: '活动费用', content: activityPrice + '￥/人' }
   ]
-  return item
+  data.datetime = `${startTime.slice(5, -3)} 至 ${endTime.slice(5, -3)}`
+  return data
+}
+
+function processAlumniActivityList(list) {
+  return list.map(item => {
+    item.datetime = formatDatetime(item.startTime, item.endTime)
+    return item
+  })
 }
 
 export function useActivityList(fetchMy) {
@@ -85,21 +120,20 @@ export function useActivityList(fetchMy) {
     fetchMy ? _getMyAlumniActivityList : _getAlumniActivityList
   )
 
-  async function _getAlumniActivityList(arg = {}) {
-    let { data } = await getAlumniActivityList({ ...arg })
+  async function _getAlumniActivityList(params = {}) {
+    let { data } = await getAlumniActivityList(params)
     if (!isMock) {
-      data = data.list.map(item => mapActivity(item))
+      data = mapActivityList(data.list)
     }
-    data = data.map(item => processAlumniActivity(item))
-    return data
+    return processAlumniActivityList(data)
   }
 
-  async function _getMyAlumniActivityList(arg = {}) {
-    let { data } = await getMyAlumniActivityList({ ...arg })
+  async function _getMyAlumniActivityList(params = {}) {
+    let { data } = await getMyAlumniActivityList(params)
     if (!isMock) {
-      data = data.list.map(item => mapActivity(item))
+      data = mapActivityList(data.list)
     }
-    return data.map(item => processAlumniActivity(item))
+    return processAlumniActivityList(data)
   }
 
   return {
@@ -173,16 +207,5 @@ export function useActivityRegistration(props) {
     form,
     rules,
     submit
-  }
-}
-
-export function useRegisteredActivities() {
-  const { activityList: registeredActivities, refresh, noData, loadStatus, loadMore } = useActivityList(true)
-  return {
-    registeredActivities,
-    refresh,
-    noData,
-    loadStatus,
-    loadMore
   }
 }

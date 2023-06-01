@@ -1,5 +1,5 @@
 import { get } from '@/service/base'
-import { nextTick, reactive, ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import useSearch from '@/common/hook/use-search'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
@@ -8,7 +8,8 @@ export const getAlumniEnterpriseList = params => get(paths.alumniEnterpriseList,
 export const getAlumniEnterpriseDetail = params => get(paths.alumniEnterpriseDetail, params)
 export const getAlumniEnterpriseJodList = params => get(paths.alumniEnterpriseJodList, params)
 export const getAlumniEnterpriseJodDetail = params => get(paths.alumniEnterpriseJodDetail, params)
-export const getAlumniEnterpriseProductServiceList = params => get(paths.alumniEnterpriseProductServiceList, params)
+export const getAlumniEnterpriseProductServiceList = params =>
+  get(paths.alumniEnterpriseProductServiceList, params)
 export const getAlumniAchievementsList = params => get(paths.alumniAchievementsList, params)
 
 function mapEnterprise(data) {
@@ -26,7 +27,8 @@ function mapEnterprise(data) {
     registrationDate,
     registeredCapital,
     registeredAddress,
-    creditCode
+    creditCode,
+    id
   } = data
   return {
     cover,
@@ -42,21 +44,20 @@ function mapEnterprise(data) {
     registrationDate,
     registeredCapital,
     registeredAddress,
-    creditCode
+    creditCode,
+    id
   }
 }
 
+function mapEnterpriseList(list) {
+  return list.map(item => {
+    const { cover, avatar, city, address, enterpriseScale, industry, industryText, id } = item
+    return { cover, avatar, city, address, enterpriseScale, industry, industryText, id }
+  })
+}
+
 function mapEnterpriseJod(data) {
-  const {
-    title,
-    city,
-    workYears,
-    education,
-    salary,
-    id,
-    jobResponsibilities,
-    jobRequirements
-  } = data
+  const { title, city, workYears, education, salary, id, jobResponsibilities, jobRequirements } = data
   return {
     title,
     city,
@@ -69,10 +70,10 @@ function mapEnterpriseJod(data) {
   }
 }
 
-async function _getAlumniEnterpriseList(arg = {}) {
-  let { data } = await getAlumniEnterpriseList({ ...arg })
+async function _getAlumniEnterpriseList(params) {
+  let { data } = await getAlumniEnterpriseList(params)
   if (!isMock) {
-    data = data.map(item => mapEnterprise(item))
+    data = mapEnterpriseList(data)
   }
   return data.map(item => {
     item.desc = `${item.city} | ${item.enterpriseScale} | ${item.industryText}`
@@ -84,7 +85,7 @@ export function useAlumniEnterpriseList() {
   const alumniEnterpriseList = ref([])
 
   async function refresh() {
-    return alumniEnterpriseList.value = await _getAlumniEnterpriseList()
+    return (alumniEnterpriseList.value = await _getAlumniEnterpriseList())
   }
 
   return {
@@ -188,7 +189,6 @@ export function useAlumniEnterpriseDetail() {
   async function _getAlumniEnterpriseProductServiceList() {
     let { data } = await getAlumniEnterpriseProductServiceList()
     if (!isMock) {
-
     }
     return data
   }
@@ -196,11 +196,9 @@ export function useAlumniEnterpriseDetail() {
   async function _getAlumniAchievementsList() {
     let { data } = await getAlumniAchievementsList()
     if (!isMock) {
-
     }
     return data
   }
-
 
   async function refreshAlumniEnterpriseDetail(refreshNextTickCallback) {
     alumniEnterpriseDetail.value = await _getAlumniEnterpriseDetail()

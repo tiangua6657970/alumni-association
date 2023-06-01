@@ -1,5 +1,5 @@
 <template>
-  <view class="aa-has-avatar-content-list" v-if="list.length">
+  <view class="aa-has-avatar-content-list" :class="rootClass" v-if="list.length">
     <view class="aa-has-avatar-content-item" v-for="item in list" :key="item.id" @click="$emit('itemClick', item)">
       <u-avatar
         class="aa-has-avatar-content-item__avatar"
@@ -12,16 +12,17 @@
         <view class="aa-has-avatar-content-item__title aa-font-title">{{ item.name }}</view>
         <view class="aa-has-avatar-content-item__desc aa-font-desc">{{ item.desc }}</view>
       </view>
-      <u-checkbox
-        :label-size="0"
-        :icon-size="30"
-        shape="circle"
-        v-model="item.selected"
-        :disabled="disableCheckBox || item.disableCheckBox"
-        @change="$emit('checkboxChange', item)"
-        @click.stop
-        v-if="showCheckBox"
-      ></u-checkbox>
+      <view @click.stop>
+        <u-checkbox
+          :label-size="0"
+          :icon-size="30"
+          shape="circle"
+          v-model="item.selected"
+          :disabled="disableCheckBox || item.disableCheckBox"
+          @change="$emit('checkboxChange', item)"
+          v-if="showCheckBox"
+        ></u-checkbox>
+      </view>
     </view>
     <slot name="bottom"></slot>
   </view>
@@ -47,6 +48,10 @@
       disableCheckBox: {
         type: Boolean,
         default: false
+      },
+      rootClass: {
+        type: String,
+        default: ' '
       }
     }
   }

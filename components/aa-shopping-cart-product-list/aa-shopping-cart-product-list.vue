@@ -26,7 +26,7 @@
       </view>
     </template>
     <template v-else>
-      <u-empty class="u-empty" mode="car"></u-empty>
+      <aa-empty :show="!list.length" mode="car"/>
     </template>
   </view>
 </template>
@@ -92,12 +92,5 @@
         right: 20rpx;
       }
     }
-  }
-  .u-empty {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
   }
 </style>

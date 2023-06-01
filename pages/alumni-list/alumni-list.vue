@@ -37,7 +37,7 @@
   <view class="alumni-list aa-container">
     <u-search placeholder="日照香炉生紫烟" v-model="query" @search="refresh" @custom="refresh"></u-search>
     <aa-has-avatar-content-list
-      class="mt-30 aa-fix-fixed-bottom"
+      root-class="mt-30 aa-fix-fixed-bottom"
       :list="searchResult"
       show-check-box
       @itemClick="navigateToAlumniDetail"

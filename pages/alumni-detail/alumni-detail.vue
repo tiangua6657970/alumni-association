@@ -2,10 +2,10 @@
   import { onLoad, onReady } from '@dcloudio/uni-app'
   import { useAlumniDetail } from '@/service/alumni-and-alumni-association'
   import { useSupplyAndDemandList } from '@/service/supply-and-demand'
-  import { navigateToSupplyAndDemandDetail, navigateToAlumniEnterpriseDetail } from '@/common/navigates'
+  import { navigateToAlumniEnterpriseDetail, navigateToSupplyAndDemandDetail } from '@/common/navigates'
   import { systemInfo } from '@/stores/system-info'
   import { ref } from 'vue'
-  
+
   const { alumniDetail, refresh } = useAlumniDetail()
   const { supplyAndDemandList, refresh: refreshSupplyAndDemandList } = useSupplyAndDemandList()
   const marginTop = ref(0)
@@ -14,8 +14,7 @@
     refresh()
     refreshSupplyAndDemandList()
   })
-  onReady(() => {
-  })
+  onReady(() => {})
 </script>
 <template>
   <view class="alumni-detail">
@@ -34,7 +33,7 @@
             :size="180"
             :src="alumniDetail.avatar"
           ></u-avatar>
-          <aa-button class="aa-button">联系Ta</aa-button>
+          <u-button class="aa-button" type="primary" size="mini">联系Ta</u-button>
         </view>
       </view>
       <view class="aa-font-paragraph-title mtb-30">Ta供需</view>
@@ -64,27 +63,27 @@
     position: relative;
     top: -60rpx;
   }
-  
+
   .alumni-detail {
     .inner-container {
       padding: 20rpx;
       background-color: #ffffff;
       border-radius: 20rpx;
     }
-    
+
     .avatar {
       position: absolute;
       left: 50%;
       top: 0;
       transform: translate(-50%, -50%);
     }
-    
+
     .aa-button {
       position: absolute;
       top: 50rpx;
       right: 50rpx;
     }
-    
+
     .top--60 {
       position: relative;
     }

@@ -1,7 +1,7 @@
 <script setup>
-  import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useSearchAlumniEnterpriseList } from '@/service/alumni-enterprise'
-  import { navigateTo, pathMap, navigateToAlumniEnterpriseCertification } from '@/common/navigates'
+  import { navigateTo, navigateToAlumniEnterpriseCertification, pathMap } from '@/common/navigates'
   import { reactive, ref } from 'vue'
   import useIndustryCategoryList from '@/service/common/use-industry-category-list'
 
@@ -19,10 +19,8 @@
   const industrySelectorShow = ref(false)
   const addressSelectorShow = ref(false)
   const showFilterItems = reactive({})
-  onLoad(() => {
-    refresh()
-    refreshIndustryCategoryList()
-  })
+  refresh()
+  refreshIndustryCategoryList()
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     // await refresh()
@@ -64,7 +62,11 @@
 <template>
   <view class="alumni-enterprise aa-container">
     <u-search placeholder="日照香炉生紫烟" v-model="query" @search="refresh" @custom="refresh"></u-search>
-    <aa-select-tab customClass="mt-30 mb-30" :list="[{ name: '行业' }, { name: '地区' }]" @itemClick="handleSelectTab" />
+    <aa-select-tab
+      customClass="mt-30 mb-30"
+      :list="[{ name: '行业' }, { name: '地区' }]"
+      @itemClick="handleSelectTab"
+    />
     <aa-show-filter-items customClass="mb-30" :items="showFilterItems" @itemClick="handleFilterItemClick" />
     <aa-has-avatar-content-list class="aa-fix-fixed-bottom-btn" :list="searchResult" @itemClick="handleItemClick">
       <template #bottom>
@@ -88,10 +90,6 @@
 </template>
 
 <style scoped lang="scss">
-  page {
-    background-color: #ffffff;
-  }
-
   .aa-has-avatar-content-list {
     margin-bottom: calc(80rpx + 96rpx);
   }
@@ -102,4 +100,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+</style>
+<style>
+page {
+  background-color: #fff;
+}
 </style>

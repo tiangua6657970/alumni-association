@@ -1,6 +1,5 @@
 <script setup>
   import { ref, watch } from 'vue'
-  import { onLoad } from '@dcloudio/uni-app'
   import { useAlumniEnterpriseDetail } from '@/service/alumni-enterprise'
   import {
     navigateToAlumniEnterpriseDetail,
@@ -32,9 +31,7 @@
     { name: '校友风采' },
     { name: '供需信息' }
   ]
-  onLoad(() => {
-    refreshAlumniEnterpriseDetail()
-  })
+  refreshAlumniEnterpriseDetail()
   const fetchMap = {
     0: refreshAlumniEnterpriseDetail,
     1: refreshAlumniEnterpriseProductServiceList,
@@ -95,10 +92,6 @@
 </template>
 
 <style scoped lang="scss">
-  page {
-    background-color: #f7f7f7;
-  }
-
   .alumni-enterprise-detail {
     background-color: #f7f7f7;
 

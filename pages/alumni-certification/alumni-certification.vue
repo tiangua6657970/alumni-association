@@ -66,7 +66,6 @@
           @click="navigateToAlumniList"
         >
           <u-input
-            v-model="form.phone"
             disabled
             clearable
             :placeholder="placeholder"

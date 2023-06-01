@@ -2,11 +2,13 @@
   import { onLoad } from '@dcloudio/uni-app'
   import { navigateToAlumniActivityRegistration } from '@/common/navigates'
   import { activityCancelRegistration, useAlumniActivityDetail } from '@/service/alumni-activities'
+
   const props = defineProps({ id: String })
   const { alumniActivityDetail, refresh } = useAlumniActivityDetail(props)
-  onLoad(() => {
-    refresh()
-  })
+  refresh()
+  // onLoad(() => {
+  //   refresh()
+  // })
 
   function handleInfoItemEndClick(item) {
     console.log(item, 'handleInfoItemEndClick')
@@ -15,10 +17,7 @@
   function share() {}
 
   function call() {}
-  const statusTextMap = {
-    1: '报名中',
-    2: '在进行'
-  }
+
   async function handleCancelRegistration() {
     const res = await activityCancelRegistration({ id: alumniActivityDetail.value.registerId, type: 2 })
     console.log(res, 'res')
@@ -29,13 +28,17 @@
   <view class="alumni-activity-detail" v-if="alumniActivityDetail.id">
     <view class="cover">
       <u-image width="100%" height="100%" :src="alumniActivityDetail.cover" />
-      <view class="cover__status">{{ statusTextMap[alumniActivityDetail.status] }}</view>
+      <view class="cover__status">{{ alumniActivityDetail.statusText }}</view>
     </view>
-    <view class="content">
+    <view class="aa-container">
       <view class="aa-font-title">{{ alumniActivityDetail.title }}</view>
-      <aa-info-list root-class="mt-30" :list="alumniActivityDetail.infoList" @itemEndClick="handleInfoItemEndClick" />
-      <view class="sub-title">活动说明</view>
-      <view class="aa-font-paragraph">{{alumniActivityDetail.paragraph}}</view>
+      <aa-info-list
+        root-class="mt-30"
+        :list="alumniActivityDetail.infoList"
+        @itemEndClick="handleInfoItemEndClick"
+      />
+      <view class="mtb-30 aa-font-desc">活动说明</view>
+      <view class="aa-font-paragraph">{{ alumniActivityDetail.paragraph }}</view>
     </view>
     <aa-fixed-bottom>
       <template #default>
@@ -71,18 +74,8 @@
       }
     }
 
-    .content {
-      padding: 30rpx;
-
-      .sub-title {
-        margin-top: 40rpx;
-        margin-bottom: 20rpx;
-        font-size: 24rpx;
-      }
-
-      .aa-font-paragraph {
-        margin-bottom: 120rpx;
-      }
+    .aa-font-paragraph {
+      margin-bottom: 120rpx;
     }
 
     .aa-fixed-bottom {

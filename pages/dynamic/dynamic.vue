@@ -10,6 +10,7 @@
   watch(activeIndex, newVal => {
     setParamsAndRefresh('cateId', dynamicListCategoryList.value[newVal].id)
   })
+
   onLoad(async () => {
     await refreshDynamicListCategoryList()
     const dynamicListCategoryListVal = dynamicListCategoryList.value
@@ -40,6 +41,7 @@
       @itemClick="handleItemClick"
       v-if="dynamicList.length"
     />
+
     <u-loadmore :status="loadStatus" v-if="dynamicList.length" @loadmore="loadMore" />
     <aa-empty :show="noData" :top="88" />
   </view>

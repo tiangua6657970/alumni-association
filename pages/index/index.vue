@@ -38,12 +38,12 @@
       setParamsAndRefresh('cateId', category.id)
     }
   }
-
+  refreshSwiperList()
+  refreshAlumniDynamicList()
+  refreshActivityList()
+  refreshAlumniEnterpriseList()
   onLoad(() => {
-    refreshSwiperList()
-    refreshAlumniDynamicList()
-    refreshActivityList()
-    refreshAlumniEnterpriseList()
+
   })
 
   onPullDownRefresh(async () => {

@@ -4,9 +4,10 @@
   import { useActivityList } from '@/service/alumni-activities'
 
   const { activityList, loadStatus, noData, refresh, loadMore } = useActivityList(true)
-  onLoad(() => {
-    refresh()
-  })
+  refresh()
+  // onLoad(() => {
+  //   refresh()
+  // })
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     await refresh()

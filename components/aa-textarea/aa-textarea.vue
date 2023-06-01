@@ -1,6 +1,6 @@
 <template>
   <u-field
-    class="aa-textarea"
+    class="u-field"
     :label-width="0"
     v-model="paragraph"
     type="textarea"
@@ -40,11 +40,4 @@
 </script>
 
 <style scoped lang="scss">
-  .aa-textarea {
-  }
-  .u-field {
-    height: 380rpx;
-    background-color: #f7f7f7;
-    border-radius: 8rpx;
-  }
 </style>
