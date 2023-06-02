@@ -3,7 +3,7 @@
   import { useDeliveryAddressDetail } from '@/service/personal-center'
   import { ref } from 'vue'
   import { getFormRules } from '@/common/utils'
-  import { getLocation } from '@/stores/location'
+  import { refreshLocation } from '@/stores/location'
   const  props = defineProps({ id: String })
   const { deliveryAddressDetail, refresh } = useDeliveryAddressDetail(props)
   const formRef = ref()
@@ -37,7 +37,7 @@
     formRef.value.setRules(rules)
   })
   function handlePosition() {
-    getLocation()
+    refreshLocation()
   }
   function handleAddressSelectionConfirm(result) {
     deliveryAddressDetail.placeholderAddress = `${result.province.name}-${result.city.name}-${result.area.name}`

@@ -73,7 +73,8 @@
           />
         </u-form-item>
       </u-form>
-      <aa-selected-alumni-list class="mt-30" :list="selectedAlumniList" />
+      <aa-selected-alumni-list root-class="mt-30" :list="selectedAlumniList" />
+      <view class="aa-fix-fixed-bottom-btn"></view>
     </view>
     <aa-fixed-bottom-primary-btn @click="save">提交</aa-fixed-bottom-primary-btn>
   </view>

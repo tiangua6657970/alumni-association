@@ -312,13 +312,14 @@
       <view class="aa-container bg-white mb-20">
         <view class="aa-font-title mb-30">企业法人登记证/营业执照</view>
         <u-form-item
-          class="aa-fix-fixed-bottom-btn p-0"
+          class="p-0"
           :label-width="0"
           :border-bottom="false"
           prop="businessLicense"
         >
           <aa-upload-single-image class="" />
         </u-form-item>
+        <view class="aa-fix-fixed-bottom-btn"></view>
       </view>
     </u-form>
     <u-picker v-model="addressSelectorShow" mode="region" @confirm="handleAddressSelectionConfirm"></u-picker>

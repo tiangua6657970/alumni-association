@@ -1,6 +1,6 @@
 import { get } from '@/service/base'
 import { reactive, ref, watchEffect } from 'vue'
-import useLoadMore from '@/common/hook/useLoadMore'
+import useLoadMore from '@/common/hook/use-load-more'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
 import useSearch from '@/common/hook/use-search'

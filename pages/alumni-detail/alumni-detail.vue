@@ -36,7 +36,7 @@
           <u-button class="aa-button" type="primary" size="mini">联系Ta</u-button>
         </view>
       </view>
-      <view class="aa-font-paragraph-title mtb-30">Ta供需</view>
+      <view class="aa-font-paragraph-title mt-30">Ta供需</view>
       <view class="aa-container">
         <aa-supply-and-demand-list
           :list="supplyAndDemandList"
@@ -45,7 +45,7 @@
           v-if="supplyAndDemandList.length"
         />
       </view>
-      <view class="aa-font-paragraph-title mtb-30">Ta企业</view>
+      <view class="aa-font-paragraph-title mb-30">Ta企业</view>
       <view class="pb-30 plr-30">
         <view class="inner-container">
           <aa-has-avatar-content-item

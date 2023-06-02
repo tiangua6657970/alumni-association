@@ -1,4 +1,4 @@
-import { __token__ } from '@/common/keys'
+import { __TOKEN__ } from '@/common/keys'
 import { isMock } from '@/common/env'
 
 export const serverConfig = {
@@ -19,7 +19,7 @@ export const serverConfig = {
 uni.$u.http.setConfig(serverConfig)
 uni.$u.http.interceptor.request = config => {
   config.header = {
-    Authorization: uni.getStorageSync(__token__)
+    Authorization: uni.getStorageSync(__TOKEN__)
   }
   return config
 }

@@ -1,6 +1,6 @@
 import { get, post, put } from '@/service/base'
 import { reactive, ref } from 'vue'
-import useLoadMore from '@/common/hook/useLoadMore'
+import useLoadMore from '@/common/hook/use-load-more'
 import { paths } from '@/service/path-map'
 import { getFormRules } from '@/common/utils'
 import { isMock } from '@/common/env'

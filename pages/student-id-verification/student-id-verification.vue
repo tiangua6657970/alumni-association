@@ -45,6 +45,7 @@
         <u-form-item label="请上传身份证附件" label-position="top" prop="idCardCopy">
           <aa-upload-single-image />
         </u-form-item>
+        <view class="aa-fix-fixed-bottom-btn"></view>
       </u-form>
     </view>
     <aa-fixed-bottom-primary-btn @click="save">提交</aa-fixed-bottom-primary-btn>

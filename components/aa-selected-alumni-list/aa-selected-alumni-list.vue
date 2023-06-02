@@ -1,5 +1,5 @@
 <template>
-  <view class="aa-selected-alumni-list">
+  <view class="aa-selected-alumni-list" :class="rootClass">
     <u-avatar
       class="selected-alumni-item"
       :sex-icon="item.sex"
@@ -19,6 +19,10 @@
       list: {
         type: Array,
         default: () => []
+      },
+      rootClass: {
+        type: String,
+        default: ''
       }
     }
   }

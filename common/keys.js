@@ -1,2 +1,3 @@
-export const __token__ = '__token__'
-export const __userInfo__ = '__userInfo__'
+export const __TOKEN__ = '__token__'
+export const __USERINFO__ = '__userinfo__'
+export const __LOCATION__ = '__location__'

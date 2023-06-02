@@ -7,7 +7,7 @@
     <u-navbar
       :is-back="false"
       :border-bottom="false"
-      :background="{ background: '#2b85e4' }"
+      :background="{ background: 'transparent' }"
       title-color="#fff"
       back-text="返回"
       title="校友认证"
@@ -15,7 +15,7 @@
     </u-navbar>
     <view class="background"> </view>
     <view class="aa-container container">
-      <u-image src="@/static/images/logo.png" width="144" height="144" />
+      <u-image src="@/static/images/logo.png" width="219" height="219" />
       <view class="mt-20 aa-font-base">您还未认证校友</view>
       <u-button class="mt-40 w-100p" type="primary" @click="navigateToAuthenticationMethods">去认证</u-button>
       <u-button class="mt-40 w-100p" type="primary" @click="switchTabToIndex">去首页</u-button>

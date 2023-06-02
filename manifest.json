@@ -66,6 +66,7 @@
     },
     /* 小程序特有相关 */
     "mp-weixin" : {
+        "requiredPrivateInfos": ["getLocation"],
         "appid" : "wx557301fc417dd936",
         "setting" : {
             "urlCheck" : false

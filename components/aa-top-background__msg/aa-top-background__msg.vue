@@ -1,15 +1,11 @@
+<script setup>
+  import { currentAlumniAssociation } from '@/stores/location'
+</script>
 <template>
   <view class="aa-top-background__msg">
-    <text>校友会：</text>
-    <text>桂电南宁校友会</text>
+    <text>{{ currentAlumniAssociation }}</text>
   </view>
 </template>
-
-<script>
-  export default {
-    name: 'aa-top-background__msg'
-  }
-</script>
 
 <style scoped lang="scss">
   .aa-top-background__msg {

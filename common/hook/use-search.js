@@ -1,5 +1,5 @@
 import { reactive, ref, watch } from 'vue'
-import useLoadMore from '@/common/hook/useLoadMore'
+import useLoadMore from '@/common/hook/use-load-more'
 
 export default function useSearch(fetch, dependencies = [], queryRefreshCallback) {
   const query = ref('')

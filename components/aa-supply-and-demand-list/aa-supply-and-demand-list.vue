@@ -56,6 +56,9 @@
       margin-bottom: 20rpx;
       background-color: #ffffff;
     }
+    .supply-and-demand-item:nth-last-child(1) {
+      margin-bottom: 0;
+    }
 
     .supply-and-demand-item__title {
       flex: 1;

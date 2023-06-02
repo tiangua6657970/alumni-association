@@ -1,12 +1,16 @@
 <script>
   import { refreshSystemInfo } from '@/stores/system-info'
-  import { getCurrentPath } from "@/common/utils";
-  import { DEFAULT_SHEAR_IMAGE } from "@/common/constants";
+  import { getCurrentPath } from '@/common/utils'
+  import { DEFAULT_SHEAR_IMAGE } from '@/common/constants'
+  import { refreshLocation } from '@/stores/location'
 
   export default {
     onLaunch: function () {
       console.log('App Launch')
       refreshSystemInfo()
+      setTimeout(() => {
+        refreshLocation()
+      }, 0)
     },
     onShow: function () {
       console.log('App Show')

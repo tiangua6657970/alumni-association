@@ -24,6 +24,7 @@
   import { useDynamicList, useDynamicListCategoryList } from '@/service/dynamic'
   import { useActivityList } from '@/service/alumni-activities'
   import { useAlumniEnterpriseList } from '@/service/alumni-enterprise'
+  import { currentAlumniAssociation } from '@/stores/location'
 
   const { swiperList, refresh: refreshSwiperList } = useIndexSwiperList()
   const { refresh: refreshDynamicListCategoryList } = useDynamicListCategoryList()
@@ -38,13 +39,11 @@
       setParamsAndRefresh('cateId', category.id)
     }
   }
+
   refreshSwiperList()
   refreshAlumniDynamicList()
   refreshActivityList()
   refreshAlumniEnterpriseList()
-  onLoad(() => {
-
-  })
 
   onPullDownRefresh(async () => {
     await Promise.all([
@@ -89,7 +88,7 @@
     >
       <template #default>
         <view class="header" @click="navigateToAlumniAndAlumniAssociationList">
-          <u-icon :size="36" name="search" color="#fff" label-color="#fff" label="南宁校友会" />
+          <u-icon :size="36" name="search" color="#fff" label-color="#fff" :label="currentAlumniAssociation" />
         </view>
       </template>
     </u-navbar>

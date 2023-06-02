@@ -1,10 +1,11 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
-  import { computed, reactive, ref, watch } from 'vue'
+  import { onLoad, onReady } from '@dcloudio/uni-app'
+  import { reactive, ref, watch } from 'vue'
   import { getFormRules } from '@/common/utils'
   import { postDemandAndSupply } from '@/service/supply-and-demand'
   import useIndustryCategoryList from '@/service/common/use-industry-category-list'
-  import { TYPE_TEXT_MAP } from "@/common/constants";
+  import { TYPE_TEXT_MAP } from '@/common/constants'
+  import { currentAddress, positionStatusText, refreshLocation } from '@/stores/location'
 
   const form = reactive({
     title: '',
@@ -26,6 +27,7 @@
   const industrySelectorShow = ref(false)
   const typeSelectorDefaultIndex = ref(0)
   const datetimeSelectorShow = ref(false)
+  const locationPopupShow = ref(false)
   const datetimeSelectorParams = {
     year: true,
     month: true,
@@ -46,7 +48,7 @@
       label: '提供'
     }
   ]
-  const { rules: commonRules } = getFormRules(form, ['title','phone'])
+  const { rules: commonRules } = getFormRules(form, ['title', 'phone'])
   const rules = {
     title: commonRules.title,
     placeholderType: [
@@ -101,6 +103,7 @@
     formRef.value.setRules(rules)
   })
   watch(industryCategoryList, newVal => console.log(newVal, 'nweVal'))
+
   function handleTypeSelectionConfirm(result) {
     const { value } = result[0]
     typeSelectorDefaultIndex.value = typeList.findIndex(item => item.value === value)
@@ -118,6 +121,7 @@
   }
 
   function handleAddressSelectionConfirm(result) {
+    console.log(result, 'result')
     const { province, city, area } = result
     form.placeholderAddress = `${province.name}-${city.name}-${area.name}`
     form.address = [province.code, city.code, area.code]
@@ -149,7 +153,7 @@
           address: region,
           addressLine: detailedRegion,
           validTime: time,
-          industry:industryId,
+          industry: industryId,
           paragraph: illustrate,
           type
         } = form
@@ -202,7 +206,13 @@
       </u-form-item>
       <u-form-item label-width="auto" label="地址：" prop="placeholderAddress">
         <template #right>
-          <u-icon name="map" label="定位" color="#1B80C4" label-color="#1B80C4" @click="handlePosition" />
+          <u-icon
+            name="map"
+            label="定位"
+            color="#1B80C4"
+            label-color="#1B80C4"
+            @click="locationPopupShow = true"
+          />
         </template>
         <u-input
           v-model="form.placeholderAddress"
@@ -257,12 +267,39 @@
       @confirm="handleDatetimeSelectionConfirm"
     ></u-picker>
     <u-picker v-model="addressSelectorShow" mode="region" @confirm="handleAddressSelectionConfirm"></u-picker>
+    <u-popup v-model="locationPopupShow" mode="bottom">
+      <view class="location-selection">
+        <view class="location-selection-item">
+          <view class="aa-font-desc">使用当前定位：</view>
+          <view class="aa-font-desc-light">{{ currentAddress }}</view>
+        </view>
+        <view class="location-selection-item mt-30">
+          <u-button size="mini" type="primary">确定</u-button>
+          <u-button class="ml-20" size="mini" type="primary" @click="refreshLocation"
+            >{{ positionStatusText }}
+          </u-button>
+        </view>
+      </view>
+    </u-popup>
     <aa-submit-button @click="save">保存</aa-submit-button>
   </view>
 </template>
 
 <style scoped lang="scss">
   .post-demand-and-supply {
+  }
+
+  .location-selection {
+    height: 500rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .location-selection-item {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .aa-submit-button {

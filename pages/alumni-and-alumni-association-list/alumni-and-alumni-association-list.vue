@@ -1,13 +1,11 @@
 <script setup>
-  import { onLoad, onReachBottom, onPullDownRefresh } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useSearchAlumniListAndAlumniAssociationList } from '@/service/alumni-and-alumni-association'
-  import { pathMap, navigateTo } from '@/common/navigates'
+  import { navigateTo, pathMap } from '@/common/navigates'
 
   const { query, searchResult, loadStatus, currentView, refresh, loadMore } =
     useSearchAlumniListAndAlumniAssociationList()
-  onLoad(async () => {
-    await refresh()
-  })
+  refresh()
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     await refresh()
@@ -24,7 +22,12 @@
 </script>
 <template>
   <div class="alumni-and-alumni-association-list">
-    <u-search placeholder="日照香炉生紫烟" v-model="query" @search="refresh" @custom="refresh"></u-search>
+    <u-search
+      :placeholder="currentView === 'left' ? '输入城市、校友会名字' : '输入校友名字'"
+      v-model="query"
+      @search="refresh"
+      @custom="refresh"
+    ></u-search>
     <view class="tab">
       <u-button
         class="tab-item"
