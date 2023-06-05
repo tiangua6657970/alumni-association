@@ -1,11 +1,10 @@
 <script setup>
   import { onLoad } from '@dcloudio/uni-app'
   import { navigateTo, pathMap } from '@/common/navigates'
-  import usePersonalCenterStore from '@/stores/personal-center'
+  import { profileStore } from '@/stores/personal-center'
   import { ref } from 'vue'
-  import { SEX_MAP } from '@/common/constants'
+  import { SEX_TEXT_MAP } from '@/common/constants'
 
-  const { storeData } = usePersonalCenterStore()
   onLoad(() => {})
 
   const actionList = [
@@ -38,9 +37,9 @@
     <view class="aa-container" :style="{ marginTop: marginTop + 'px' }">
       <view class="content">
         <view class="info">
-          <u-avatar :size="200" :src="storeData.avatar" show-sex :sex-icon="SEX_MAP[storeData.sex]" />
-          <aa-blue-bold-name>{{ storeData.name }}</aa-blue-bold-name>
-          <view class="aa-font-desc">{{ storeData.desc }}</view>
+          <u-avatar :size="200" :src="profileStore.avatar" show-sex :sex-icon="SEX_TEXT_MAP[profileStore.sex]" />
+          <aa-blue-bold-name>{{ profileStore.name }}</aa-blue-bold-name>
+          <view class="aa-font-desc">{{ profileStore.desc }}</view>
           <view class="edit-profile" @click="handleEditProfile">
             <text class="edit-profile__text">编辑资料</text>
             <u-icon class="edit-profile__icon" :size="30" color="#fff" name="map" />

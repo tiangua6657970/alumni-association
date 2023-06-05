@@ -12,16 +12,16 @@
     <view class="product-review-list">
       <view class="product-review-item" v-for="item in productReviewList" :key="item.id">
         <view class="product-review-item__header u-border-bottom">
-          <u-avatar :size="60"  :src="item.reviewerAvatar"/>
-          <view class="aa-font-title">{{item.reviewerName}}</view>
-          <view class="aa-font-mini">{{item.reviewDatetime}}</view>
+          <u-avatar :size="60" :src="item.reviewerAvatar" />
+          <view class="aa-font-title">{{ item.reviewerName }}</view>
+          <view class="aa-font-mini">{{ item.reviewDatetime }}</view>
         </view>
         <view class="product-review-item__content">
           <view class="product-review-item__content-header">
             <u-rate :model-value="item.reviewScore" :size="20" disabled></u-rate>
-            <text class="aa-font-desc">iPhone XS Max 256G 黑</text>
+            <text class="aa-font-desc">{{ item.productSku }}</text>
           </view>
-          <view class=aa-font-paragraph>{{item.paragraph}}</view>
+          <view class="aa-font-paragraph">{{ item.paragraph }}</view>
         </view>
       </view>
     </view>
@@ -34,7 +34,7 @@
       padding: 20rpx;
       margin-bottom: 20rpx;
       border-radius: 8rpx;
-      background: #FFFFFF;
+      background: #ffffff;
       .product-review-item__header {
         display: flex;
         align-items: center;
@@ -48,7 +48,7 @@
         display: flex;
         align-items: center;
         margin: 20rpx 0;
-  
+
         .aa-font-desc {
           margin-left: 20rpx;
         }

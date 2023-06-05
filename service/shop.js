@@ -3,23 +3,33 @@ import { reactive, ref } from 'vue'
 import useSearch from '@/common/hook/use-search'
 import useShoppingCart from '@/stores/shopping-cart'
 import { paths } from '@/service/path-map'
+import { isMock } from '@/common/env'
 
 export const getProductList = params => get(paths.productList, params)
 export const getProductDetail = params => get(paths.productDetail, params)
 export const getProductReviewList = params => get(paths.productReviewList, params)
 
-const mode = {
-  productName: '',
-  productPrice: 0,
-  productSales: 0,
-  productStock: 0,
-  paragraph: '',
-  id: '',
-  productCover: ''
+function mapProduct(data) {
+  const { productName, productPrice, productSales, productStock, paragraph, id, productCover } = data
+  return {
+    productName,
+    productPrice,
+    productSales,
+    productStock,
+    paragraph,
+    id,
+    productCover
+  }
+}
+
+function mapProductReview(data) {
+  const { reviewerName, reviewerAvatar, reviewScore, reviewDatetime, productSku, paragraph, id } = data
+  return { reviewerName, reviewerAvatar, reviewScore, reviewDatetime, productSku, paragraph, id }
 }
 
 export function useSearchProductList(queryRefreshCallback) {
   const shoppingCart = useShoppingCart()
+
   function randomNum() {
     const min = 200
     const max = 500
@@ -27,7 +37,10 @@ export function useSearchProductList(queryRefreshCallback) {
   }
 
   async function _getProductList(arg = {}) {
-    const { data } = await getProductList({ ...arg })
+    let { data } = await getProductList({ ...arg })
+    if (!isMock) {
+      data = data.map(item => mapProduct(item))
+    }
     return data.map(item => {
       return {
         image: `https://dummyimage.com/${randomNum()}x${randomNum()}`, // item.productCover
@@ -52,8 +65,8 @@ export function useSearchProductList(queryRefreshCallback) {
     setParamsAndRefresh,
     resetParamsAndRefresh,
     setParamsAndRefreshFactory,
-    resetParamsAndRefreshFactory,
-  } = useSearch(_getProductList,[], queryRefreshCallback)
+    resetParamsAndRefreshFactory
+  } = useSearch(_getProductList, [], queryRefreshCallback)
 
   return {
     refresh,
@@ -66,10 +79,9 @@ export function useSearchProductList(queryRefreshCallback) {
     setParamsAndRefresh,
     resetParamsAndRefresh,
     setParamsAndRefreshFactory,
-    resetParamsAndRefreshFactory,
+    resetParamsAndRefreshFactory
   }
 }
-
 
 // const list =  [
 //   {
@@ -110,18 +122,29 @@ export function useSearchProductList(queryRefreshCallback) {
 // }
 
 export function useProductDetail() {
-  const productDetail = reactive(mode)
+  const productDetail = reactive({
+    productName: '',
+    productPrice: 0,
+    productSales: 0,
+    productStock: 0,
+    paragraph: '',
+    id: '',
+    productCover: ''
+  })
   const shoppingCart = useShoppingCart()
 
   async function _getProductDetail() {
-    const { data } = await getProductDetail()
+    let { data } = await getProductDetail()
+    if (!isMock) {
+      data = mapProduct(data)
+    }
     return { isAddedToCart: shoppingCart.isInCart(data.id), count: 0, selected: true, ...data }
   }
 
   async function refresh() {
     const res = await _getProductDetail()
-    for (const modeKey in mode) {
-      productDetail[modeKey] = res[modeKey]
+    for (const productKey in productDetail) {
+      productDetail[productKey] = res[productKey]
     }
     productDetail.isAddedToCart = res.isAddedToCart
     productDetail.count = res.count
@@ -135,8 +158,11 @@ export function useProductReviewList() {
   const productReviewList = ref([])
 
   async function _getProductReviewList() {
-    const { data } = await getProductReviewList()
-    return data
+    let { data } = await getProductReviewList()
+    if (!isMock) {
+      data = data.map(item => mapProductReview(item))
+    }
+    return data;
   }
 
   async function refresh() {

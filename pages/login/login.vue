@@ -9,11 +9,9 @@
   import { useCode } from '@/common/hook/use-code'
   import { useLogin } from '@/service/auth'
   import { __TOKEN__, __USERINFO__ } from '@/common/keys'
-  import { refreshDeliveryAddressList } from '@/stores/delivery-address'
-  import usePersonalCenterStore from '@/stores/personal-center'
+  import { refreshProfileStore } from '@/stores/personal-center'
   import { isMock } from '@/common/env'
 
-  const personalCenterStore = usePersonalCenterStore()
   const { formRef, form, rules, submit } = useLogin()
   const currentView = ref('codeLogin')
   const loginTabsStyle = computed(() => {
@@ -57,7 +55,7 @@
         }
         if (isMock) {
           uni.$u.toast('登录成功')
-          personalCenterStore.refresh()
+          refreshProfileStore()
           refreshDeliveryAddressList()
           navigateToAlumniCertificationTips()
         }
@@ -67,7 +65,7 @@
             uni.setStorageSync(__TOKEN__, data.token)
             uni.setStorageSync(__USERINFO__, data.userInfo)
             uni.$u.toast('登录成功')
-            personalCenterStore.refresh()
+            refreshProfileStore()
             refreshDeliveryAddressList()
             navigateToAlumniCertificationTips()
           } catch (e) {
@@ -80,7 +78,7 @@
 </script>
 <template>
   <view class="login">
-    <aa-top-background :height="600" navbar-title="登录" :is-back="false">
+    <aa-top-background :height="600" navbar-title="登录">
       <view class="top-background">
         <u-image src="@/static/images/logo-with-text.png" width="506" height="316"></u-image>
         <view class="aa-font-base-white mtb-30">欢迎来到桂林电子科技大学校友会</view>
@@ -194,7 +192,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    //margin-bottom: 160rpx;
   }
 
   .hidden {

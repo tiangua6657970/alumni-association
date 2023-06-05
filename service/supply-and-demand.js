@@ -1,9 +1,8 @@
 import { get, post } from '@/service/base'
 import useSearch from '@/common/hook/use-search'
-import { computed, reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
-import { TYPE_LIST } from "@/common/constants";
 
 export const getSupplyAndDemandList = params => post(paths.supplyAndDemandList, params)
 export const getSupplyAndDemandDetail = params => get(paths.supplyAndDemandDetail, params)
@@ -65,14 +64,17 @@ export async function _getSupplyAndDemandList(arg = {}) {
 
 export function useSupplyAndDemandList() {
   const supplyAndDemandList = ref([])
+
   async function refresh(params) {
     supplyAndDemandList.value = await _getSupplyAndDemandList(params)
   }
+
   return {
     supplyAndDemandList,
     refresh
   }
 }
+
 export function useSearchSupplyAndDemandList() {
   const {
     query,
@@ -150,5 +152,3 @@ export function useSupplyAndDemandDetail(props) {
     refresh
   }
 }
-
-export function usePostDemandAndSupply() {}

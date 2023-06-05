@@ -1,10 +1,8 @@
-import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { getProfile } from '@/service/personal-center'
-import { deliveryAddressListStore } from '@/stores/delivery-address'
+import { isMock } from '@/common/env'
 
-
-function processProfile(data) {
+function mapProfile(data) {
   const {
     userNickname: name,
     avatar,
@@ -46,46 +44,70 @@ function processProfile(data) {
     code
   }
 }
-const usePersonalCenterStore = defineStore('personalCenter', () => {
-  const storeData = reactive({
+
+export const profileStore = reactive({
+  name: '',
+  avatar: '',
+  sex: '',
+  id: '',
+  phone: '',
+  enterprise: '',
+  city: '',
+  jobPositions: '',
+  paragraph: '',
+  enterpriseInfo: {
     name: '',
     avatar: '',
-    sex: '',
-    id: '',
-    phone: '',
-    enterprise: '',
     city: '',
-    jobPositions: '',
-    paragraph: '',
-    enterpriseInfo: {
-      name: '',
-      avatar: '',
-      city: '',
-      enterpriseScale: '',
-      industry: ''
-    },
-    dateOfBirt: '',
-    nativePlace: '',
-    address: '',
-    email: '',
-    code: '',
-    desc: ''
-  })
-  const selectedDeliveryAddress = computed(() => deliveryAddressListStore.value.find(item => item.selected))
-
-  async function refresh() {
-    const data = await _getProfile()
-    for (const dataKey in data) {
-      storeData[dataKey] = data[dataKey]
-    }
-    storeData.desc = `${data.enterpriseInfo.name} | ${data.jobPositions}`
-  }
-
-  async function _getProfile() {
-    const { data } = await getProfile()
-    return data
-  }
-
-  return { storeData, refresh, selectedDeliveryAddress }
+    enterpriseScale: '',
+    industry: ''
+  },
+  dateOfBirt: '',
+  nativePlace: '',
+  address: '',
+  email: '',
+  code: '',
+  desc: ''
 })
-export default usePersonalCenterStore
+
+async function _getProfile() {
+  let { data } = await getProfile()
+  if (!isMock) {
+    data = mapProfile(data)
+  }
+  return data
+}
+
+export async function refreshProfileStore() {
+  const data = await _getProfile()
+  for (const dataKey in data) {
+    profileStore[dataKey] = data[dataKey]
+  }
+  profileStore.desc = `${data.enterpriseInfo.name} | ${data.jobPositions}`
+}
+
+export const deliveryAddressListStore = ref([])
+
+async function _getDeliveryAddressList() {
+  let { data } = await getDeliveryAddressList()
+  if (!isMock) {
+    data = data.map(item => processDeliveryAddress(item))
+  }
+  return data
+}
+
+export async function refreshDeliveryAddressList() {
+  const list = await _getDeliveryAddressList()
+  const index = list.findIndex(item => item.isDefault)
+  if (index !== -1) {
+    const defaultDeliveryAddress = list[index]
+    list[index] = list[0]
+    list[0] = defaultDeliveryAddress
+    list.forEach((item, index) => {
+      item.selected = index === 0
+    })
+  }
+  deliveryAddressListStore.value = list
+}
+
+export const selectedDeliveryAddress = computed(() => deliveryAddressListStore.value.find(item => item.selected))

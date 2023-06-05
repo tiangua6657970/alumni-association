@@ -1,8 +1,25 @@
 import { defineStore } from 'pinia'
 import { computed, reactive, ref, watch } from 'vue'
+import { __SHOPPING_CART__ } from "@/common/keys";
 
+/**
+ * @returns {[]}
+ */
+function getLocalShoppingCartStore() {
+  try {
+    const result = uni.getStorageSync(__SHOPPING_CART__)
+    if (Object.prototype.toString.call(result) === '[object Array]') {
+      return result
+    } else {
+      return []
+    }
+  }catch (err) {
+    console.log(err)
+    return []
+  }
+}
 const useShoppingCart = defineStore('shopping-cart', () => {
-  const shoppingCartStore = ref([])
+  const shoppingCartStore = ref(getLocalShoppingCartStore())
   const oldTotalPrice = ref(0)
   let oldSelect = []
   watch(shoppingCartStore.value, newVal => {
@@ -44,6 +61,7 @@ const useShoppingCart = defineStore('shopping-cart', () => {
       payload.count++
       shoppingCartStore.value.push(payload)
       payload.isAddedToCart = true
+      saveToLocalSync()
     }
   }
 
@@ -53,6 +71,7 @@ const useShoppingCart = defineStore('shopping-cart', () => {
       if (index !== -1) {
         shoppingCartStore.value.splice(index, 1)
         payload.isAddedToCart = false
+        saveToLocalSync()
       }
     }
   }
@@ -71,6 +90,15 @@ const useShoppingCart = defineStore('shopping-cart', () => {
     })
   }
 
+  function saveToLocalSync() {
+    uni.setStorageSync(__SHOPPING_CART__, shoppingCartStore.value)
+  }
+
+  function clear() {
+    shoppingCartStore.value = []
+    saveToLocalSync()
+  }
+
   return {
     shoppingCartStore,
     totalPrice,
@@ -80,7 +108,9 @@ const useShoppingCart = defineStore('shopping-cart', () => {
     add,
     remove,
     toggle,
-    isInCart
+    isInCart,
+    saveToLocalSync,
+    clear
   }
 })
 export default useShoppingCart

@@ -1,16 +1,15 @@
 <script setup>
   import { onReady } from '@dcloudio/uni-app'
-  import usePersonalCenterStore from '@/stores/personal-center'
+  import { profileStore } from '@/stores/personal-center'
   import { computed, reactive, ref, watch } from 'vue'
   import useUpload from '@/common/hook/use-upload'
-  import { SEX_LIST, SEX_MAP } from '@/common/constants'
+  import { SEX_LIST, SEX_TEXT_MAP } from '@/common/constants'
   import { getFormRules } from '@/common/utils'
 
-  const { storeData } = usePersonalCenterStore()
   const { uploadConfig, fileList, uploadRef, upload, handleChooseComplete } = useUpload()
   const currentState = {}
-  for (const storeDataKey in storeData) {
-    currentState[storeDataKey] = storeData[storeDataKey]
+  for (const storeDataKey in profileStore) {
+    currentState[storeDataKey] = profileStore[storeDataKey]
   }
   const form = reactive(currentState)
   const formRef = ref()
@@ -18,7 +17,7 @@
   const addressSelectorShow = ref(false)
   const sexSelectorDefaultIndex = ref(0)
   const sexDisplay = computed(() => {
-    return SEX_MAP[form.sex]
+    return SEX_TEXT_MAP[form.sex]
   })
 
   const { rules } = getFormRules(form, ['name', 'phone', 'code', 'placeholderAddress'])
@@ -55,15 +54,14 @@
     console.log(form, 'form')
     upload()
   }
+
   watch(fileList, newVal => {
     if (newVal.length) {
       form.avatar = newVal[0].url
     }
   })
 
-  function handlePosition() {
-
-  }
+  function handlePosition() {}
 </script>
 <template>
   <view class="edit-profile aa-container">

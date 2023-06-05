@@ -1,3 +1,5 @@
+import { joinUrl } from "@/common/navigates";
+
 export function getFormRules(form, extract = []) {
   const rules = {
     title: [
@@ -132,15 +134,6 @@ export function getFormRules(form, extract = []) {
   }
 }
 
-export function joinUrl(path, params = {}) {
-  return (
-    path +
-    '?' +
-    Object.entries(params)
-      .map(item => item.join('='))
-      .join('&')
-  )
-}
 export function getCurrentPath() {
   const pages = getCurrentPages()
   const { route: path, options: params } = pages[pages.length - 1]

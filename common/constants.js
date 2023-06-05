@@ -26,7 +26,7 @@ export const SEX_LIST = [
   }
 ]
 
-export const SEX_MAP = {
+export const SEX_TEXT_MAP = {
   1: '男',
   2: '女'
 }

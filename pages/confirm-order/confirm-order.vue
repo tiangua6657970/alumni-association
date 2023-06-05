@@ -1,12 +1,12 @@
 <script setup>
-  import usePersonalCenterStore from '@/stores/personal-center'
+  import  { selectedDeliveryAddress } from '@/stores/personal-center'
   import useShoppingCart from '@/stores/shopping-cart'
   import { navigateToAddDeliveryAddress, navigateToDeliveryAddress, navigateToPayment } from '@/common/navigates'
 
-  const personalCenter = usePersonalCenterStore()
   const shoppingCart = useShoppingCart()
 
   function handleSubmit() {
+    shoppingCart.clear()
     navigateToPayment({ orderId: '12304' })
   }
 </script>
@@ -15,8 +15,8 @@
     <view class="container">
       <aa-delivery-address-item
         bg-color="#fff"
-        v-if="personalCenter.selectedDeliveryAddress"
-        :data="personalCenter.selectedDeliveryAddress"
+        v-if="selectedDeliveryAddress"
+        :data="selectedDeliveryAddress"
         action-mode="select"
         @click="navigateToDeliveryAddress({ showSelect: true })"
       />
@@ -39,7 +39,8 @@
         <view class="order-info-item">
           <view class="order-info-item__name aa-font-base">订单总价</view>
           <view class="order-info-item__content aa-font-price">
-            ￥<u-count-to
+            ￥
+            <u-count-to
               color="#ff5200"
               :font-size="24"
               :start-val="shoppingCart.oldTotalPrice"

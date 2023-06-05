@@ -1,5 +1,4 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
   import { useProductDetail } from '@/service/shop'
   import { navigateTo, pathMap } from '@/common/navigates'
   import useShoppingCart from '@/stores/shopping-cart'
@@ -7,9 +6,7 @@
 
   const { productDetail, refresh } = useProductDetail()
   const shoppingCart = useShoppingCart()
-  onLoad(() => {
-    refresh()
-  })
+  refresh()
 
   const blockList = computed(() => {
     // const selectedProductAttributesVal = selectedProductAttributes.value
@@ -22,18 +19,21 @@
       { label: '评价', content: '', path: pathMap.productReview }
     ]
   })
+
   function handleBlockItemClick(item) {
     if (!item.path) {
       return uni.$u.toast('功能未实现')
     }
     navigateTo(item.path, { id: productDetail.id })
   }
+
   const btnList = computed(() => {
     return [
       { text: productDetail.isAddedToCart ? '已加入购物车' : '加入购物车', type: 'info' },
       { text: '立即购买' }
     ]
   })
+
   function handleBtnItemCLick(item) {
     if (item.text === '加入购物车') {
       shoppingCart.add(productDetail)
@@ -114,6 +114,7 @@
       }
     }
   }
+
   .aa-font-paragraph {
     margin-top: 20rpx;
     background-color: #fff;

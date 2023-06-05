@@ -2,7 +2,7 @@
   import { onLoad, onShow } from '@dcloudio/uni-app'
   import { pathMap, navigateTo, navigateToAddDeliveryAddress } from '@/common/navigates'
   import { ref } from 'vue'
-  import { deliveryAddressListStore } from '@/stores/delivery-address'
+  import { deliveryAddressListStore } from '@/stores/personal-center'
   const selectShow = ref(false)
 
   onLoad(options => {

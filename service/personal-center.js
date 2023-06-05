@@ -1,29 +1,18 @@
 import { get } from '@/service/base'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { paths } from '@/service/path-map'
 import useSearch from '@/common/hook/use-search'
 import { isMock } from '@/common/env'
 
 export const getProfile = params => get(paths.profile, params)
 export const getPaymentRecords = params => get(paths.paymentRecords, params)
-export const getActivityList = params => get('/activityList', params)
-export const getUserSupplyAndDemand = params => get('/userSupplyAndDemand')
 export const getOrderList = params => get(paths.orderList, params)
 export const getOrderDetail = params => get(paths.orderDetail, params)
 export const getDeliveryAddressList = params => get(paths.deliveryAddressList, params)
 export const getDeliveryAddressDetail = params => get(paths.deliveryAddressDetail, params)
 
 function mapOrder(data) {
-  const {
-    orderNum,
-    orderTime,
-    paymentMethod,
-    paymentTime,
-    shippingInfo,
-    orderStatus,
-    id,
-    productList,
-  } = data
+  const { orderNum, orderTime, paymentMethod, paymentTime, shippingInfo, orderStatus, id, productList } = data
   return {
     orderNum,
     orderTime,
@@ -32,9 +21,24 @@ function mapOrder(data) {
     shippingInfo,
     orderStatus,
     id,
-    productList,
+    productList
   }
 }
+
+export function mapDeliveryAddress(data) {
+  const { shippingAddress, shippingAddressLine, receiverPhone, isDefault, receiverName, id, placeholderAddress } =
+    data
+  return {
+    shippingAddress,
+    shippingAddressLine,
+    receiverPhone,
+    isDefault,
+    receiverName,
+    id,
+    placeholderAddress
+  }
+}
+
 export function useOrderDetail() {
   const orderDetail = reactive({
     orderNum: '',
@@ -71,7 +75,7 @@ export function useOrderDetail() {
       shippingInfo,
       orderStatus,
       id,
-      productList,
+      productList
     } = await _getOrderDetail(params)
     const paymentMethodMap = {
       1: '微信支付',
@@ -129,34 +133,22 @@ export function useSearchOrderList() {
   return { query, searchResult, refresh, setParamsAndRefresh, noData, loadMore, loadStatus }
 }
 
-export function processDeliveryAddress(data) {
-  const {
-    shippingAddress,
-    shippingAddressLine,
-    receiverPhone,
-    isDefault,
-    receiverName,
-    id,
-    placeholderAddress,
-  } = data
-  return {
-    shippingAddress,
-    shippingAddressLine,
-    receiverPhone,
-    isDefault,
-    receiverName,
-    id,
-    placeholderAddress
+export async function _getDeliveryAddressList() {
+  let { data } = await getDeliveryAddressList()
+  if (!isMock) {
+    data = data.map(item => mapDeliveryAddress(item))
   }
+  return data
 }
 
 async function _getDeliveryAddressDetail(params) {
   let { data } = await getDeliveryAddressDetail(params)
   if (!isMock) {
-    data = processDeliveryAddress(data)
+    data = mapDeliveryAddress(data)
   }
   return data
 }
+
 export function useDeliveryAddressDetail(props) {
   const deliveryAddressDetail = reactive({
     shippingAddress: '',
@@ -169,14 +161,8 @@ export function useDeliveryAddressDetail(props) {
   })
 
   async function refresh() {
-    const {
-      shippingAddress,
-      shippingAddressLine,
-      receiverPhone,
-      isDefault,
-      receiverName,
-      id,
-    } = await _getDeliveryAddressDetail({ id: props.id })
+    const { shippingAddress, shippingAddressLine, receiverPhone, isDefault, receiverName, id } =
+      await _getDeliveryAddressDetail({ id: props.id })
     deliveryAddressDetail.shippingAddress = shippingAddress
     deliveryAddressDetail.shippingAddressLine = shippingAddressLine
     deliveryAddressDetail.receiverPhone = receiverPhone
@@ -188,4 +174,3 @@ export function useDeliveryAddressDetail(props) {
 
   return { deliveryAddressDetail, refresh }
 }
-
