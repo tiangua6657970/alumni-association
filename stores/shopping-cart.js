@@ -95,6 +95,7 @@ const useShoppingCart = defineStore('shopping-cart', () => {
   }
 
   function clear() {
+    shoppingCartStore.value.forEach(item => item.isAddedToCart = false)
     shoppingCartStore.value = []
     saveToLocalSync()
   }

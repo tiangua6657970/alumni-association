@@ -8,6 +8,7 @@
     navigateToSupplyAndDemandDetail
   } from '@/common/navigates'
   import { useSupplyAndDemandList } from '@/service/supply-and-demand'
+  import AaGap from "@/components/base/aa-gap/aa-gap.vue";
 
   const activeIndex = ref(0)
   const {
@@ -52,6 +53,7 @@
 <template>
   <view class="alumni-enterprise-detail" v-if="alumniEnterpriseDetail.id">
     <aa-tabs :list="tabs" v-model="activeIndex" />
+    <aa-gap :height="20"/>
     <template v-if="activeIndex === 0">
       <u-image class="cover" :src="alumniEnterpriseDetail.cover" :height="400" />
       <view class="container">

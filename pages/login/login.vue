@@ -9,7 +9,7 @@
   import { useCode } from '@/common/hook/use-code'
   import { useLogin } from '@/service/auth'
   import { __TOKEN__, __USERINFO__ } from '@/common/keys'
-  import { refreshProfileStore } from '@/stores/personal-center'
+  import { refreshDeliveryAddressList, refreshProfileStore } from "@/stores/personal-center";
   import { isMock } from '@/common/env'
 
   const { formRef, form, rules, submit } = useLogin()

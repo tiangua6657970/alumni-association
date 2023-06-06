@@ -1,5 +1,5 @@
 import { computed, reactive, ref } from 'vue'
-import { getProfile } from '@/service/personal-center'
+import { getDeliveryAddressList, getProfile } from "@/service/personal-center";
 import { isMock } from '@/common/env'
 
 function mapProfile(data) {

@@ -4,6 +4,7 @@
   import { useSearchProductList } from '@/service/shop'
   import { navigateToProductDetail, navigateToShoppingCart } from '@/common/navigates'
   import useShoppingCart from '@/stores/shopping-cart'
+  import AaGap from "@/components/base/aa-gap/aa-gap.vue";
 
   const tabs = [{ name: '全部' }, { name: '类别' }, { name: '销量' }, { name: '价格' }]
   const activeIndex = ref(0)
@@ -75,6 +76,7 @@
     </aa-top-background>
     <view class="aa-container" :style="{ marginTop: marginTop + 'px' }">
       <aa-tabs :list="tabs" v-model="activeIndex" />
+      <aa-gap :height="20"/>
       <pp-waterfall-flow
         :value="searchResult"
         @iconClick="handleProductIconClick"

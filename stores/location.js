@@ -1,6 +1,5 @@
 import { computed, reactive, ref } from 'vue'
 import amap from '@/common/amap-wx.130'
-import { __LOCATION__ } from '@/common/keys'
 
 export const locationStore = reactive({
   // 如："南宁市西乡塘区衡阳西路11号"
