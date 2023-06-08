@@ -1,22 +1,22 @@
 <script setup>
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { useDynamicDetail } from '@/service/dynamic'
-  import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
-  import { getCurrentPath } from "@/common/utils";
 
   const props = defineProps({ id: String, navigationBarTitle: String })
   const { dynamicDetail, refresh } = useDynamicDetail(props)
   uni.setNavigationBarTitle({ title: props.navigationBarTitle })
-  onLoad(async () => {
-    const { title, publisher: desc, cover: imageUrl, id } = await refresh()
-    const shareVal = {
-      path: getCurrentPath(),
+
+  function getShareVal() {
+    const { title, cover: imageUrl } = dynamicDetail.value
+    return {
       title,
-      desc,
       imageUrl
     }
-    onShareAppMessage(shareVal)
-    onShareTimeline(shareVal)
-  })
+  }
+
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
 </script>
 <template>
   <view class="dynamic-detail">

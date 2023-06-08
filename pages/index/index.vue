@@ -1,15 +1,15 @@
 <script setup>
-  import { onLoad, onPullDownRefresh, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import {
     navigateTo,
-    pathMap,
-    navigateToAlumniAndAlumniAssociationList,
-    navigateToDynamic,
-    navigateToDynamicDetail,
     navigateToActivityDetail,
     navigateToAlumniActivities,
+    navigateToAlumniAndAlumniAssociationList,
     navigateToAlumniEnterprise,
-    navigateToAlumniEnterpriseDetail
+    navigateToAlumniEnterpriseDetail,
+    navigateToDynamic,
+    navigateToDynamicDetail,
+    pathMap
   } from '@/common/navigates'
   import AaGap from '@/components/base/aa-gap/aa-gap'
   import indexGrid1 from '@/static/images/index/index-grid(1).png'
@@ -24,37 +24,12 @@
   import { useDynamicList, useDynamicListCategoryList } from '@/service/dynamic'
   import { useActivityList } from '@/service/alumni-activities'
   import { useAlumniEnterpriseList } from '@/service/alumni-enterprise'
-  import { currentAlumniAssociation } from '@/stores/location'
 
   const { swiperList, refresh: refreshSwiperList } = useIndexSwiperList()
   const { refresh: refreshDynamicListCategoryList } = useDynamicListCategoryList()
   const { dynamicList, setParamsAndRefresh } = useDynamicList()
   const { alumniEnterpriseList, refresh: refreshAlumniEnterpriseList } = useAlumniEnterpriseList()
   const { activityList, refresh: refreshActivityList } = useActivityList()
-
-  async function refreshAlumniDynamicList() {
-    const dynamicListCategoryList = await refreshDynamicListCategoryList()
-    const category = dynamicListCategoryList.find(item => item.name === '校友动态')
-    if (category) {
-      setParamsAndRefresh('cateId', category.id)
-    }
-  }
-
-  refreshSwiperList()
-  refreshAlumniDynamicList()
-  refreshActivityList()
-  refreshAlumniEnterpriseList()
-
-  onPullDownRefresh(async () => {
-    await Promise.all([
-      refreshSwiperList(),
-      refreshActivityList(),
-      refreshAlumniEnterpriseList(),
-      refreshAlumniDynamicList()
-    ])
-    uni.stopPullDownRefresh()
-  })
-
   const indexNavGrid = [
     { name: '动态', icon: indexGrid1, path: pathMap.dynamic },
     { name: '校友活动', icon: indexGrid2, path: pathMap.alumniActivities },
@@ -65,6 +40,14 @@
     { name: '校友捐赠', icon: indexGrid7, path: '' },
     { name: '国际校友', icon: indexGrid8, path: '' }
   ]
+
+  async function refreshAlumniDynamicList() {
+    const dynamicListCategoryList = await refreshDynamicListCategoryList()
+    const category = dynamicListCategoryList.find(item => item.name === '校友动态')
+    if (category) {
+      setParamsAndRefresh('cateId', category.id)
+    }
+  }
 
   function handleSwiperItemClick(index) {
     navigateTo(pathMap[swiperList.value[index].routeName])
@@ -78,6 +61,28 @@
   function handleAlumniDynamicItemClick(item) {
     navigateToDynamicDetail({ id: item.id, navigationBarTitle: '校友动态详情' })
   }
+
+  function getShareVal() {
+    return {
+      title: '校友会小程序'
+    }
+  }
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+
+  refreshSwiperList()
+  refreshAlumniDynamicList()
+  refreshActivityList()
+  refreshAlumniEnterpriseList()
+  onPullDownRefresh(async () => {
+    await Promise.all([
+      refreshSwiperList(),
+      refreshActivityList(),
+      refreshAlumniEnterpriseList(),
+      refreshAlumniDynamicList()
+    ])
+    uni.stopPullDownRefresh()
+  })
 </script>
 <template>
   <view class="index">
@@ -87,9 +92,10 @@
       :background="{ background: 'linear-gradient(45deg, rgba(18, 118, 198, 1), rgb(136, 163, 255))' }"
     >
       <template #default>
-        <view class="header" @click="navigateToAlumniAndAlumniAssociationList">
-          <u-icon :size="36" name="search" color="#fff" label-color="#fff" :label="currentAlumniAssociation" />
-        </view>
+        <aa-top-background__msg
+          is-search
+          @searchClick="navigateToAlumniAndAlumniAssociationList"
+        ></aa-top-background__msg>
       </template>
     </u-navbar>
     <aa-swiper :list="swiperList" @itemClick="handleSwiperItemClick" />
@@ -126,10 +132,6 @@
 </template>
 
 <style scoped lang="scss">
-  .header {
-    padding: 0 30rpx;
-  }
-
   .u-grid {
     background-color: #ffffff;
   }

@@ -1,5 +1,4 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
   import { useDonationDetail, useDonationRecords, useExpenditureDetailList } from '@/service/donation'
   import { ref } from 'vue'
   import { navigateToDonation } from '@/common/navigates'
@@ -8,11 +7,9 @@
   const { donationDetail, refresh } = useDonationDetail()
   const { donationRecords, refresh: refreshDonationRecords } = useDonationRecords()
   const { expenditureDetailList, refresh: refreshExpenditureDetailList } = useExpenditureDetailList()
-  onLoad(() => {
-    refresh()
-    refreshDonationRecords()
-    refreshExpenditureDetailList()
-  })
+  refresh()
+  refreshDonationRecords()
+  refreshExpenditureDetailList()
 </script>
 <template>
   <view class="donation-detail aa-container">
@@ -45,7 +42,7 @@
             <view class="aa-font-title">{{ item.name }}</view>
             <view class="aa-font-mini mt-10">{{ item.datetime }}</view>
           </view>
-          <view class="donation-record-item__right aa-font-title"> {{ item.amount }}元 </view>
+          <view class="donation-record-item__right aa-font-title"> {{ item.amount }}元</view>
         </view>
       </view>
       <view class="donation-records" v-else>
@@ -55,7 +52,7 @@
             <view class="aa-font-title">{{ item.name }}</view>
             <view class="aa-font-mini mt-10">{{ item.datetime }}</view>
           </view>
-          <view class="donation-record-item__right aa-font-title"> {{ item.amount }}元 </view>
+          <view class="donation-record-item__right aa-font-title"> {{ item.amount }}元</view>
         </view>
       </view>
     </view>
@@ -67,6 +64,7 @@
   page {
     background-color: #f7f7f7;
   }
+
   .donation-detail {
     .image-list {
       display: flex;
@@ -79,17 +77,21 @@
         flex-basis: calc(33.333% - 13.333rpx);
       }
     }
+
     .donation-records-wrapper {
       box-shadow: 0 0 20rpx rgba(204, 204, 204, 0.27);
       border-radius: 12rpx;
       background-color: #fff;
     }
+
     .u-subsection {
       border-radius: 12rpx 12rpx 0 0 !important;
     }
+
     .donation-records {
       padding: 0 20rpx;
     }
+
     .donation-record-item {
       display: flex;
       align-items: center;
@@ -99,6 +101,7 @@
         flex: 1;
         margin-left: 10rpx;
       }
+
       .donation-record-item__right {
         margin-left: 10rpx;
       }

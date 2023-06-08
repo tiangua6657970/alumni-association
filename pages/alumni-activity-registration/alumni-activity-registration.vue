@@ -1,5 +1,5 @@
 <script setup>
-  import { onLoad, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { reactive, ref } from 'vue'
   import { activityRegistration, useAlumniActivityDetail } from '@/service/alumni-activities'
   import { getFormRules } from '@/common/utils'

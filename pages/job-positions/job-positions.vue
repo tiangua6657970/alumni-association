@@ -1,10 +1,18 @@
 <script setup>
-  import { onLoad, onReady, onShow } from '@dcloudio/uni-app'
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { useAlumniEnterpriseJodDetail } from '@/service/alumni-enterprise'
-  const { alumniEnterpriseJodDetail, refreshAlumniEnterpriseJodDetail } = useAlumniEnterpriseJodDetail()
-  onLoad(() => {
-    refreshAlumniEnterpriseJodDetail()
-  })
+
+  const { alumniEnterpriseJodDetail, refresh } = useAlumniEnterpriseJodDetail()
+
+  function getShareVal() {
+    const { title } = alumniEnterpriseJodDetail
+    return {
+      title
+    }
+  }
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
 </script>
 <template>
   <view class="job-positions">

@@ -1,9 +1,21 @@
 <script setup>
-  import { currentAlumniAssociation } from '@/stores/location'
+  import { currentAlumniAssociation, refreshLocation } from '@/stores/location'
+  defineProps({ isSearch: { type: Boolean, default: false } })
+  const emit = defineEmits(['searchClick','textClick'])
 </script>
 <template>
   <view class="aa-top-background__msg">
-    <text>{{ currentAlumniAssociation }}</text>
+    <u-icon
+      :size="36"
+      name="search"
+      color="#fff"
+      label-color="#fff"
+      :label="currentAlumniAssociation"
+      @click="$emit('searchClick')"
+      v-if="isSearch"
+    />
+    <text v-else @click="$emit('textClick')">{{ currentAlumniAssociation }}</text>
+    <u-icon name="map" color="#fff" label="定位" label-color="#fff" @click="refreshLocation" />
   </view>
 </template>
 
@@ -12,7 +24,9 @@
     position: absolute;
     left: 30rpx;
     right: 30rpx;
-    bottom: 40rpx;
+    bottom: 30rpx;
+    display: flex;
+    justify-content: space-between;
     color: #ffffff;
   }
 </style>

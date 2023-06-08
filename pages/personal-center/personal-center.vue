@@ -1,11 +1,8 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
   import { navigateTo, pathMap } from '@/common/navigates'
   import { profileStore } from '@/stores/personal-center'
   import { ref } from 'vue'
   import { SEX_TEXT_MAP } from '@/common/constants'
-
-  onLoad(() => {})
 
   const actionList = [
     { icon: 'custom-icon-activities', content: '我的活动', path: pathMap.myActivities },

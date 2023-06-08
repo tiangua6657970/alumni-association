@@ -1,20 +1,26 @@
 <script setup>
-  import { onLoad, onReady } from '@dcloudio/uni-app'
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { useAlumniDetail } from '@/service/alumni-and-alumni-association'
   import { useSupplyAndDemandList } from '@/service/supply-and-demand'
   import { navigateToAlumniEnterpriseDetail, navigateToSupplyAndDemandDetail } from '@/common/navigates'
-  import { systemInfo } from '@/stores/system-info'
   import { ref } from 'vue'
 
   const { alumniDetail, refresh } = useAlumniDetail()
   const { supplyAndDemandList, refresh: refreshSupplyAndDemandList } = useSupplyAndDemandList()
   const marginTop = ref(0)
-  onLoad(() => {
-    console.log(systemInfo)
-    refresh()
-    refreshSupplyAndDemandList()
-  })
-  onReady(() => {})
+
+  function getShareVal() {
+    const { name: title, avatar: imageUrl } = alumniDetail.value
+    return {
+      title,
+      imageUrl
+    }
+  }
+
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
+  refreshSupplyAndDemandList()
 </script>
 <template>
   <view class="alumni-detail">
@@ -33,7 +39,7 @@
             :size="180"
             :src="alumniDetail.avatar"
           ></u-avatar>
-          <u-button class="aa-button" type="primary" size="mini">联系Ta</u-button>
+          <u-button class="u-button" type="primary" size="mini">联系Ta</u-button>
         </view>
       </view>
       <view class="aa-font-paragraph-title mt-30">Ta供需</view>
@@ -78,7 +84,7 @@
       transform: translate(-50%, -50%);
     }
 
-    .aa-button {
+    .u-button {
       position: absolute;
       top: 50rpx;
       right: 50rpx;

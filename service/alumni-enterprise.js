@@ -250,12 +250,12 @@ export function useAlumniEnterpriseJodDetail() {
     return data
   }
 
-  async function refreshAlumniEnterpriseJodDetail() {
+  async function refresh() {
     alumniEnterpriseJodDetail.value = await _getAlumniEnterpriseJodDetail()
   }
 
   return {
     alumniEnterpriseJodDetail,
-    refreshAlumniEnterpriseJodDetail
+    refresh
   }
 }

@@ -1,13 +1,10 @@
 <script setup>
-  import { onLoad, onReachBottom, onPullDownRefresh } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { navigateToActivityDetail } from '@/common/navigates'
   import { useActivityList } from '@/service/alumni-activities'
 
   const { activityList, loadStatus, noData, refresh, loadMore } = useActivityList(true)
   refresh()
-  // onLoad(() => {
-  //   refresh()
-  // })
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     await refresh()

@@ -1,5 +1,4 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
   import { ref, watch } from 'vue'
   import { useSearchOrderList } from '@/service/personal-center'
   import { navigateToMyOrdersDetail } from '@/common/navigates'
@@ -7,10 +6,7 @@
   const { searchResult, query, refresh, noData, loadMore, loadStatus, setParamsAndRefresh } = useSearchOrderList()
   const activeIndex = ref(0)
   const tabs = [{ name: '全部' }, { name: '待付款' }, { name: '待收货' }, { name: '已完成' }, { name: '已消除' }]
-  onLoad(() => {
-    refresh()
-  })
-
+  refresh()
   watch(activeIndex, newVal => setParamsAndRefresh('type', newVal))
 </script>
 <template>

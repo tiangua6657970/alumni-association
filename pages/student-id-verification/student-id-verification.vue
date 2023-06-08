@@ -1,7 +1,8 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { reactive, ref } from 'vue'
   import { getFormRules } from '@/common/utils'
+
   const formRef = ref()
   const marginTop = ref(0)
   const form = reactive({

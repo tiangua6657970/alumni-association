@@ -1,5 +1,5 @@
 <script setup>
-  import { onLoad, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { reactive, ref, watch } from 'vue'
   import { getFormRules } from '@/common/utils'
   import { postDemandAndSupply } from '@/service/supply-and-demand'
@@ -47,9 +47,7 @@
     { name: 'paragraph', message: '请输入供需说明' }
   ])
   const { industryCategoryList, refresh: refreshIndustryCategoryList } = useIndustryCategoryList()
-  onLoad(() => {
-    refreshIndustryCategoryList()
-  })
+  refreshIndustryCategoryList()
   onReady(() => {
     formRef.value.setRules(rules)
   })

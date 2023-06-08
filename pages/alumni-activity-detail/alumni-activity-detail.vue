@@ -1,14 +1,10 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { navigateToAlumniActivityRegistration } from '@/common/navigates'
   import { activityCancelRegistration, useAlumniActivityDetail } from '@/service/alumni-activities'
 
   const props = defineProps({ id: String })
   const { alumniActivityDetail, refresh } = useAlumniActivityDetail(props)
-  refresh()
-  // onLoad(() => {
-  //   refresh()
-  // })
 
   function handleInfoItemEndClick(item) {
     console.log(item, 'handleInfoItemEndClick')
@@ -23,6 +19,18 @@
     console.log(res, 'res')
     refresh()
   }
+
+  function getShareVal() {
+    const { title, cover: imageUrl } = alumniActivityDetail.value
+    return {
+      title: title,
+      imageUrl
+    }
+  }
+
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
 </script>
 <template>
   <view class="alumni-activity-detail" v-if="alumniActivityDetail.id">

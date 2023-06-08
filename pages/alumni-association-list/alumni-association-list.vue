@@ -1,14 +1,11 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
   import { useAlumniAssociationList } from '@/service/alumni-and-alumni-association'
   import { selectedAlumniAssociation } from '@/stores/certification'
   import { navigateToAlumniAssociationDetail } from '@/common/navigates'
+
   const { query, loadStatus, searchResult, refresh, loadMore } = useAlumniAssociationList()
 
-  onLoad(() => {
-    refresh()
-  })
-
+  refresh()
 
   function handleCheckboxChange(item) {
     selectedAlumniAssociation.value = item

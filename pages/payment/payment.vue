@@ -1,15 +1,11 @@
 <script setup>
-  import { onLoad, onShow } from '@dcloudio/uni-app'
   import useShoppingCart from '@/stores/shopping-cart'
   import { ref } from 'vue'
   import { navigateToPaymentResult } from '@/common/navigates'
 
+  defineProps({ orderId: Number })
   const shoppingCart = useShoppingCart()
   const paymentMethod = ref('')
-  onLoad(options => {
-    console.log(options.orderId, 'orderId')
-  })
-
   function handlePayment() {
     navigateToPaymentResult()
   }

@@ -1,6 +1,6 @@
 <script setup>
   import { useSearchSupplyAndDemandList } from '@/service/supply-and-demand'
-  import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onReachBottom, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import {
     navigateToAlumniEnterpriseDetail,
     navigateToPostDemandAndSupply,
@@ -55,11 +55,15 @@
     delete showFilterItems[key]
     setParamsAndRefresh(key, undefined)
   }
-
-  onLoad(() => {
-    refresh()
-    refreshIndustryCategoryList()
-  })
+  function getShareVal() {
+    return {
+      title: '校友会供需'
+    }
+  }
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
+  refreshIndustryCategoryList()
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     for (const showFilterItemsKey in showFilterItems) {

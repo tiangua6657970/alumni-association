@@ -1,11 +1,10 @@
 <script setup>
-  import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useSearchSupplyAndDemandList } from '@/service/supply-and-demand'
-  import  { navigateToSupplyAndDemandDetail } from '@/common/navigates'
+  import { navigateToSupplyAndDemandDetail } from '@/common/navigates'
+
   const { searchResult, noData, loadStatus, refresh, loadMore } = useSearchSupplyAndDemandList()
-  onLoad(() => {
-    refresh()
-  })
+  refresh()
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     await refresh()
@@ -29,4 +28,3 @@
     background-color: #f7f7f7;
   }
 </style>
-

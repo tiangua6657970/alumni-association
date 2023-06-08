@@ -21,26 +21,28 @@
         >{{ item.text }}</u-button
       >
     </template>
-    <u-icon
-      class="bottom__share-btn ml-10"
-      name="share"
-      :size="30"
-      color="#2b85e4"
-      label="分享"
-      label-color="#2b85e4"
-      @click="$emit('share')"
-      v-if="showShare"
-    />
-    <u-icon
-      class="bottom__contact-btn ml-10"
-      name="phone-fill"
-      :size="30"
-      color="#2b85e4"
-      label="联系"
-      label-color="#2b85e4"
-      @click="$emit('contact')"
-      v-if="showContact"
-    />
+    <u-button class="bottom__share-btn ml-10" open-type="share">
+      <u-icon
+        name="share"
+        :size="30"
+        color="#2b85e4"
+        label="分享"
+        label-color="#2b85e4"
+        @click="$emit('share')"
+        v-if="showShare"
+      />
+    </u-button>
+    <u-button class="bottom__contact-btn ml-10">
+      <u-icon
+        name="phone-fill"
+        :size="30"
+        color="#2b85e4"
+        label="联系"
+        label-color="#2b85e4"
+        @click="$emit('contact')"
+        v-if="showContact"
+      />
+    </u-button>
   </view>
 </template>
 

@@ -1,6 +1,7 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { useRegister } from '@/service/auth'
+
   const { form, formRef, submit, rules } = useRegister()
 
   onReady(() => {

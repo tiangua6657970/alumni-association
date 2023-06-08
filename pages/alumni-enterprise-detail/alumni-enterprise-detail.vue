@@ -1,4 +1,5 @@
 <script setup>
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { ref, watch } from 'vue'
   import { useAlumniEnterpriseDetail } from '@/service/alumni-enterprise'
   import {
@@ -8,7 +9,7 @@
     navigateToSupplyAndDemandDetail
   } from '@/common/navigates'
   import { useSupplyAndDemandList } from '@/service/supply-and-demand'
-  import AaGap from "@/components/base/aa-gap/aa-gap.vue";
+  import AaGap from '@/components/base/aa-gap/aa-gap.vue'
 
   const activeIndex = ref(0)
   const {
@@ -32,7 +33,6 @@
     { name: '校友风采' },
     { name: '供需信息' }
   ]
-  refreshAlumniEnterpriseDetail()
   const fetchMap = {
     0: refreshAlumniEnterpriseDetail,
     1: refreshAlumniEnterpriseProductServiceList,
@@ -40,7 +40,6 @@
     3: refreshAlumniAchievementsList,
     4: refreshAlumniEnterpriseSupplyAndDemandList
   }
-  watch(activeIndex, newVal => fetchMap[newVal]())
 
   function handleEnterpriseProductServiceItemClick(item) {
     navigateToDynamicDetail({ id: item.id, navigationBarTitle: '产品服务详情' })
@@ -49,11 +48,24 @@
   function handleAlumniAchievementItemClick(item) {
     navigateToDynamicDetail({ id: item.id, navigationBarTitle: '校友风采详情' })
   }
+  watch(activeIndex, newVal => fetchMap[newVal]())
+
+  function getShareVal() {
+    const { name: title, cover: imageUrl } = alumniEnterpriseDetail.value
+    return {
+      title,
+      imageUrl
+    }
+  }
+
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refreshAlumniEnterpriseDetail()
 </script>
 <template>
   <view class="alumni-enterprise-detail" v-if="alumniEnterpriseDetail.id">
     <aa-tabs :list="tabs" v-model="activeIndex" />
-    <aa-gap :height="20"/>
+    <aa-gap :height="20" />
     <template v-if="activeIndex === 0">
       <u-image class="cover" :src="alumniEnterpriseDetail.cover" :height="400" />
       <view class="container">

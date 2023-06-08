@@ -1,16 +1,10 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
   import { useOrderDetail } from '@/service/personal-center'
   import { navigateToProductDetail } from '@/common/navigates'
 
-  const { orderDetail, refresh } = useOrderDetail()
-  onLoad(options => {
-    refresh(options)
-  })
-
-  function handleProductItemClick(item) {
-    console.log(item, 'item')
-  }
+  const props = defineProps({ id: Number })
+  const { orderDetail, refresh } = useOrderDetail(props)
+  refresh()
 </script>
 <template>
   <div class="my-orders-detail aa-container">

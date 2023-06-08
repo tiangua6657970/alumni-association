@@ -1,13 +1,20 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { useSupplyAndDemandDetail } from '@/service/supply-and-demand'
   import { navigateToAlumniEnterpriseDetail } from '@/common/navigates'
 
   const props = defineProps(['id'])
   const { detailData: data, refresh } = useSupplyAndDemandDetail(props)
-  onLoad(() => {
-    refresh()
-  })
+  function getShareVal() {
+    const { title } = data
+    return {
+      title,
+      imageUrl: ''
+    }
+  }
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
 </script>
 <template>
   <view class="supply-and-demand-details">

@@ -3,7 +3,7 @@
   import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useDynamicList, useDynamicListCategoryList } from '@/service/dynamic'
   import { navigateToDynamicDetail } from '@/common/navigates'
-  import AaGap from "@/components/base/aa-gap/aa-gap.vue";
+  import AaGap from '@/components/base/aa-gap/aa-gap.vue'
 
   const activeIndex = ref(0)
   const { dynamicListCategoryList, refresh: refreshDynamicListCategoryList } = useDynamicListCategoryList()
@@ -35,7 +35,7 @@
 <template>
   <view class="news-and-events">
     <aa-tabs :list="dynamicListCategoryList" v-model="activeIndex" />
-    <aa-gap :height="20"/>
+    <aa-gap :height="20" />
     <aa-content-list
       :list="dynamicList"
       :showTop="false"

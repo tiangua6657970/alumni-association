@@ -16,15 +16,17 @@ export const locationStore = reactive({
   province: '',
   // 市
   city: '',
-  citycode: '',
   // 区
-  district: ''
+  district: '',
+  street: '',
+  number: ''
 })
 
 export const currentAddress = computed(() => {
   const { province, city, district } = locationStore
   return `${province}-${city}-${district}`
 })
+export const currentAddressLine = computed(() => `${locationStore.street}${locationStore.number}`)
 
 export const positionStatus = ref('reposition') // reposition | positioning | positionErr
 const positionStatusTextMap = {
@@ -35,10 +37,11 @@ const positionStatusTextMap = {
 export const positionStatusText = computed(() => positionStatusTextMap[positionStatus.value])
 
 export const currentAlumniAssociation = computed(() => {
-  if (positionStatus.value === 'positioning') {
-    return positionStatusTextMap[positionStatus.value]
+  if (positionStatus.value === 'reposition') {
+    return `桂电校友会-${locationStore.city}`
+  } else {
+    return positionStatusTextMap[positionStatus.value];
   }
-  return `桂电校友会-${locationStore.city}`
 })
 
 export function refreshLocation() {
@@ -50,6 +53,7 @@ export function refreshLocation() {
     success: res => {
       positionStatus.value = 'reposition'
       const [regeo] = res
+      console.log(res, 'res')
       const {
         name,
         desc,
@@ -57,7 +61,7 @@ export function refreshLocation() {
         longitude,
         regeocodeData: { addressComponent }
       } = regeo
-      const { country, province, city, citycode, district } = addressComponent
+      const { country, province, city, district, streetNumber } = addressComponent
       locationStore.name = name
       locationStore.desc = desc
       locationStore.latitude = latitude
@@ -65,8 +69,10 @@ export function refreshLocation() {
       locationStore.country = country
       locationStore.province = province
       locationStore.city = city
-      locationStore.citycode = citycode
       locationStore.district = district
+      const { street, number } = streetNumber
+      locationStore.street = street
+      locationStore.number = number
     },
     fail: err => {
       positionStatus.value = 'positionErr'

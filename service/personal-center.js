@@ -39,7 +39,7 @@ export function mapDeliveryAddress(data) {
   }
 }
 
-export function useOrderDetail() {
+export function useOrderDetail(params) {
   const orderDetail = reactive({
     orderNum: '',
     orderTime: '',
@@ -57,7 +57,7 @@ export function useOrderDetail() {
     productList: []
   })
 
-  async function _getOrderDetail(params) {
+  async function _getOrderDetail() {
     let { data } = await getOrderDetail({ id: params.id })
     if (!isMock) {
       data = mapOrder(data)
@@ -65,7 +65,7 @@ export function useOrderDetail() {
     return data
   }
 
-  async function refresh(params) {
+  async function refresh() {
     const {
       orderNum,
       orderTime,
@@ -76,7 +76,7 @@ export function useOrderDetail() {
       orderStatus,
       id,
       productList
-    } = await _getOrderDetail(params)
+    } = await _getOrderDetail()
     const paymentMethodMap = {
       1: '微信支付',
       2: '支付宝支付',

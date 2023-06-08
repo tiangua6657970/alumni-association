@@ -1,5 +1,5 @@
 import { computed, reactive, ref } from 'vue'
-import { getDeliveryAddressList, getProfile } from "@/service/personal-center";
+import { getDeliveryAddressList, getProfile, mapDeliveryAddress } from "@/service/personal-center";
 import { isMock } from '@/common/env'
 
 function mapProfile(data) {
@@ -91,7 +91,7 @@ export const deliveryAddressListStore = ref([])
 async function _getDeliveryAddressList() {
   let { data } = await getDeliveryAddressList()
   if (!isMock) {
-    data = data.map(item => processDeliveryAddress(item))
+    data = data.map(item => mapDeliveryAddress(item))
   }
   return data
 }

@@ -1,11 +1,11 @@
 <script setup>
-  import { onLoad, onReady } from '@dcloudio/uni-app'
+  import { onReady } from '@dcloudio/uni-app'
   import { useDeliveryAddressDetail } from '@/service/personal-center'
   import { ref } from 'vue'
   import { getFormRules } from '@/common/utils'
-  import { refreshLocation } from '@/stores/location'
+  import { currentAddressLine } from '@/stores/location'
 
-  const props = defineProps({ id: String })
+  const props = defineProps({ id: String, edit: Boolean })
   const { deliveryAddressDetail, refresh } = useDeliveryAddressDetail(props)
   const formRef = ref()
   const addressSelectorShow = ref(false)
@@ -20,25 +20,21 @@
     receiverPhone: commonRules.phone,
     placeholderAddress: commonRules.placeholderAddress
   }
-  onLoad(options => {
-    if (options.edit && options.id) {
-      uni.setNavigationBarTitle({ title: '编辑收货地址' })
-      refresh()
-    }
-  })
+  if (props.edit && props.id) {
+    uni.setNavigationBarTitle({ title: '编辑收货地址' })
+    refresh()
+  }
+
   onReady(() => {
     formRef.value.setRules(rules)
   })
-
-  function handlePosition() {
-    refreshLocation()
-  }
 
   function handleAddressSelectionConfirm(result) {
     deliveryAddressDetail.placeholderAddress = `${result.province.name}-${result.city.name}-${result.area.name}`
   }
 
   function handleLocationSelectionConfirm(result) {
+    deliveryAddressDetail.shippingAddressLine = currentAddressLine
     console.log(result, 'result')
   }
 

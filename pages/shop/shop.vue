@@ -1,10 +1,16 @@
 <script setup>
-  import { onLoad, onPageScroll, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
+  import {
+    onPageScroll,
+    onPullDownRefresh,
+    onReachBottom,
+    onShareAppMessage,
+    onShareTimeline
+  } from '@dcloudio/uni-app'
   import { nextTick, ref, watch } from 'vue'
   import { useSearchProductList } from '@/service/shop'
   import { navigateToProductDetail, navigateToShoppingCart } from '@/common/navigates'
   import useShoppingCart from '@/stores/shopping-cart'
-  import AaGap from "@/components/base/aa-gap/aa-gap.vue";
+  import AaGap from '@/components/base/aa-gap/aa-gap.vue'
 
   const tabs = [{ name: '全部' }, { name: '类别' }, { name: '销量' }, { name: '价格' }]
   const activeIndex = ref(0)
@@ -21,6 +27,24 @@
     resetParamsAndRefreshFactory
   } = useSearchProductList(refreshCallback)
   const shoppingCart = useShoppingCart()
+  const setParamsAndRefresh = setParamsAndRefreshFactory(refreshCallback)
+  const resetParamsAndRefresh = resetParamsAndRefreshFactory(refreshCallback)
+  const refresh = refreshFactory(refreshCallback)
+
+  watch(activeIndex, newVal => {
+    setParamsAndRefresh('type', tabs[newVal])
+  })
+
+  onPullDownRefresh(async () => {
+    await refresh()
+    uni.stopPullDownRefresh()
+  })
+  onReachBottom(() => {
+    loadMore()
+  })
+  onPageScroll(e => {
+    scrollTop.value = e.scrollTop
+  })
 
   // 瀑布流组件的bug，刷新、切换的时候要先重置列表再赋值能解决
   function refreshCallback() {
@@ -31,32 +55,19 @@
     })
   }
 
-  const setParamsAndRefresh = setParamsAndRefreshFactory(refreshCallback)
-  const resetParamsAndRefresh = resetParamsAndRefreshFactory(refreshCallback)
-
-  const refresh = refreshFactory(refreshCallback)
-
-  watch(activeIndex, newVal => {
-    setParamsAndRefresh('type', tabs[newVal])
-  })
-  onLoad(() => {
-    refresh()
-  })
-  onPullDownRefresh(async () => {
-    await refresh()
-    uni.stopPullDownRefresh()
-  })
-  onReachBottom(() => {
-    loadMore()
-  })
-
-  onPageScroll(e => {
-    scrollTop.value = e.scrollTop
-  })
-
   function handleProductIconClick(item) {
     shoppingCart.toggle(item)
   }
+
+  function getShareVal() {
+    return {
+      title: '校友会商城'
+    }
+  }
+
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
+  refresh()
 </script>
 <template>
   <view class="shop">
@@ -76,12 +87,13 @@
     </aa-top-background>
     <view class="aa-container" :style="{ marginTop: marginTop + 'px' }">
       <aa-tabs :list="tabs" v-model="activeIndex" />
-      <aa-gap :height="20"/>
+      <aa-gap :height="20" />
       <pp-waterfall-flow
         :value="searchResult"
         @iconClick="handleProductIconClick"
         @clickItem="navigateToProductDetail(searchResult[$event])"
         @clickImage="navigateToProductDetail(searchResult[$event])"
+        v-if="searchResult.length"
       ></pp-waterfall-flow>
       <u-loadmore :status="loadStatus" v-if="searchResult.length" @loadmore="loadMore" />
       <aa-empty :show="noData" :top="400 + 88" />

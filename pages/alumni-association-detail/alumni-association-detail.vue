@@ -1,11 +1,20 @@
 <script setup>
-  import { onLoad, onShow, onReady } from '@dcloudio/uni-app'
+  import { onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app'
   import { useAlumniAssociationDetail } from '@/service/alumni-and-alumni-association'
+
   const { alumniAssociationDetail, refresh } = useAlumniAssociationDetail()
+
+  function getShareVal() {
+    const { name: title, avatar: imageUrl } = alumniAssociationDetail.value
+    return {
+      title,
+      imageUrl
+    }
+  }
+
+  onShareAppMessage(getShareVal)
+  onShareTimeline(getShareVal)
   refresh()
-  onLoad(() => {
-  
-  })
 </script>
 <template>
   <div class="alumni-association-detail aa-container">

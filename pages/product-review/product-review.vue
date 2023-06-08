@@ -1,11 +1,8 @@
 <script setup>
-  import { onLoad, onShow } from '@dcloudio/uni-app'
   import { useProductReviewList } from '@/service/shop'
 
   const { productReviewList, refresh } = useProductReviewList()
-  onLoad(() => {
-    refresh()
-  })
+  refresh()
 </script>
 <template>
   <view class="product-review aa-container">
@@ -35,15 +32,18 @@
       margin-bottom: 20rpx;
       border-radius: 8rpx;
       background: #ffffff;
+
       .product-review-item__header {
         display: flex;
         align-items: center;
         padding: 0 20rpx 20rpx 20rpx;
+
         .aa-font-title {
           flex: 1;
           margin-left: 20rpx;
         }
       }
+
       .product-review-item__content-header {
         display: flex;
         align-items: center;

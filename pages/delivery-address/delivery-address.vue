@@ -1,14 +1,11 @@
 <script setup>
-  import { onLoad } from '@dcloudio/uni-app'
   import { navigateTo, navigateToAddDeliveryAddress, pathMap } from '@/common/navigates'
   import { ref } from 'vue'
   import { deliveryAddressListStore } from '@/stores/personal-center'
 
+  const props = defineProps({ selectShow: { type: String } })
   const selectShow = ref(false)
-
-  onLoad(options => {
-    selectShow.value = options.showSelect
-  })
+  selectShow.value = props.showSelect
   function add() {}
 
   function handleSelect(item) {

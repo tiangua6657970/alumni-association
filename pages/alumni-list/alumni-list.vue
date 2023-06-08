@@ -1,13 +1,11 @@
 <script setup>
-  import { onLoad, onReachBottom, onPullDownRefresh } from '@dcloudio/uni-app'
+  import { onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app'
   import { useSearchAlumniList } from '@/service/alumni-and-alumni-association'
   import { selectedAlumniList } from '@/stores/certification'
   import { navigateToAlumniDetail } from '@/common/navigates'
 
   const { refresh, query, searchResult, loadMore, loadStatus } = useSearchAlumniList()
-  onLoad(() => {
-    refresh()
-  })
+  refresh()
   onReachBottom(loadMore)
   onPullDownRefresh(async () => {
     await refresh()
@@ -29,6 +27,7 @@
       searchResult.value.forEach(item => (item.disableCheckBox = false))
     }
   }
+
   function handleConfirm() {
     uni.navigateBack()
   }
