@@ -1,6 +1,6 @@
 <template>
   <view class="aa-jod-list">
-    <view class="aa-jod-item aa-container" v-for="item in list" @click="$emit('itemClick', item)">
+    <view class="aa-jod-item aa-container" v-for="item in list" :key="item.id" @click="$emit('itemClick', item)">
       <view class="aa-jod-item__left">
         <view class="aa-jod-item__title aa-font-title">{{ item.title }}</view>
         <view class="aa-jod-item__info aa-font-base">

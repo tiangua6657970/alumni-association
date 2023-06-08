@@ -1,8 +1,9 @@
 <script setup>
-  import { onLoad, onShow } from '@dcloudio/uni-app'
-  import { pathMap, navigateTo, navigateToAddDeliveryAddress } from '@/common/navigates'
+  import { onLoad } from '@dcloudio/uni-app'
+  import { navigateTo, navigateToAddDeliveryAddress, pathMap } from '@/common/navigates'
   import { ref } from 'vue'
   import { deliveryAddressListStore } from '@/stores/personal-center'
+
   const selectShow = ref(false)
 
   onLoad(options => {
@@ -16,7 +17,7 @@
   }
 
   function handleChange(index) {
-    deliveryAddressListStore.value.forEach((item, _index) => item.selected = _index === index)
+    deliveryAddressListStore.value.forEach((item, _index) => (item.selected = _index === index))
   }
 
   function handleEditItem(item) {}
@@ -60,10 +61,12 @@
         <view class="aa-font-desc">{{ item.shippingAddress }}</view>
       </view>
     </view>
-    <aa-empty mode="list" :show="!deliveryAddressListStore.length"/>
-    <aa-fixed-bottom-primary-btn @click="navigateTo(pathMap.addDeliveryAddress)"
-      >添加收货地址</aa-fixed-bottom-primary-btn
-    >
+    <aa-empty mode="list" :show="!deliveryAddressListStore.length" />
+    <aa-fixed-bottom-right @click="navigateTo(pathMap.addDeliveryAddress)">
+      <template #default>
+        <u-icon name="plus" :size="40" />
+      </template>
+    </aa-fixed-bottom-right>
   </view>
 </template>
 

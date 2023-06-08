@@ -5,6 +5,7 @@
     v-model="paragraph"
     type="textarea"
     clearable
+    required
     :placeholder="placeholder"
   />
 </template>
@@ -13,6 +14,9 @@
   export default {
     name: 'aa-textarea',
     emits: ['update:modelValue'],
+    options: {
+      styleIsolation: 'shared'
+    },
     props: {
       modelValue: {
         type: String,

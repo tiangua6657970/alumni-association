@@ -10,6 +10,7 @@
   const addressSelectorShow = ref(false)
   const industrySelectorShow = ref(false)
   const alumniAssociationSelectorShow = ref(false)
+  const locationPopupShow = ref(false)
   const form = reactive({
     name: '',
     cover: '',
@@ -26,9 +27,19 @@
     placeholderIndustry: '',
     placeholderAlumniAssociation: ''
   })
-  const { rules: commonRules } = getFormRules(form, ['name', 'phone'])
+  const { rules: commonRules, placeholders } = getFormRules(form, [
+    { name: 'name', message: '请输入企业名称' },
+    { name: 'phone', message: '请输入联系电话' },
+    { name: 'paragraph', message: '请输入企业简介' },
+    'placeholderIndustry',
+    'placeholderAddress'
+  ])
   const rules = {
     name: commonRules.name,
+    phone: commonRules.phone,
+    placeholderIndustry: commonRules.placeholderIndustry,
+    placeholderAddress: commonRules.placeholderAddress,
+    paragraph: commonRules.paragraph,
     enterpriseScale: [
       {
         required: true,
@@ -36,18 +47,10 @@
         trigger: ['blur']
       }
     ],
-    placeholderIndustry: [
+    cover: [
       {
         required: true,
-        message: '请选择行业',
-        trigger: ['blur']
-      }
-    ],
-    phone: commonRules.phone,
-    placeholderAddress: [
-      {
-        required: true,
-        message: '请选择地址',
+        message: '请上传企业logo',
         trigger: ['blur']
       }
     ],
@@ -62,20 +65,6 @@
       {
         required: true,
         message: '请输入企业负责人',
-        trigger: ['blur']
-      }
-    ],
-    paragraph: [
-      {
-        required: true,
-        message: '请输入企业简介',
-        trigger: ['blur']
-      }
-    ],
-    cover: [
-      {
-        required: true,
-        message: '请上传企业logo',
         trigger: ['blur']
       }
     ],
@@ -228,6 +217,10 @@
     form.enterpriseScale = result[0].label
   }
 
+  function handleLocationSelectionConfirm(result) {
+    console.log(result, 'result')
+  }
+
   function save() {
     formRef.value.validate(valid => {
       if (valid) {
@@ -241,7 +234,7 @@
     <u-form :model="form" ref="formRef">
       <view class="aa-container bg-white mb-20">
         <u-form-item label-width="auto" label="企业名称：" prop="name">
-          <u-input v-model="form.name" clearable placeholder="请输入企业名称" />
+          <u-input v-model="form.name" clearable :placeholder="placeholders.name" />
         </u-form-item>
         <u-form-item label-width="auto" label="企业规模：" prop="enterpriseScale">
           <u-input
@@ -259,12 +252,12 @@
             :select-open="industrySelectorShow"
             type="select"
             clearable
-            placeholder="请选择行业"
+            :placeholder="placeholders.placeholderIndustry"
             @click="industrySelectorShow = true"
           />
         </u-form-item>
         <u-form-item label-width="auto" label="联系电话：" prop="phone">
-          <u-input v-model="form.phone" clearable placeholder="请输入联系电话" />
+          <u-input v-model="form.phone" clearable :placeholder="placeholders.phone" />
         </u-form-item>
         <u-form-item label-width="auto" label="地址：" prop="placeholderAddress">
           <template #right>
@@ -275,7 +268,7 @@
             :select-open="addressSelectorShow"
             type="select"
             clearable
-            placeholder="请选择地址"
+            :placeholder="placeholders.placeholderAddress"
             @click="addressSelectorShow = true"
           />
         </u-form-item>
@@ -300,7 +293,7 @@
       <view class="aa-container bg-white mb-20">
         <view class="aa-font-title mb-30">企业简介</view>
         <u-form-item class="p-0" :label-width="0" :border-bottom="false" prop="paragraph">
-          <aa-textarea style="width: 100%" v-model="form.paragraph" placeholder="请输入你的企业简介" />
+          <aa-textarea style="width: 100%" v-model="form.paragraph" :placeholder="placeholders.paragraph" />
         </u-form-item>
       </view>
       <view class="aa-container bg-white mb-20">
@@ -311,12 +304,7 @@
       </view>
       <view class="aa-container bg-white mb-20">
         <view class="aa-font-title mb-30">企业法人登记证/营业执照</view>
-        <u-form-item
-          class="p-0"
-          :label-width="0"
-          :border-bottom="false"
-          prop="businessLicense"
-        >
+        <u-form-item class="p-0" :label-width="0" :border-bottom="false" prop="businessLicense">
           <aa-upload-single-image class="" />
         </u-form-item>
         <view class="aa-fix-fixed-bottom-btn"></view>
@@ -330,6 +318,7 @@
       @confirm="handleIndustrySelectionConfirm"
     ></u-select>
     <u-select v-model="scaleSelectorShow" :list="scaleList" @confirm="scaleSelectionConfirm"></u-select>
+    <aa-location-selection-popup v-model="locationPopupShow" @confirm="handleLocationSelectionConfirm" />
     <aa-fixed-bottom-primary-btn @click="save">提交</aa-fixed-bottom-primary-btn>
   </view>
 </template>

@@ -1,8 +1,7 @@
 import { __TOKEN__ } from '@/common/keys'
-import { isMock } from '@/common/env'
 
 export const serverConfig = {
-  baseUrl: '',//isMock ? 'https://mock.apifox.cn/m1/2374747-0-default' : 'http://192.168.1.23:8091', // 请求的本域名 //
+  baseUrl: '',
   method: 'POST',
   // 设置为json，返回后会对数据进行一次JSON.parse()
   dataType: 'json',
@@ -43,7 +42,7 @@ export function request(url, params = {}, requestMethod = 'GET', config = {}) {
       } else return { err: undefined, data: res.data }
     })
     .catch(err => {
-      console.log('[service err] :', err)
+      console.error('[service err] :', err)
       return { err: 1, data: undefined }
       // throw 'service err'
     })

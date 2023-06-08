@@ -4,8 +4,7 @@
   import { getFormRules } from '@/common/utils'
   import { postDemandAndSupply } from '@/service/supply-and-demand'
   import useIndustryCategoryList from '@/service/common/use-industry-category-list'
-  import { TYPE_TEXT_MAP } from '@/common/constants'
-  import { currentAddress, positionStatusText, refreshLocation } from '@/stores/location'
+  import { TYPE_LIST, TYPE_TEXT_MAP } from '@/common/constants'
 
   const form = reactive({
     title: '',
@@ -25,7 +24,6 @@
   const formRef = ref()
   const typeSelectorShow = ref(false)
   const industrySelectorShow = ref(false)
-  const typeSelectorDefaultIndex = ref(0)
   const datetimeSelectorShow = ref(false)
   const locationPopupShow = ref(false)
   const datetimeSelectorParams = {
@@ -38,63 +36,16 @@
     timestamp: true
   }
   const addressSelectorShow = ref(false)
-  const typeList = [
-    {
-      value: 1,
-      label: '需求'
-    },
-    {
-      value: 2,
-      label: '提供'
-    }
-  ]
-  const { rules: commonRules } = getFormRules(form, ['title', 'phone'])
-  const rules = {
-    title: commonRules.title,
-    placeholderType: [
-      {
-        required: true,
-        message: '请选择类型',
-        trigger: ['blur']
-      }
-    ],
-    placeholderIndustry: [
-      {
-        required: true,
-        message: '请选择行业',
-        trigger: ['blur']
-      }
-    ],
-    placeholderAddress: [
-      {
-        required: true,
-        message: '请输入地址',
-        trigger: ['blur']
-      }
-    ],
-    placeholderValidTime: [
-      {
-        required: true,
-        message: '请输入有效时间',
-        trigger: ['blur']
-      }
-    ],
-    name: [
-      {
-        required: true,
-        message: '请输入联系人姓名',
-        trigger: ['blur']
-      }
-    ],
-    phone: commonRules.phone,
-    paragraph: [
-      {
-        required: true,
-        message: '请输入供需说明',
-        trigger: ['blur']
-      }
-    ]
-  }
+  const { rules, placeholders } = getFormRules(form, [
+    'title',
+    'placeholderType',
+    'placeholderIndustry',
+    'placeholderAddress',
+    'placeholderValidTime',
+    { name: 'name', message: '请输入联系人姓名' },
+    { name: 'phone', message: '请输入联系人手机号' },
+    { name: 'paragraph', message: '请输入供需说明' }
+  ])
   const { industryCategoryList, refresh: refreshIndustryCategoryList } = useIndustryCategoryList()
   onLoad(() => {
     refreshIndustryCategoryList()
@@ -106,7 +57,6 @@
 
   function handleTypeSelectionConfirm(result) {
     const { value } = result[0]
-    typeSelectorDefaultIndex.value = typeList.findIndex(item => item.value === value)
     form.placeholderType = TYPE_TEXT_MAP[value]
     form.type = value
   }
@@ -141,7 +91,9 @@
     ]
   }
 
-  function handlePosition() {}
+  function handleLocationSelectionConfirm(result) {
+    console.log(result, 'result')
+  }
 
   function save() {
     formRef.value.validate(async valid => {
@@ -182,7 +134,7 @@
   <view class="post-demand-and-supply aa-container">
     <u-form class="profile-form" :model="form" ref="formRef">
       <u-form-item label-width="auto" label="标题" prop="title">
-        <u-input v-model="form.title" clearable placeholder="请输入标题" />
+        <u-input v-model="form.title" clearable :placeholder="placeholders.title" />
       </u-form-item>
       <u-form-item label-width="auto" label="类型：" prop="placeholderType">
         <u-input
@@ -190,7 +142,7 @@
           :select-open="typeSelectorShow"
           type="select"
           clearable
-          placeholder="请选择类型"
+          :placeholder="placeholders.placeholderType"
           @click="typeSelectorShow = true"
         />
       </u-form-item>
@@ -200,7 +152,7 @@
           :select-open="industrySelectorShow"
           type="select"
           clearable
-          placeholder="请选择行业"
+          :placeholder="placeholders.placeholderIndustry"
           @click="industrySelectorShow = true"
         />
       </u-form-item>
@@ -219,7 +171,7 @@
           :select-open="addressSelectorShow"
           type="select"
           clearable
-          placeholder="请选择地址"
+          :placeholder="placeholders.placeholderAddress"
           @click="addressSelectorShow = true"
         />
       </u-form-item>
@@ -232,26 +184,27 @@
           :select-open="datetimeSelectorShow"
           type="select"
           clearable
-          placeholder="请输入有效时间"
+          :placeholder="placeholders.placeholderValidTime"
           @click="datetimeSelectorShow = true"
         />
       </u-form-item>
       <u-form-item label-width="auto" label="联系人" prop="name">
-        <u-input v-model="form.name" clearable placeholder="请输入联系人姓名" />
+        <u-input v-model="form.name" clearable :placeholder="placeholders.name" />
       </u-form-item>
       <u-form-item label-width="auto" label="联系人手机号" prop="phone">
-        <u-input v-model="form.phone" clearable placeholder="请输入手机号" />
+        <u-input v-model="form.phone" clearable :placeholder="placeholders.phone" />
       </u-form-item>
       <u-form-item label-width="auto" label="供需说明：" prop="paragraph" label-position="top">
-        <u-input v-model="form.paragraph" type="textarea" :height="300" clearable placeholder="请输入供需说明" />
+        <u-input
+          v-model="form.paragraph"
+          type="textarea"
+          :height="300"
+          clearable
+          :placeholder="placeholders.paragraph"
+        />
       </u-form-item>
     </u-form>
-    <u-select
-      v-model="typeSelectorShow"
-      :list="typeList"
-      :default-value="[typeSelectorDefaultIndex]"
-      @confirm="handleTypeSelectionConfirm"
-    ></u-select>
+    <u-select v-model="typeSelectorShow" :list="TYPE_LIST" @confirm="handleTypeSelectionConfirm"></u-select>
     <u-select
       v-model="industrySelectorShow"
       :list="industryCategoryList"
@@ -267,39 +220,13 @@
       @confirm="handleDatetimeSelectionConfirm"
     ></u-picker>
     <u-picker v-model="addressSelectorShow" mode="region" @confirm="handleAddressSelectionConfirm"></u-picker>
-    <u-popup v-model="locationPopupShow" mode="bottom">
-      <view class="location-selection">
-        <view class="location-selection-item">
-          <view class="aa-font-desc">使用当前定位：</view>
-          <view class="aa-font-desc-light">{{ currentAddress }}</view>
-        </view>
-        <view class="location-selection-item mt-30">
-          <u-button size="mini" type="primary">确定</u-button>
-          <u-button class="ml-20" size="mini" type="primary" @click="refreshLocation"
-            >{{ positionStatusText }}
-          </u-button>
-        </view>
-      </view>
-    </u-popup>
+    <aa-location-selection-popup v-model="locationPopupShow" @confirm="handleLocationSelectionConfirm" />
     <aa-submit-button @click="save">保存</aa-submit-button>
   </view>
 </template>
 
 <style scoped lang="scss">
   .post-demand-and-supply {
-  }
-
-  .location-selection {
-    height: 500rpx;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    .location-selection-item {
-      display: flex;
-      align-items: center;
-    }
   }
 
   .aa-submit-button {

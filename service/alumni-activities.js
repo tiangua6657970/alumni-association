@@ -183,29 +183,3 @@ export function useAlumniActivityDetail(props) {
     refresh
   }
 }
-
-export function useActivityRegistration(props) {
-  const formRef = ref()
-  const form = reactive({ name: '', phone: '' })
-  const { rules } = getFormRules(form, ['name', 'phone'])
-
-  async function submit() {
-    const valid = await formRef.value.validate()
-    if (valid) {
-      form.mobile = form.phone
-      form.activityId = props.id
-      const { err } = await activityRegistration(form)
-      if (!err) {
-        uni.$u.toast('报名成功')
-        formRef.value.resetFields()
-      }
-    }
-  }
-
-  return {
-    formRef,
-    form,
-    rules,
-    submit
-  }
-}

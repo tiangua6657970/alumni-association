@@ -38,7 +38,7 @@ export const currentAlumniAssociation = computed(() => {
   if (positionStatus.value === 'positioning') {
     return positionStatusTextMap[positionStatus.value]
   }
-  return `桂电${locationStore.city}校友会`
+  return `桂电校友会-${locationStore.city}`
 })
 
 export function refreshLocation() {
@@ -48,7 +48,6 @@ export function refreshLocation() {
   })
   aMap.getRegeo({
     success: res => {
-      console.log('aMap.getRegeo', res)
       positionStatus.value = 'reposition'
       const [regeo] = res
       const {

@@ -21,6 +21,7 @@
         class="name-number-item"
         :class="{ 'u-border-right': index !== alumniAssociationDetail.nameNumberList.length - 1 }"
         v-for="(item, index) in alumniAssociationDetail.nameNumberList"
+        :key="item.name"
       >
         <view class="name-number-item__number">{{ item.number }}</view>
         <view class="name-number-item__name">{{ item.name }}</view>

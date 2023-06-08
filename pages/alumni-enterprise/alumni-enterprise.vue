@@ -68,15 +68,15 @@
       @itemClick="handleSelectTab"
     />
     <aa-show-filter-items customClass="mb-30" :items="showFilterItems" @itemClick="handleFilterItemClick" />
-    <aa-has-avatar-content-list class="aa-fix-fixed-bottom-btn" :list="searchResult" @itemClick="handleItemClick">
+    <aa-has-avatar-content-list :list="searchResult" @itemClick="handleItemClick">
       <template #bottom>
         <u-loadmore :status="loadStatus" v-if="searchResult.length" @loadmore="loadMore" />
       </template>
     </aa-has-avatar-content-list>
     <aa-empty :show="noData" :top="162"></aa-empty>
-    <aa-fixed-bottom-primary-btn @click="navigateToAlumniEnterpriseCertification"
-      >企业认证
-    </aa-fixed-bottom-primary-btn>
+    <aa-fixed-bottom-right @click="navigateToAlumniEnterpriseCertification">
+      认证
+    </aa-fixed-bottom-right>
     <u-select
       v-model="industrySelectorShow"
       mode="mutil-column-auto"
@@ -100,9 +100,4 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-</style>
-<style>
-page {
-  background-color: #fff;
-}
 </style>

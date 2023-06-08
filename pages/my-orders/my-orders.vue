@@ -18,7 +18,12 @@
     <u-search v-model="query" @search="refresh" @custom="refresh"></u-search>
     <aa-tabs :list="tabs" v-model="activeIndex" />
     <view class="order-list mt-30">
-      <aa-order-item v-for="item in searchResult" :data="item" @click="navigateToMyOrdersDetail(item)" />
+      <aa-order-item
+        v-for="item in searchResult"
+        :data="item"
+        :key="item.id"
+        @click="navigateToMyOrdersDetail(item)"
+      />
     </view>
   </div>
 </template>

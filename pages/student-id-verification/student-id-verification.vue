@@ -11,7 +11,7 @@
     id: '',
     idCardCopy: ''
   })
-  const { rules } = getFormRules(form, ['name', 'majorField', 'studentId', 'id', 'idCardCopy'])
+  const { rules, placeholders } = getFormRules(form, ['name', 'majorField', 'studentId', 'id', 'idCardCopy'])
   onReady(() => {
     formRef.value.setRules(rules)
   })
@@ -31,16 +31,16 @@
     <view class="aa-container container aa-fix-fixed-bottom-btn" :style="{ marginTop: marginTop + 'px' }">
       <u-form :model="form" ref="formRef">
         <u-form-item label-width="auto" label="姓名" prop="name">
-          <u-input v-model="form.name" clearable placeholder="请输入姓名" />
+          <u-input v-model="form.name" clearable :placeholder="placeholders.name" />
         </u-form-item>
         <u-form-item label-width="auto" label="专业" prop="majorField">
-          <u-input v-model="form.name" clearable placeholder="请输入专业" />
+          <u-input v-model="form.name" clearable :placeholder="placeholders.majorField" />
         </u-form-item>
         <u-form-item label-width="auto" label="学号" prop="studentId">
           <u-input v-model="form.name" clearable placeholder="请输入学号" />
         </u-form-item>
         <u-form-item label-width="auto" label="身份证号" prop="id">
-          <u-input v-model="form.id" clearable placeholder="请输入身份证号" />
+          <u-input v-model="form.id" clearable :placeholder="placeholders.studentId" />
         </u-form-item>
         <u-form-item label="请上传身份证附件" label-position="top" prop="idCardCopy">
           <aa-upload-single-image />
