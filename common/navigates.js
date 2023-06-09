@@ -1,15 +1,5 @@
-export function joinUrl(path, params = {}) {
-  const isString = typeof params === 'string'
-  return (
-    path +
-    '?' +
-    (isString
-      ? params
-      : Object.entries(params)
-        .map(item => item.join('='))
-        .join('&'))
-  )
-}
+import { __TOKEN__ } from '@/common/keys'
+
 export const pathMap = {
   // 首页
   index: '/pages/index/index',
@@ -42,7 +32,7 @@ export const pathMap = {
   dynamicDetail: '/pages/dynamic-detail/dynamic-detail',
   studentIdVerification: '/pages/student-id-verification/student-id-verification',
   login: '/pages/login/login',
-  register:'/pages/register/register',
+  register: '/pages/register/register',
   jobPositions: '/pages/job-positions/job-positions',
   editProfile: '/pages/edit-profile/edit-profile',
   orderReview: '/pages/order-review/order-review',
@@ -71,12 +61,53 @@ export const pathMap = {
   shipmentTracking: '/pages/shipment-tracking/shipment-tracking'
 }
 
+export function joinUrl(path, params = {}) {
+  const isString = typeof params === 'string'
+  return (
+    path +
+    '?' +
+    (isString
+      ? params
+      : Object.entries(params)
+          .map(item => item.join('='))
+          .join('&'))
+  )
+}
+
+/**
+ * 必须登录才能访问的页面
+ * @type {string[]}
+ */
+const loginRequiredPages = [
+  pathMap.alumniActivityDetail,
+  pathMap.alumniEnterpriseDetail,
+  pathMap.donationDetail,
+  pathMap.supplyAndDemandDetail,
+  pathMap.confirmOrder,
+  pathMap.editProfile,
+  pathMap.myActivities,
+  pathMap.mySupplyAndDemand,
+  pathMap.paymentRecords,
+  pathMap.myOrders,
+  pathMap.privacy,
+  pathMap.suggestionsAndFeedback,
+  pathMap.settings,
+  pathMap.alumniDetail,
+  pathMap.alumniAssociationDetail
+]
+
 /**
  *
  * @param path {string}
  * @param params
  */
 export function navigateTo(path, params = {}) {
+  if (loginRequiredPages.findIndex(item => item === path) !== -1) {
+    if (!uni.getStorageSync(__TOKEN__)) {
+      navigateToLogin()
+      return
+    }
+  }
   const url = joinUrl(path, params)
   uni.navigateTo({
     url: url,
@@ -95,8 +126,12 @@ export function switchTabToShop(arg = {}) {
 export function navigateToRegister() {
   navigateTo(pathMap.register)
 }
+
 export function navigateToLogin() {
   navigateTo(pathMap.login)
+}
+export function navigateEditProfile() {
+  navigateTo(pathMap.editProfile)
 }
 
 export function navigateToForgotPassword() {
@@ -195,8 +230,7 @@ export function navigateToMyOrdersDetail(item = {}) {
   navigateTo(pathMap.myOrdersDetail, { id: item.id })
 }
 
-export function navigateToShipmentTracking() {
-}
+export function navigateToShipmentTracking() {}
 
 export function navigateToAlumniEnterpriseCertification() {
   navigateTo(pathMap.alumniEnterpriseCertification)

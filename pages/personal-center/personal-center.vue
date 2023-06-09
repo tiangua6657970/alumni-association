@@ -1,5 +1,5 @@
 <script setup>
-  import { navigateTo, pathMap } from '@/common/navigates'
+  import { navigateEditProfile, navigateToLogin, navigateTo, pathMap } from '@/common/navigates'
   import { profileStore } from '@/stores/personal-center'
   import { ref } from 'vue'
   import { SEX_TEXT_MAP } from '@/common/constants'
@@ -14,10 +14,6 @@
     { icon: 'custom-icon-setting', content: '设置', path: pathMap.settings }
   ]
   const marginTop = ref(0)
-
-  function handleEditProfile() {
-    navigateTo(pathMap.editProfile)
-  }
   const background = {
     background: 'transparent'
   }
@@ -35,9 +31,14 @@
       <view class="content">
         <view class="info">
           <u-avatar :size="200" :src="profileStore.avatar" show-sex :sex-icon="SEX_TEXT_MAP[profileStore.sex]" />
-          <aa-blue-bold-name>{{ profileStore.name }}</aa-blue-bold-name>
-          <view class="aa-font-desc">{{ profileStore.desc }}</view>
-          <view class="edit-profile" @click="handleEditProfile">
+          <template v-if="profileStore.id">
+            <aa-blue-bold-name>{{ profileStore.name }}</aa-blue-bold-name>
+            <view class="aa-font-desc">{{ profileStore.desc }}</view>
+          </template>
+          <template v-else>
+            <aa-blue-bold-name @click="navigateToLogin">点击登录</aa-blue-bold-name>
+          </template>
+          <view class="edit-profile" @click="navigateEditProfile">
             <text class="edit-profile__text">编辑资料</text>
             <u-icon class="edit-profile__icon" :size="30" color="#fff" name="map" />
           </view>
@@ -96,6 +97,7 @@
       position: relative;
       top: -130rpx;
     }
+
     .info {
       display: flex;
       flex-direction: column;

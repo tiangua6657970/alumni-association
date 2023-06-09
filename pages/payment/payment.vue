@@ -3,7 +3,7 @@
   import { ref } from 'vue'
   import { navigateToPaymentResult } from '@/common/navigates'
 
-  defineProps({ orderId: Number })
+  defineProps({ orderId: [Number, String] })
   const shoppingCart = useShoppingCart()
   const paymentMethod = ref('')
   function handlePayment() {

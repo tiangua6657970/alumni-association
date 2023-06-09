@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { computed, reactive, ref, watch } from 'vue'
-import { __SHOPPING_CART__ } from "@/common/keys";
+import { computed, ref, watch } from 'vue'
+import { __SHOPPING_CART__ } from '@/common/keys'
 
 /**
  * @returns {[]}
@@ -13,7 +13,7 @@ function getLocalShoppingCartStore() {
     } else {
       return []
     }
-  }catch (err) {
+  } catch (err) {
     console.log(err)
     return []
   }
@@ -37,7 +37,7 @@ const useShoppingCart = defineStore('shopping-cart', () => {
   })
 
   watch(totalPrice, (newVal, oldValue) => {
-    oldTotalPrice.value  = oldValue
+    oldTotalPrice.value = oldValue
   })
   const totalPriceText = computed(() => {
     return `￥${totalPrice.value}`
@@ -95,7 +95,7 @@ const useShoppingCart = defineStore('shopping-cart', () => {
   }
 
   function clear() {
-    shoppingCartStore.value.forEach(item => item.isAddedToCart = false)
+    shoppingCartStore.value.forEach(item => (item.isAddedToCart = false))
     shoppingCartStore.value = []
     saveToLocalSync()
   }

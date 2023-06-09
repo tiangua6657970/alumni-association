@@ -1,6 +1,7 @@
-import { computed, reactive, ref } from 'vue'
-import { getDeliveryAddressList, getProfile, mapDeliveryAddress } from "@/service/personal-center";
+import { computed, ref } from 'vue'
+import { getDeliveryAddressList, getProfile, mapDeliveryAddress } from '@/service/personal-center'
 import { isMock } from '@/common/env'
+import { __USERINFO__ } from '@/common/keys'
 
 function mapProfile(data) {
   const {
@@ -44,8 +45,7 @@ function mapProfile(data) {
     code
   }
 }
-
-export const profileStore = reactive({
+const profileDefaultStore = {
   name: '',
   avatar: '',
   sex: '',
@@ -65,10 +65,21 @@ export const profileStore = reactive({
   dateOfBirt: '',
   nativePlace: '',
   address: '',
+  addressLine: '',
   email: '',
   code: '',
   desc: ''
-})
+}
+function getLocalProfileStore() {
+  try {
+    return uni.getStorageSync(__USERINFO__) || profileDefaultStore
+  } catch (err) {
+    console.log('[getLocalProfileStore err]',err)
+    return profileDefaultStore
+  }
+}
+
+export const profileStore = ref(getLocalProfileStore())
 
 async function _getProfile() {
   let { data } = await getProfile()
@@ -80,10 +91,13 @@ async function _getProfile() {
 
 export async function refreshProfileStore() {
   const data = await _getProfile()
-  for (const dataKey in data) {
-    profileStore[dataKey] = data[dataKey]
-  }
-  profileStore.desc = `${data.enterpriseInfo.name} | ${data.jobPositions}`
+  profileStore.value = data
+  profileStore.value.desc = `${data.enterpriseInfo.name} | ${data.jobPositions}`
+  uni.setStorageSync(__USERINFO__, profileStore.value)
+}
+export function resetProfileDefaultStore() {
+  profileStore.value = profileDefaultStore
+  uni.removeStorageSync(__USERINFO__)
 }
 
 export const deliveryAddressListStore = ref([])

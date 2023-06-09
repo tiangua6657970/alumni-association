@@ -1,5 +1,7 @@
 <script setup>
   import { pathMap, navigateTo } from '@/common/navigates'
+  import { __TOKEN__ } from '@/common/keys'
+  import { resetProfileDefaultStore } from '@/stores/personal-center'
 
   const navList = [
     { content: '个人信息', path: pathMap.editProfile },
@@ -12,8 +14,10 @@
   }
 
   function handleLogout() {
+    uni.removeStorageSync(__TOKEN__)
+    resetProfileDefaultStore()
     uni.reLaunch({
-      url: pathMap.login
+      url: pathMap.index
     })
   }
 </script>

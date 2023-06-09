@@ -8,8 +8,8 @@
   } from '@/common/navigates'
   import { useCode } from '@/common/hook/use-code'
   import { useLogin } from '@/service/auth'
-  import { __TOKEN__, __USERINFO__ } from '@/common/keys'
-  import { refreshDeliveryAddressList, refreshProfileStore } from "@/stores/personal-center";
+  import { __TOKEN__ } from '@/common/keys'
+  import { refreshDeliveryAddressList, refreshProfileStore } from '@/stores/personal-center'
   import { isMock } from '@/common/env'
 
   const { formRef, form, rules, submit } = useLogin()
@@ -54,22 +54,13 @@
           return
         }
         if (isMock) {
-          uni.$u.toast('登录成功')
-          refreshProfileStore()
-          refreshDeliveryAddressList()
-          navigateToAlumniCertificationTips()
-        }
-        const { err, data } = await submit()
-        if (!err) {
-          try {
-            uni.setStorageSync(__TOKEN__, data.token)
-            uni.setStorageSync(__USERINFO__, data.userInfo)
+          const { err, data } = await submit()
+          if (!err) {
             uni.$u.toast('登录成功')
+            uni.setStorageSync(__TOKEN__, data)
             refreshProfileStore()
             refreshDeliveryAddressList()
             navigateToAlumniCertificationTips()
-          } catch (e) {
-            // error
           }
         }
       }

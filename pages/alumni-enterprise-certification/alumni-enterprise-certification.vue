@@ -219,6 +219,9 @@
 
   function handleLocationSelectionConfirm(result) {
     console.log(result, 'result')
+    const { currentAddress, currentAddressLine } = result
+    form.placeholderAddress = currentAddress
+    form.addressLine = currentAddressLine
   }
 
   function save() {
@@ -261,7 +264,13 @@
         </u-form-item>
         <u-form-item label-width="auto" label="地址：" prop="placeholderAddress">
           <template #right>
-            <u-icon name="map" label="定位" color="#1B80C4" label-color="#1B80C4" @click="handlePosition" />
+            <u-icon
+              name="map"
+              label="定位"
+              color="#1B80C4"
+              label-color="#1B80C4"
+              @click="locationPopupShow = true"
+            />
           </template>
           <u-input
             v-model="form.placeholderAddress"
@@ -271,6 +280,9 @@
             :placeholder="placeholders.placeholderAddress"
             @click="addressSelectorShow = true"
           />
+        </u-form-item>
+        <u-form-item label-width="auto" label="详细地址" prop="addressLine">
+          <u-input v-model="form.addressLine" clearable placeholder="请输入详细地址" />
         </u-form-item>
         <u-form-item
           label-width="auto"

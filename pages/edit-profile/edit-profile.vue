@@ -7,14 +7,11 @@
   import { getFormRules } from '@/common/utils'
 
   const { uploadConfig, fileList, uploadRef, upload, handleChooseComplete } = useUpload()
-  const currentState = {}
-  for (const storeDataKey in profileStore) {
-    currentState[storeDataKey] = profileStore[storeDataKey]
-  }
-  const form = reactive(currentState)
+  const form = reactive(profileStore.value)
   const formRef = ref()
   const sexSelectorShow = ref(false)
   const addressSelectorShow = ref(false)
+  const locationPopupShow = ref(false)
   const sexSelectorDefaultIndex = ref(0)
   const sexDisplay = computed(() => {
     return SEX_TEXT_MAP[form.sex]
@@ -61,7 +58,12 @@
     }
   })
 
-  function handlePosition() {}
+  function handleLocationSelectionConfirm(result) {
+    console.log(result, 'result')
+    const { currentAddress, currentAddressLine } = result
+    form.placeholderAddress = currentAddress
+    form.addressLine = currentAddressLine
+  }
 </script>
 <template>
   <view class="edit-profile aa-container">
@@ -112,7 +114,13 @@
       </u-form-item>
       <u-form-item label-width="auto" label="地址：" prop="placeholderAddress">
         <template #right>
-          <u-icon name="map" label="定位" color="#1B80C4" label-color="#1B80C4" @click="handlePosition" />
+          <u-icon
+            name="map"
+            label="定位"
+            color="#1B80C4"
+            label-color="#1B80C4"
+            @click="locationPopupShow = true"
+          />
         </template>
         <u-input
           v-model="form.placeholderAddress"
@@ -122,6 +130,9 @@
           placeholder="请选择地址"
           @click="addressSelectorShow = true"
         />
+      </u-form-item>
+      <u-form-item label-width="auto" label="详细地址" prop="addressLine">
+        <u-input v-model="form.addressLine" clearable placeholder="请输入详细地址" />
       </u-form-item>
       <u-form-item label-width="auto" label="手机号：" prop="phone">
         <u-input v-model="form.phone" maxlength="20" clearable placeholder="请输入手机号" />
@@ -137,6 +148,7 @@
       :default-value="[sexSelectorDefaultIndex]"
       @confirm="handleSexSelectionConfirm"
     ></u-select>
+    <aa-location-selection-popup v-model="locationPopupShow" @confirm="handleLocationSelectionConfirm" />
     <aa-submit-button @click="save">保存</aa-submit-button>
   </view>
 </template>

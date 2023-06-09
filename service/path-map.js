@@ -1,6 +1,9 @@
 import { isMock } from '@/common/env'
 
 export const devPaths = {
+  register: '/api/login/register',
+  login: '/api/login/login',
+
   // 首页轮播图等数据
   indexData: '/api/index/index',
 
@@ -56,6 +59,9 @@ export const devPaths = {
 }
 const mockPathPrefix = 'https://mock.apifox.cn/m1/2374747-0-default'
 export const mockPaths = {
+  register: `${mockPathPrefix}/register`,
+  login: `${mockPathPrefix}/login`,
+
   // 首页轮播图等数据
   indexData: `${mockPathPrefix}/indexSwiperList`,
 

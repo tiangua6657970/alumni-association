@@ -91,6 +91,9 @@
 
   function handleLocationSelectionConfirm(result) {
     console.log(result, 'result')
+    const { currentAddress, currentAddressLine } = result
+    form.placeholderAddress = currentAddress
+    form.addressLine = currentAddressLine
   }
 
   function save() {

@@ -40,7 +40,7 @@ export const currentAlumniAssociation = computed(() => {
   if (positionStatus.value === 'reposition') {
     return `桂电校友会-${locationStore.city}`
   } else {
-    return positionStatusTextMap[positionStatus.value];
+    return positionStatusTextMap[positionStatus.value]
   }
 })
 

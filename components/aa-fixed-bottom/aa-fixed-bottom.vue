@@ -32,7 +32,7 @@
         v-if="showShare"
       />
     </u-button>
-    <u-button class="bottom__contact-btn ml-10">
+    <u-button class="bottom__contact-btn ml-10" v-if="showContact">
       <u-icon
         name="phone-fill"
         :size="30"
@@ -40,7 +40,6 @@
         label="联系"
         label-color="#2b85e4"
         @click="$emit('contact')"
-        v-if="showContact"
       />
     </u-button>
   </view>

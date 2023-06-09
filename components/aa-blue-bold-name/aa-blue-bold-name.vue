@@ -1,10 +1,11 @@
 <template>
-  <div class="aa-blue-bold-name" :class="_rootClass"><slot></slot></div>
+  <div class="aa-blue-bold-name" :class="_rootClass" @click="$emit('click')"><slot></slot></div>
 </template>
 
 <script>
   export default {
     name: 'aa-blue-bold-name',
+    emits: ['click'],
     props: {
       sub: {
         type: Boolean,
