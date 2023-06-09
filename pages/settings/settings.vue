@@ -1,5 +1,6 @@
 <script setup>
   import { pathMap, navigateTo } from '@/common/navigates'
+  import { __TOKEN__ } from '@/common/keys'
 
   const navList = [
     { content: '个人信息', path: pathMap.editProfile },
@@ -12,8 +13,9 @@
   }
 
   function handleLogout() {
+    uni.setStorageSync(__TOKEN__, null)
     uni.reLaunch({
-      url: pathMap.login
+      url: pathMap.index
     })
   }
 </script>

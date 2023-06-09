@@ -1,6 +1,11 @@
 import { computed, reactive, ref } from 'vue'
-import { getDeliveryAddressList, getProfile, mapDeliveryAddress } from "@/service/personal-center";
+import { getDeliveryAddressList, getProfile, mapDeliveryAddress } from '@/service/personal-center'
 import { isMock } from '@/common/env'
+
+export const loginStatus = ref(false)
+export function updateLoginStatus(payload) {
+  loginStatus.value = payload
+}
 
 function mapProfile(data) {
   const {
@@ -65,6 +70,7 @@ export const profileStore = reactive({
   dateOfBirt: '',
   nativePlace: '',
   address: '',
+  addressLine: '',
   email: '',
   code: '',
   desc: ''

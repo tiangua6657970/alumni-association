@@ -1,9 +1,10 @@
 import { get, post } from '@/service/base'
 import { reactive, ref } from 'vue'
 import { getFormRules } from '@/common/utils'
+import { paths } from "@/service/path-map";
 
-export const register = data => post('/api/login/register', data)
-export const login = data => post('/api/login/login', data)
+export const register = data => post(paths.register, data)
+export const login = data => post(paths.login, data)
 
 export function useRegister() {
   const formRef = ref()

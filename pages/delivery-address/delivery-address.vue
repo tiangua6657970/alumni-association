@@ -21,7 +21,7 @@
 </script>
 <template>
   <view class="delivery-address aa-container">
-    <view class="delivery-address-list aa-fix-fixed-bottom-btn" v-if="deliveryAddressListStore.length">
+    <view class="delivery-address-list" v-if="deliveryAddressListStore.length">
       <view class="delivery-address-item" v-for="(item, index) in deliveryAddressListStore" :key="item.id">
         <view class="delivery-address-item__header">
           <view class="delivery-address-item__header__left">

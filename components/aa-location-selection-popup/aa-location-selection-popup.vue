@@ -1,11 +1,21 @@
 <script setup>
-  import { currentAddress, locationStore, positionStatusText, refreshLocation } from '@/stores/location'
+  import {
+    currentAddress,
+    currentAddressLine,
+    locationStore,
+    positionStatusText,
+    refreshLocation
+  } from '@/stores/location'
 
   defineProps({ modelValue: { type: Boolean, default: false } })
   const emit = defineEmits(['update:modelValue', 'confirm'])
 
   function handleConfirm() {
-    emit('confirm', { currentAddress: currentAddress.value, locationStore })
+    emit('confirm', {
+      currentAddress: currentAddress.value,
+      currentAddressLine: currentAddressLine.value,
+      locationStore
+    })
     emit('update:modelValue', false)
   }
 </script>

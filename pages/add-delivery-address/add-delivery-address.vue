@@ -3,7 +3,6 @@
   import { useDeliveryAddressDetail } from '@/service/personal-center'
   import { ref } from 'vue'
   import { getFormRules } from '@/common/utils'
-  import { currentAddressLine } from '@/stores/location'
 
   const props = defineProps({ id: String, edit: Boolean })
   const { deliveryAddressDetail, refresh } = useDeliveryAddressDetail(props)
@@ -34,8 +33,10 @@
   }
 
   function handleLocationSelectionConfirm(result) {
-    deliveryAddressDetail.shippingAddressLine = currentAddressLine
     console.log(result, 'result')
+    const { currentAddress, currentAddressLine } = result
+    deliveryAddressDetail.placeholderAddress = currentAddress
+    deliveryAddressDetail.addressLine = currentAddressLine
   }
 
   function save() {
