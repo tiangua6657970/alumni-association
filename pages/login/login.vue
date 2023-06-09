@@ -58,9 +58,13 @@
           if (!err) {
             uni.$u.toast('登录成功')
             uni.setStorageSync(__TOKEN__, data)
-            refreshProfileStore()
-            refreshDeliveryAddressList()
-            navigateToAlumniCertificationTips()
+            const profile = await refreshProfileStore()
+            if (profile.isAuthenticated) {
+              await uni.navigateBack()
+            } else {
+              refreshDeliveryAddressList()
+              navigateToAlumniCertificationTips()
+            }
           }
         }
       }

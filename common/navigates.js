@@ -93,7 +93,9 @@ const loginRequiredPages = [
   pathMap.suggestionsAndFeedback,
   pathMap.settings,
   pathMap.alumniDetail,
-  pathMap.alumniAssociationDetail
+  pathMap.alumniAssociationDetail,
+  pathMap.postDemandAndSupply,
+  pathMap.alumniEnterpriseCertification
 ]
 
 /**

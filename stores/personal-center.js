@@ -22,7 +22,8 @@ function mapProfile(data) {
     nativePlace,
     address,
     userEmail: email,
-    code
+    code,
+    isAuthenticated
   } = data
   return {
     name,
@@ -42,7 +43,8 @@ function mapProfile(data) {
     nativePlace,
     address,
     email,
-    code
+    code,
+    isAuthenticated
   }
 }
 const profileDefaultStore = {
@@ -68,7 +70,8 @@ const profileDefaultStore = {
   addressLine: '',
   email: '',
   code: '',
-  desc: ''
+  desc: '',
+  isAuthenticated: false
 }
 function getLocalProfileStore() {
   try {
@@ -94,6 +97,7 @@ export async function refreshProfileStore() {
   profileStore.value = data
   profileStore.value.desc = `${data.enterpriseInfo.name} | ${data.jobPositions}`
   uni.setStorageSync(__USERINFO__, profileStore.value)
+  return profileStore.value
 }
 export function resetProfileDefaultStore() {
   profileStore.value = profileDefaultStore
