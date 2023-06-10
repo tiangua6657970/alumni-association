@@ -47,7 +47,7 @@ function mapProfile(data) {
     isAuthenticated
   }
 }
-const profileDefaultStore = {
+const defaultProfileStore = {
   name: '',
   avatar: '',
   sex: '',
@@ -75,10 +75,10 @@ const profileDefaultStore = {
 }
 function getLocalProfileStore() {
   try {
-    return uni.getStorageSync(__USERINFO__) || profileDefaultStore
+    return uni.getStorageSync(__USERINFO__) || defaultProfileStore
   } catch (err) {
     console.log('[getLocalProfileStore err]',err)
-    return profileDefaultStore
+    return defaultProfileStore
   }
 }
 
@@ -100,7 +100,7 @@ export async function refreshProfileStore() {
   return profileStore.value
 }
 export function resetProfileDefaultStore() {
-  profileStore.value = profileDefaultStore
+  profileStore.value = defaultProfileStore
   uni.removeStorageSync(__USERINFO__)
 }
 

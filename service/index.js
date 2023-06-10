@@ -1,4 +1,4 @@
-import { get, request } from '@/service/base'
+import { get } from '@/service/base'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
 import { ref } from 'vue'

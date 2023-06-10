@@ -35,14 +35,16 @@
     <view class="aa-container aa-bg-white">
       <aa-left-cover-content :data="alumniActivityDetail" />
     </view>
-    <u-form :model="form" ref="formRef">
-      <u-form-item label="" prop="name" required>
-        <u-input v-model="form.name" maxlength="20" clearable :placeholder="placeholders.name" />
-      </u-form-item>
-      <u-form-item label="" prop="phone" required>
-        <u-input v-model="form.phone" maxlength="20" clearable :placeholder="placeholders.phone" />
-      </u-form-item>
-    </u-form>
+    <view class="u-form">
+      <u-form  :model="form" ref="formRef">
+        <u-form-item label="" prop="name" required>
+          <u-input v-model="form.name" maxlength="20" clearable :placeholder="placeholders.name" />
+        </u-form-item>
+        <u-form-item label="" prop="phone" required>
+          <u-input v-model="form.phone" maxlength="20" clearable :placeholder="placeholders.phone" />
+        </u-form-item>
+      </u-form>
+    </view>
     <view class="info-list">
       <view class="info-item">
         <text class="info-item__label">活动费用</text>

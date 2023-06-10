@@ -1,7 +1,7 @@
 import { get } from '@/service/base'
-import { computed, reactive, ref } from 'vue'
+import { computed, ref } from 'vue'
 import useSearch from '@/common/hook/use-search'
-import { selectedAlumniList, isInSelectedAlumniList, selectedAlumniAssociation } from '@/stores/certification'
+import { isInSelectedAlumniList, selectedAlumniAssociation } from '@/stores/certification'
 import { paths } from '@/service/path-map'
 import { isMock } from '@/common/env'
 

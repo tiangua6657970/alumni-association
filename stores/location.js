@@ -77,7 +77,7 @@ export function refreshLocation() {
     fail: err => {
       positionStatus.value = 'positionErr'
       uni.$u.toast('获取地理位置失败，可重启小程序')
-      console.log('aMap.getRegeo', err)
+      console.log('[aMap.getRegeo err]', err)
     }
   })
 }

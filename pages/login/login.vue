@@ -60,9 +60,9 @@
             uni.setStorageSync(__TOKEN__, data)
             const profile = await refreshProfileStore()
             if (profile.isAuthenticated) {
+              refreshDeliveryAddressList()
               await uni.navigateBack()
             } else {
-              refreshDeliveryAddressList()
               navigateToAlumniCertificationTips()
             }
           }

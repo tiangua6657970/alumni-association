@@ -1,6 +1,6 @@
 import { get } from '@/service/base'
 import { paths } from '@/service/path-map'
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { isMock } from '@/common/env'
 
 export const getDonationDetail = params => get(paths.donationDetail, params)

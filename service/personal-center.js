@@ -133,14 +133,6 @@ export function useSearchOrderList() {
   return { query, searchResult, refresh, setParamsAndRefresh, noData, loadMore, loadStatus }
 }
 
-export async function _getDeliveryAddressList() {
-  let { data } = await getDeliveryAddressList()
-  if (!isMock) {
-    data = data.map(item => mapDeliveryAddress(item))
-  }
-  return data
-}
-
 async function _getDeliveryAddressDetail(params) {
   let { data } = await getDeliveryAddressDetail(params)
   if (!isMock) {
